@@ -21,7 +21,8 @@
 <button onclick="myFunction()">Click me</button>
 <script type="text/javascript">
 
-function myFunction(){
+function myFunction()
+{
 	MIDI.loadPlugin({
 		soundfontUrl: "./soundfont/",
 		instrument: "acoustic_grand_piano",
@@ -38,6 +39,7 @@ function myFunction(){
 			MIDI.noteOff(0, note, delay + 0.75);
 		}
 	});
+}
 
 </script>
 </body>
