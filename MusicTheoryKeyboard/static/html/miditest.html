@@ -20,7 +20,7 @@
 <body>
 <script type="text/javascript">
 
-window.onload = function () {
+window.onclick = function () {
 	MIDI.loadPlugin({
 		soundfontUrl: "../js/soundfont/",
 		instrument: "acoustic_grand_piano",
@@ -39,16 +39,8 @@ window.onload = function () {
 	});
 };
 
-<button id="unmuteButton"></button>
 
-<script>
-  unmuteButton.addEventListener('click', function() {
-    video.muted = false;
-  });
 </script>
-// window.onclick - function () {
-//   MIDI.resume();
-// }
 
 </script>
 </body>
