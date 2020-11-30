@@ -19,8 +19,9 @@
 </head>
 <body>
 <script type="text/javascript">
-
-window.onload = function () {
+var midiOn = False;
+window.mouseover = function () {
+	if(!midiOn){
 	MIDI.loadPlugin({
 		soundfontUrl: "../js/soundfont/",
 		instrument: "acoustic_grand_piano",
@@ -28,9 +29,10 @@ window.onload = function () {
 			console.log(state, progress);
 		},
 		onsuccess: function() {
-			console.log('Midi Loaded Successfully');
+			console.log('Midi Loaded Successfully')
+			midiOn - True;
 		}
-	});
+	});}
 };
 
 window.onclick= function() {
