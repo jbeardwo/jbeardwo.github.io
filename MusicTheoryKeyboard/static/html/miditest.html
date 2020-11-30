@@ -19,7 +19,7 @@
 </head>
 <body>
 <script type="text/javascript">
-var midiOn = False;
+var midiOn = false;
 window.mouseover = function () {
 	if(!midiOn){
 	MIDI.loadPlugin({
@@ -30,7 +30,7 @@ window.mouseover = function () {
 		},
 		onsuccess: function() {
 			console.log('Midi Loaded Successfully')
-			midiOn - True;
+			midiOn = True;
 		}
 	});}
 };
