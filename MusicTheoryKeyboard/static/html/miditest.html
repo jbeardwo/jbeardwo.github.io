@@ -18,31 +18,26 @@
 	<script src="../js/util/dom_request_script.js" type="text/javascript"></script>
 </head>
 <body>
+<button onclick="myFunction()">Click me</button>
 <script type="text/javascript">
 
-window.mouseover = function () {
-	console.log("yo")
+function myFunction(){
 	MIDI.loadPlugin({
-		soundfontUrl: "../js/soundfont/",
+		soundfontUrl: "./soundfont/",
 		instrument: "acoustic_grand_piano",
 		onprogress: function(state, progress) {
 			console.log(state, progress);
 		},
 		onsuccess: function() {
-			console.log('Midi Loaded Successfully');
+			var delay = 0; // play one note every quarter second
+			var note = 50; // the MIDI note
+			var velocity = 127; // how hard the note hits
+			// play the note
+			MIDI.setVolume(0, 127);
+			MIDI.noteOn(0, note, velocity, delay);
+			MIDI.noteOff(0, note, delay + 0.75);
 		}
 	});
-};
-
-window.onclick= function() {
-	var delay = 0; // play one note every quarter second
-	var note = 50; // the MIDI note
-	var velocity = 127; // how hard the note hits
-	// play the note
-	MIDI.setVolume(0, 127);
-	MIDI.noteOn(0, note, velocity, delay);
-	MIDI.noteOff(0, note, delay + 0.75);
-}
 
 </script>
 </body>
