@@ -20,7 +20,7 @@
 <body>
 <script type="text/javascript">
 
-window.onclick = function () {
+window.onload = function () {
 	MIDI.loadPlugin({
 		soundfontUrl: "../js/soundfont/",
 		instrument: "acoustic_grand_piano",
@@ -28,7 +28,7 @@ window.onclick = function () {
 			console.log(state, progress);
 		},
 		onsuccess: function() {
-			console.log('MidiLoaded');
+			console.log('Midi Loaded Successfully');
 		}
 	});
 };
