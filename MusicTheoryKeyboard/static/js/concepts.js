@@ -62,6 +62,19 @@ function pianoKeyUp(note) {
     revertKey(note);
 }
 
+function loadMIDI() {
+  MIDI.loadPlugin({
+		soundfontUrl: "../js/soundfont/",
+		instrument: "acoustic_grand_piano",
+		onprogress: function(state, progress) {
+			console.log(state, progress);
+		},
+		onsuccess: function() {
+			console.log('MIDI loaded')
+		}
+	});
+}
+
 function highlightKey(note) {
     var divID = note + "Key";
     if(document.getElementById(divID).className.includes("lStraightKey")) {
