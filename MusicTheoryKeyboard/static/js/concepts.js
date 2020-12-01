@@ -59,6 +59,17 @@ function pianoKeyDown(note) {
     note = teoria.note(note);
     var midiNote = note.midi();
     console.log(midiNote);
+    playNote(note);
+}
+
+function playNote(note){
+	var delay = 0; // play one note every quarter second
+	var midiNote = note.midi(); // the MIDI note
+	var velocity = 127; // how hard the note hits
+	// play the note
+	MIDI.setVolume(0, 127);
+	MIDI.noteOn(0, midiNote, velocity, delay);
+	MIDI.noteOff(0, note, delay + 0.75);
 }
 
 function pianoKeyUp(note) {
