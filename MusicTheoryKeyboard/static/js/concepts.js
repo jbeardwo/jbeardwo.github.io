@@ -71,6 +71,7 @@ function playNote(note){
 }
 
 function stopNote(note){
+  console.log('noteoff')
   MIDI.noteOff(0, note, 0);
 }
 
