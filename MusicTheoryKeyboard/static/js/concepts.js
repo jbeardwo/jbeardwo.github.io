@@ -66,7 +66,7 @@ function playNote(note){
 	var velocity = 127; // how hard the note hits
 	// play the note
 	MIDI.setVolume(0, 127);
-	MIDI.noteOn(midiNote, velocity);
+	MIDI.noteOn(0, midiNote, velocity, delay);
 
 }
 
