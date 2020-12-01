@@ -78,6 +78,7 @@ function stopNote(note){
 function pianoKeyUp(note) {
     revertKey(note);
     note = teoria.note(note);
+    console.log('here')
     stopNote(note);
 }
 
