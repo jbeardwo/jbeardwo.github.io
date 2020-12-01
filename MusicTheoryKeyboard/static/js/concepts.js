@@ -69,6 +69,7 @@ function playNote(note){
   if(!nowPlaying.includes(note)){
   	MIDI.noteOn(0, midiNote, velocity, delay);
     nowPlaying.push(note);
+    console.log(nowPlaying);
   }
 
 }
@@ -77,7 +78,9 @@ function stopNote(note){
   console.log('noteoff')
   var midiNote = note.midi();
   MIDI.noteOff(0, midiNote, 0);
-  nowPlaying.splice(nowPlaying.indexOf(note), 1);
+  if(nowPlaying.includes(note)){
+    nowPlaying.splice(nowPlaying.indexOf(note), 1);
+  }
 }
 
 function pianoKeyUp(note) {
