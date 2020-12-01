@@ -56,6 +56,8 @@ function pianoKeyClick(note){
 
 function pianoKeyDown(note) {
     highlightKey(note);
+    note = teoria.note(note);
+    console.log(note);
 }
 
 function pianoKeyUp(note) {
