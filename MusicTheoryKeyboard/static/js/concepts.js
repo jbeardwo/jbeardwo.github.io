@@ -72,7 +72,7 @@ function playNote(note){
 
 function stopNote(note){
   console.log('noteoff')
-  // MIDI.noteOff(0, note, 0);
+  MIDI.noteOff(0, note, 0);
 }
 
 function pianoKeyUp(note) {
