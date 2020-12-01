@@ -66,7 +66,7 @@ function playNote(note){
 	var velocity = 127; // how hard the note hits
 	// play the note
 	MIDI.setVolume(0, 127);
-	MIDI.noteOn(0, midiNote, velocity, delay);
+	MIDI.noteOn(midiNote, velocity);
 
 }
 
@@ -78,7 +78,6 @@ function stopNote(note){
 function pianoKeyUp(note) {
     revertKey(note);
     note = teoria.note(note);
-    console.log('here')
     stopNote(note);
 }
 
