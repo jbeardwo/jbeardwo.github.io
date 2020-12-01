@@ -57,8 +57,6 @@ function pianoKeyClick(note){
 function pianoKeyDown(note) {
     highlightKey(note);
     note = teoria.note(note);
-    var midiNote = note.midi();
-    console.log(midiNote);
     playNote(note);
 }
 
@@ -69,11 +67,17 @@ function playNote(note){
 	// play the note
 	MIDI.setVolume(0, 127);
 	MIDI.noteOn(0, midiNote, velocity, delay);
-	MIDI.noteOff(0, note, delay + 0.75);
+
+}
+
+function stopNote(note){
+  MIDI.noteOff(0, note, 0);
 }
 
 function pianoKeyUp(note) {
     revertKey(note);
+    note = teoria.note(note);
+    stopNote(note);
 }
 
 function loadMIDI() {
