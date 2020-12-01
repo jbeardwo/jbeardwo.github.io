@@ -66,7 +66,10 @@ function playNote(note){
 	var velocity = 127; // how hard the note hits
 	// play the note
 	MIDI.setVolume(0, 127);
-	MIDI.noteOn(0, midiNote, velocity, delay);
+  if(!nowPlaying.includes(note)){
+  	MIDI.noteOn(0, midiNote, velocity, delay);
+    nowPlaying.push(note);
+  }
 
 }
 
@@ -74,6 +77,7 @@ function stopNote(note){
   console.log('noteoff')
   var midiNote = note.midi();
   MIDI.noteOff(0, midiNote, 0);
+  nowPlaying.splice(nowPlaying.indexOf(note), 1);
 }
 
 function pianoKeyUp(note) {
