@@ -59,7 +59,6 @@ function pianoKeyDown(note) {
     note = teoria.note(note);
     console.log(note);
     console.log(teoria.note('c3'));
-    ))
 }
 
 function pianoKeyUp(note) {
