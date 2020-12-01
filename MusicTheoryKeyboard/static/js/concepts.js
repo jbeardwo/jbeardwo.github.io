@@ -21,7 +21,7 @@ var keyMap = {
     'Digit5' : 'gb4',
     'KeyT' : 'g4',
     'Digit6' : 'ab4',
-    'KeyY' : 'a5',
+    'KeyY' : 'a4',
     'Digit7' : 'bb4',
     'KeyU' : 'b4',
     'KeyI' : 'c5',
