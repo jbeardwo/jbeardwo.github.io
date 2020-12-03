@@ -64,7 +64,7 @@ function playNote(note){
 	var delay = 0; // play one note every quarter second
 	var midiNote = note.midi(); // the MIDI note
 	var velocity = 127; // how hard the note hits
-  var noteName = note.name() + note.octave()
+  var noteName = note.name() + note.accidental() + note.octave()
 	// play the note
 	MIDI.setVolume(0, 127);
   if(!nowPlaying.includes(noteName)){
@@ -77,7 +77,7 @@ function playNote(note){
 
 function stopNote(note){
   var midiNote = note.midi();
-  var noteName = note.name() + note.octave()
+  var noteName = note.name() + note.accidental() + note.octave()
   MIDI.noteOff(0, midiNote, 0);
   if(nowPlaying.includes(noteName)){
     nowPlaying.splice(nowPlaying.indexOf(noteName), 1);
