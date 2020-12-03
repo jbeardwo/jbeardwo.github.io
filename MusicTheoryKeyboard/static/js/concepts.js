@@ -70,6 +70,7 @@ function playNote(note){
   if(!nowPlaying.includes(noteName)){
   	MIDI.noteOn(0, midiNote, velocity, delay);
     nowPlaying.push(noteName);
+    console.log(nowPlaying)
   }
 
 }
