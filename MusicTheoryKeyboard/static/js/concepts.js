@@ -68,11 +68,9 @@ function playNote(note){
   console.log(noteName)
 	// play the note
 	MIDI.setVolume(0, 127);
-  if(!nowPlaying.includes(note)){
+  if(!nowPlaying.includes(noteName)){
   	MIDI.noteOn(0, midiNote, velocity, delay);
-    console.log(note.name() + note.octave())
-    note.name() + note.octave()
-    nowPlaying.push(note);
+    nowPlaying.push(noteName);
     console.log(nowPlaying);
   }
 
@@ -81,9 +79,11 @@ function playNote(note){
 function stopNote(note){
   console.log('noteoff')
   var midiNote = note.midi();
+  var noteName = note.name() + note.octave()
   MIDI.noteOff(0, midiNote, 0);
-  if(nowPlaying.includes(note)){
-    nowPlaying.splice(nowPlaying.indexOf(note), 1);
+  if(nowPlaying.includes(noteName)){
+    nowPlaying.splice(nowPlaying.indexOf(noteName), 1);
+    console.log(nowPlaying);
   }
 }
 
