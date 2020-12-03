@@ -54,9 +54,9 @@ function pianoKeyClick(note){
     }, 2000);
 }
 
-function pianoKeyDown(note) {
-    highlightKey(note);
-    note = teoria.note(note);
+function pianoKeyDown(noteName) {
+    highlightKey(noteName);
+    note = teoria.note(noteName);
     playNote(note);
 }
 
@@ -64,10 +64,14 @@ function playNote(note){
 	var delay = 0; // play one note every quarter second
 	var midiNote = note.midi(); // the MIDI note
 	var velocity = 127; // how hard the note hits
+  var noteName = note.name() + note.octave()
+  console.log(noteName)
 	// play the note
 	MIDI.setVolume(0, 127);
   if(!nowPlaying.includes(note)){
   	MIDI.noteOn(0, midiNote, velocity, delay);
+    console.log(note.name() + note.octave())
+    note.name() + note.octave()
     nowPlaying.push(note);
     console.log(nowPlaying);
   }
