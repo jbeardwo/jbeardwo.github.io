@@ -29,7 +29,7 @@ var keyMap = {
     'KeyO' : 'd5',
     'Digit0' : 'eb5',
     'KeyP' : 'e5'
-}
+};
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -64,20 +64,19 @@ function playNote(note){
 	var delay = 0; // play one note every quarter second
 	var midiNote = note.midi(); // the MIDI note
 	var velocity = 127; // how hard the note hits
-  var noteName = note.name() + note.accidental() + note.octave()
+  var noteName = note.name() + note.accidental() + note.octave();
 	// play the note
 	MIDI.setVolume(0, 127);
   if(!nowPlaying.includes(noteName)){
   	MIDI.noteOn(0, midiNote, velocity, delay);
     nowPlaying.push(noteName);
-    console.log(nowPlaying)
   }
 
 }
 
 function stopNote(note){
   var midiNote = note.midi();
-  var noteName = note.name() + note.accidental() + note.octave()
+  var noteName = note.name() + note.accidental() + note.octave();
   MIDI.noteOff(0, midiNote, 0);
   if(nowPlaying.includes(noteName)){
     nowPlaying.splice(nowPlaying.indexOf(noteName), 1);
@@ -98,7 +97,7 @@ function loadMIDI() {
 			console.log(state, progress);
 		},
 		onsuccess: function() {
-			console.log('MIDI loaded')
+			console.log('MIDI loaded');
 		}
 	});
 }
