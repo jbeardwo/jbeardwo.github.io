@@ -1,0 +1,57 @@
+body
+{
+    padding:0;
+    margin:0;
+}
+
+.top-container {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+}
+
+#menu
+{
+  padding: 16px 16px;
+  background: #555;
+  color: #f1f1f1;
+  text-align: center;
+  font-size: 25px;
+  font-weight:bold;
+}
+
+#menu .button
+{
+    background-color: #f4511e;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    opacity: 0.6;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#menu .button:hover {
+  opacity:1;
+}
+
+
+#menu .button.active
+{
+    color:black;
+}
+
+#main
+{
+    padding:5px;
+}
+
+#main .content
+{
+    display:none;
+}
