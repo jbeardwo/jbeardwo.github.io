@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <script type="text/javascript" src="../js/jquery-3.5.1.js"></script>
+  <script type="text/javascript" src="../js/scripts.js"></script>
+  <link rel='stylesheet' type='text/css' href='../CSS/style.css'>
+</head>
 <body>
-<h1>Instructions:</h1>
-<p>
-	1. Click "Create New SOR"<br>
-	2. Left click in the canvas to start a line<br>
-	3. Continue to left click to add as many points as you'd like.<br>
-	4. Right click on your final point to terminate your line, it will now be rotated about the y-axis and rendered.<br>
-	Now you can use WASD to move the camera and the arrow keys to turn.<br>
-	You can render multiple objects but they generate on top of each other in the current build.<br>
-	<br>
-	NOTE: This was originally created for a college course. I started re-writing it from scratch for organizational reasons.<br>
-	The current implementation is missing features such as moving objects with the mouse as well as texture mapping
-	and additional light sources (among other things). <br>
-	Those will be added back in as time progresses.<br>
-	<a href="./driver.html">Click Here</a>
-</p>
+  <div class="top-container">
+  <h1>John Beardwood</h1>
+  <p>Hello! This site is very much a work in progress, feel free to look around!</p>
+  </div>
+
+  <div id="menu">
+    <a href="../index.html" class="go-home">Back To Home</a>
+  </div>
+  <div id="main">
+		<h1>Instructions:</h1>
+		<p>
+			1. Click "Create New SOR"<br>
+			2. Left click in the canvas to start a line<br>
+			3. Continue to left click to add as many points as you'd like.<br>
+			4. Right click to add the terminate the line at the pointer's location. It will now be rotated about the y-axis and rendered.<br>
+			Now you can use WASD to move the camera and the arrow keys to turn.<br>
+			You can render multiple objects but they generate on top of each other in the current build.<br>
+			<br>
+			NOTE: This was originally created for a college course. I started re-writing it from scratch for organizational reasons.<br>
+			The current implementation is missing features such as moving objects with the mouse as well as texture mapping
+			and additional light sources (among other things). <br>
+			Those will be re-implemented in due time.<br>
+			<a href="./driver.html">Click Here</a>
+		</p>
+	</div>
 </body>
 </html>

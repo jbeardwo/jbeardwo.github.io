@@ -6,7 +6,7 @@ $(document).ready(function(){
       $('.active').removeClass('active');
       $(this).addClass('active');
       if ($visible.length == 0) showContent(name);
-      else $visible.fadeOut(500, function() {
+      else $visible.fadeOut(250, function() {
           showContent(name);
       });
   });
@@ -14,5 +14,5 @@ $(document).ready(function(){
 
 function showContent(name)
 {
-    $('#main .' + name).fadeIn(500);
+    $('#main .' + name).fadeIn(250);
 }
