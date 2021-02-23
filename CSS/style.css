@@ -12,7 +12,7 @@ body
 }
 
 .top-container {
-  background-color: #f1f1f1;
+  background-color: #e6ffe6;
   padding: 1px;
   text-align: center;
 }
@@ -20,8 +20,8 @@ body
 #menu
 {
   padding: 0;
-  background: #555;
-  color: #f1f1f1;
+  background: black;
+  color: black;
   text-align: center;
   font-size: 25px;
   font-weight:bold;
@@ -29,9 +29,9 @@ body
 
 #menu .button
 {
-    background-color: #f4511e;
+    background-color: #ccffcc;
     border: none;
-    color: white;
+    color: black;
     padding: 16px 32px;
     text-align: center;
     font-size: 16px;
@@ -50,7 +50,7 @@ body
 
 #menu .button.active
 {
-    color:black;
+  opacity:1;
 }
 
 #main
@@ -71,9 +71,9 @@ body
 
 .go-home
 {
-    background-color: #f4511e;
+    background-color: #ccffcc;
     border: none;
-    color: white;
+    color: black;
     padding: 16px 32px;
     text-align: center;
     font-size: 16px;
