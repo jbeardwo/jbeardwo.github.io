@@ -16,6 +16,8 @@ var far = 500
 
 var mouseDown = false;
 var dragging = false;
+var ctrlDown = false;
+
 
 var pickedObject
 
@@ -36,6 +38,7 @@ function main() {
     canvas.tabIndex = 1000;
 
     canvas.onkeydown = function (ev)  {
+      scene.drawEverything();
         //w
         if(ev.which == 87){
             scene.camera.updatePosition('FORWARD');
@@ -71,25 +74,36 @@ function main() {
         //=
         if(ev.which==187){
           if(dragging==true){
-            var translation = new Matrix4;
-            translation.setTranslate(0,0,-25)
-            pickedObject.transforms = pickedObject.transforms.multiply(translation);
-            pickedObject.normalTransforms = pickedObject.normalTransforms.multiply(translation);
-            scene.drawEverything;
+            var translate = new Matrix4;
+            translate.setTranslate(0,0,-25)
+            pickedObject.transforms = pickedObject.transforms.multiply(translate);
+            pickedObject.translation = pickedObject.translation.multiply(translate);
+            scene.drawEverything();
           }
         }
         //-
         if(ev.which==189){
           if(dragging==true){
-            var translation = new Matrix4;
-            translation.setTranslate(0,0,25)
-            pickedObject.transforms = pickedObject.transforms.multiply(translation);
-            pickedObject.normalTransforms = pickedObject.normalTransforms.multiply(translation);
-            scene.drawEverything;
+            var translate = new Matrix4;
+            translate.setTranslate(0,0,25)
+            pickedObject.transforms = pickedObject.transforms.multiply(translate);
+            pickedObject.translation = pickedObject.translation.multiply(translate);
+            scene.drawEverything();
           }
         }
+        // console.log(ev.which)
+        //ctrl
+        if(ev.which==17){
+          ctrlDown = true;
+        }
 
-        scene.drawEverything();
+    }
+
+    canvas.onkeyup = function (ev)  {
+      //ctrl
+      if(ev.which==17){
+        ctrlDown = false;
+      }
     }
 
     // Register function (event handler) to be called on a mouse press
@@ -126,9 +140,7 @@ function main() {
         }
 
         pickedObject.transforms = pickedObject.transforms.multiply(scale);
-        // translation.invert();
-        pickedObject.normalTransforms = pickedObject.normalTransforms.multiply(scale);
-
+        pickedObject.scale = pickedObject.scale.multiply(scale);
         scene.drawEverything();
       }
     }
@@ -230,20 +242,30 @@ function move(ev, gl, canvas) {
   var rect = ev.target.getBoundingClientRect();
   x = ((x - rect.left) - canvas.width / 2) * 2;
   y = (canvas.height / 2 - (y - rect.top)) * 2;
-  if(dragging){
+  if(dragging&&ctrlDown){
+    rotateObject(ev.movementX,ev.movementY);
+  }else if(dragging){
     dragObject(ev.movementX,ev.movementY);
   }
-  scene.drawEverything()
+  scene.drawEverything();
 }
 
 function dragObject(x,y) {
   y = y*-1;
-  var translation = new Matrix4;
+  var translate = new Matrix4;
   var xTranslate = [x*camera.cameraRight[0],x*camera.cameraRight[1],x*camera.cameraRight[2]];
   var yTranslate = [y*camera.cameraUp[0],y*camera.cameraUp[1],y*camera.cameraUp[2]];
-  translation.setTranslate(xTranslate[0]+yTranslate[0],xTranslate[1]+yTranslate[1],xTranslate[2]+yTranslate[2])
-  pickedObject.transforms = pickedObject.transforms.multiply(translation);
-  // translation.invert();
-  pickedObject.normalTransforms = pickedObject.normalTransforms.multiply(translation);
+  translate.setTranslate(xTranslate[0]+yTranslate[0],xTranslate[1]+yTranslate[1],xTranslate[2]+yTranslate[2])
+  pickedObject.translation = pickedObject.translation.multiply(translate)
+}
 
+function rotateObject(x,y){
+  var rotationX = new Matrix4;
+  var rotationY = new Matrix4;
+
+  rotationX.setRotate(x,camera.cameraUp[0],camera.cameraUp[1],camera.cameraUp[2]);
+  rotationY.setRotate(y,camera.cameraRight[0],camera.cameraRight[1],camera.cameraRight[2]);
+
+  pickedObject.rotation = pickedObject.rotation.multiply(rotationX);
+  pickedObject.rotation = pickedObject.rotation.multiply(rotationY);
 }

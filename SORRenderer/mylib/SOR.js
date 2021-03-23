@@ -22,8 +22,22 @@ function mySORClass(name, baseLine, color) {
     this.selectable = true;
 
     this.transforms = new Matrix4;
-    this.transforms.setIdentity();
+    this.scale = new Matrix4;
+    this.rotation = new Matrix4;
+    this.translation = new Matrix4;
     this.normalTransforms = new Matrix4;
+    this.normalScale = new Matrix4;
+    this.normalRotation = new Matrix4;
+    this.normalTranslation = new Matrix4;
+    this.transforms.setIdentity();
+    this.scale.setIdentity();
+    this.rotation.setIdentity();
+    this.translation.setIdentity();
+    this.normalTransforms.setIdentity();
+    this.normalScale.setIdentity();
+    this.normalRotation.setIdentity();
+    this.normalTranslation.setIdentity();
+
 }
 
 mySORClass.prototype.formatBaseLine = function() {
@@ -274,7 +288,8 @@ mySORClass.prototype.drawNormals = function() {
 
 
     var normalCluster = new lineCluster(normalLines,[1.0,0.0,0.0,1.0]);
-    normalCluster.transforms = this.normalTransforms;
+    normalCluster.transforms.elements = this.normalTransforms.elements;
+    normalCluster.transforms.transpose().invert();
     normalCluster.draw();
 }
 
@@ -284,15 +299,6 @@ mySORClass.prototype.draw = function() {
     var drawIndices = [];
     var drawNormals = [];
     this.showNormals = document.getElementById("normalsCheck").checked;
-
-    // translate = new Matrix4()
-    // translate.setTranslate(20,0,0)
-    //
-    // for(var i=0;i<this.vertices.length;i++){
-    //   vect = new Vector3([this.vertices[i].x,this.vertices[i].y,this.vertices[i].z])
-    //   vect = translate.multiplyVector3(vect)
-    //   this.vertices[i] = new coord(vect.elements[0],vect.elements[1],vect.elements[2])
-    // }
 
     if(this.drawFlat){
         //convert vertices from coords into a normal array
@@ -317,6 +323,7 @@ mySORClass.prototype.draw = function() {
         drawIndices = Uint16Array.from(this.indices);
         drawNormals = vector3ToFloat32(this.smoothNormals);
     }
+
     //Initialize shaders
     program = createProgramFromScripts(gl, "objectShader-vs", "objectShader-fs")
     gl.useProgram(program);
@@ -332,6 +339,13 @@ mySORClass.prototype.draw = function() {
     var u_Color = gl.getUniformLocation(program, 'u_Color')
     var u_MvpMatrix = gl.getUniformLocation(program, 'u_MvpMatrix')
     var u_Transforms = gl.getUniformLocation(program,'u_Transforms')
+    var u_Scale = gl.getUniformLocation(program,'u_Scale')
+    var u_Rotation = gl.getUniformLocation(program,'u_Rotation')
+    var u_Translation = gl.getUniformLocation(program,'u_Translation')
+    var u_ScaleNormals = gl.getUniformLocation(program,'u_Scale')
+    var u_RotationNormals = gl.getUniformLocation(program,'u_Rotation')
+    var u_TranslationNormals = gl.getUniformLocation(program,'u_Translation')
+    var u_NormalTransforms = gl.getUniformLocation(program,'u_NormalTransforms')
 
     if(this.selected){
       gl.uniform4f(u_Color, 1, 0, 0, this.color[3])
@@ -346,7 +360,17 @@ mySORClass.prototype.draw = function() {
 
 
     gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements)
-    gl.uniformMatrix4fv(u_Transforms, false, this.transforms.elements)
+    gl.uniformMatrix4fv(u_NormalTransforms, false, this.normalTransforms.elements)
+    gl.uniformMatrix4fv(u_Scale, false, this.scale.elements)
+    gl.uniformMatrix4fv(u_Rotation, false, this.rotation.elements)
+    gl.uniformMatrix4fv(u_Translation, false, this.translation.elements)
+    this.normalTransforms.setIdentity();
+    this.normalTransforms.multiply(this.scale);
+    this.normalTransforms.multiply(this.rotation);
+    this.normalTransforms.multiply(this.translation)
+    this.normalTransforms.invert();
+    this.normalTransforms.transpose();
+    gl.uniformMatrix4fv(u_NormalTransforms,false, this.normalTransforms.elements)
     gl.drawElements(gl.TRIANGLES, drawIndices.length, gl.UNSIGNED_SHORT, 0)
 
     if(this.showNormals){this.drawNormals()}
