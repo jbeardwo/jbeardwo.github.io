@@ -95,7 +95,24 @@ function main() {
     	}else{
         	move(ev, gl, canvas);
         }
-    };
+    }
+
+    canvas.onmousewheel = function(ev) {
+      if(dragging==true){
+        var scale = new Matrix4;
+        if(ev.wheelDeltaY>0){
+          scale.setScale(1.25,1.25,1.25)
+        }else if(ev.wheelDeltaY<0){
+          scale.setScale(.75,.75,.75)
+        }
+
+        pickedObject.transforms = pickedObject.transforms.multiply(scale);
+        // translation.invert();
+        pickedObject.normalTransforms = pickedObject.normalTransforms.multiply(scale);
+
+        scene.drawEverything();
+      }
+    }
 }
 
 function drawNewSOR(){
