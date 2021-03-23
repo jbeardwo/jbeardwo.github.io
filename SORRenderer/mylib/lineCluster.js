@@ -2,6 +2,8 @@ function lineCluster(vertices, color) {
     this.vertices = vertices
     this.color = color
     this.indices = this.clusterIndices()
+    this.selectable = false;
+    this.transforms = new Matrix4;
 }
 
 lineCluster.prototype.clusterIndices = function() {
@@ -35,10 +37,12 @@ lineCluster.prototype.draw = function() {
     gl.uniform4f(u_Color, this.color[0],this.color[1],this.color[2], this.color[3])
 
     var mvpMatrix = new Matrix4()
+    var u_Transforms = gl.getUniformLocation(program,'u_Transforms')
     // mvpMatrix.setOrtho(left + xPan, right + xPan, bottom + yPan, theTop + yPan, near + zPan, far + zPan)
-    
+
     mvpMatrix =  scene.camera.getViewMatrix();
     gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements)
+    gl.uniformMatrix4fv(u_Transforms, false, this.transforms.elements)
     gl.drawElements(gl.LINES, this.indices.length, gl.UNSIGNED_SHORT, 0)
     gl.lineWidth(1);
 }

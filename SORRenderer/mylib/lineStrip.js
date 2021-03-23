@@ -1,7 +1,8 @@
 function lineStrip(vertices, color) {
-    this.vertices = vertices
-    this.color = color
-    this.indices = this.stripIndices()
+    this.vertices = vertices;
+    this.color = color;
+    this.indices = this.stripIndices();
+    this.selectable = false;
 }
 
 lineStrip.prototype.stripIndices = function() {

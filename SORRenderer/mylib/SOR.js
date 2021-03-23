@@ -10,13 +10,20 @@ function mySORClass(name, baseLine, color) {
 
     this.flatVertices = this.calcFlatVertices();
     this.flatIndices = this.calcFlatIndices();
-    this.drawFlat = true;
+    this.drawFlat = false;
 
 
     this.faceNormals = this.calcFaceNormals();
     this.smoothNormals = this.calcSmoothNormals();
     this.flatNormals = this.calcFlatNormals();
-    this.showNormals = true;
+    this.showNormals = false;
+
+    this.selected = false;
+    this.selectable = true;
+
+    this.transforms = new Matrix4;
+    this.transforms.setIdentity();
+    this.normalTransforms = new Matrix4;
 }
 
 mySORClass.prototype.formatBaseLine = function() {
@@ -243,11 +250,18 @@ mySORClass.prototype.calcFlatNormals = function() {
 
 mySORClass.prototype.drawNormals = function() {
     var normalLines = [];
+    // var normalVectors = [];
+    //
+    // var current = new Vector3;
     var x;
     var y;
     var z;
 
+
     for(var i = 0;i<this.smoothNormals.length;i++){
+        // current.elements = [this.vertices[i].x,this.vertices[i].y,this.vertices[i].z];
+        // normalVectors[i] = normalTransforms.multiplyVector3(current);
+
         normalLines.push(this.vertices[i].x);
         normalLines.push(this.vertices[i].y);
         normalLines.push(this.vertices[i].z);
@@ -255,9 +269,12 @@ mySORClass.prototype.drawNormals = function() {
         normalLines.push(this.vertices[i].x + 100 * this.smoothNormals[i][0]);
         normalLines.push(this.vertices[i].y + 100 * this.smoothNormals[i][1]);
         normalLines.push(this.vertices[i].z + 100 * this.smoothNormals[i][2]);
+
     }
 
+
     var normalCluster = new lineCluster(normalLines,[1.0,0.0,0.0,1.0]);
+    normalCluster.transforms = this.normalTransforms;
     normalCluster.draw();
 }
 
@@ -266,6 +283,16 @@ mySORClass.prototype.draw = function() {
     var tempVerts = [];
     var drawIndices = [];
     var drawNormals = [];
+    this.showNormals = document.getElementById("normalsCheck").checked;
+
+    // translate = new Matrix4()
+    // translate.setTranslate(20,0,0)
+    //
+    // for(var i=0;i<this.vertices.length;i++){
+    //   vect = new Vector3([this.vertices[i].x,this.vertices[i].y,this.vertices[i].z])
+    //   vect = translate.multiplyVector3(vect)
+    //   this.vertices[i] = new coord(vect.elements[0],vect.elements[1],vect.elements[2])
+    // }
 
     if(this.drawFlat){
         //convert vertices from coords into a normal array
@@ -304,16 +331,22 @@ mySORClass.prototype.draw = function() {
 
     var u_Color = gl.getUniformLocation(program, 'u_Color')
     var u_MvpMatrix = gl.getUniformLocation(program, 'u_MvpMatrix')
+    var u_Transforms = gl.getUniformLocation(program,'u_Transforms')
 
-    gl.uniform4f(u_Color, this.color[0], this.color[1], this.color[2], this.color[3])    
+    if(this.selected){
+      gl.uniform4f(u_Color, 1, 0, 0, this.color[3])
+    }else{
+      gl.uniform4f(u_Color, this.color[0], this.color[1], this.color[2], this.color[3])
+    }
     gl.enable(gl.DEPTH_TEST)
     var mvpMatrix = new Matrix4()
     // mvpMatrix.setOrtho(-500, 500, -500, 500, -5000, 5000)
     mvpMatrix =  scene.camera.getViewMatrix();
 
-   
+
 
     gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements)
+    gl.uniformMatrix4fv(u_Transforms, false, this.transforms.elements)
     gl.drawElements(gl.TRIANGLES, drawIndices.length, gl.UNSIGNED_SHORT, 0)
 
     if(this.showNormals){this.drawNormals()}

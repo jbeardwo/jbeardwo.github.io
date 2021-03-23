@@ -9,6 +9,7 @@
     <canvas id="webgl" width="500" height="500" style="border:1px solid #000000;">
     Please use a browser that supports "canvas"
     </canvas>
+    <input type="checkbox" id="normalsCheck" onclick="scene.drawEverything();">Show Normals</input>
 
     <button type="button" id="draw" onclick="drawNewSOR()">Create New SOR</button>
 
@@ -25,7 +26,7 @@
     <script src="./mylib/lineStrip.js"></script>
     <script src="./mylib/scene.js"></script>
     <script src="main.js"></script>
-    
+
     <script id="lineShader-vs" type="x-shader/x-vertex">
         uniform mat4 u_MvpMatrix;
         attribute vec4 a_Position;
@@ -55,12 +56,13 @@
       attribute vec4 a_Position;
       attribute vec4 a_Normal;
       varying vec4 v_Normal;
+      uniform mat4 u_Transforms;
 
       uniform vec4 u_Color;
       varying vec4 v_Color;
 
       void main(){
-        gl_Position = u_MvpMatrix * a_Position;
+        gl_Position = u_MvpMatrix *u_Transforms* a_Position;
         v_Color = u_Color;
         v_Normal = a_Normal;
       }
