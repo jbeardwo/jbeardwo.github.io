@@ -68,6 +68,27 @@ function main() {
         if(ev.which == 39){
         	scene.camera.updateAngles(0,scene.camera.sensitivity)
         }
+        //=
+        if(ev.which==187){
+          if(dragging==true){
+            var translation = new Matrix4;
+            translation.setTranslate(0,0,-25)
+            pickedObject.transforms = pickedObject.transforms.multiply(translation);
+            pickedObject.normalTransforms = pickedObject.normalTransforms.multiply(translation);
+            scene.drawEverything;
+          }
+        }
+        //-
+        if(ev.which==189){
+          if(dragging==true){
+            var translation = new Matrix4;
+            translation.setTranslate(0,0,25)
+            pickedObject.transforms = pickedObject.transforms.multiply(translation);
+            pickedObject.normalTransforms = pickedObject.normalTransforms.multiply(translation);
+            scene.drawEverything;
+          }
+        }
+
         scene.drawEverything();
     }
 
@@ -83,8 +104,6 @@ function main() {
 
     canvas.onmouseup = function(ev) {
       mouseDown = false;
-      var x = ev.clientX;
-      var y = ev.clientY;
       dragging = false;
     }
 
