@@ -108,7 +108,7 @@ function highlightKey(note) {
         document.getElementById(divID).className = "highlightKey lStraightKey";
     } else if(document.getElementById(divID).className.includes("cutKey")) {
         document.getElementById(divID).className = "highlightKey cutKey";
-        console.log(document.getElementById(divID).className );
+        
     } else if(document.getElementById(divID).className.includes("rStraightKey")) {
         document.getElementById(divID).className = "highlightKey rStraightKey";
     } else if(document.getElementById(divID).className.includes("blackKey")) {
@@ -144,7 +144,7 @@ function revertKey(note){
 }
 
 function unhighlightAll(){
-    document.querySelectorAll('.key').forEach(function(i){
+    document.querySelectorAll('.highlightBlackKey,.highlightKey').forEach(function(i){
         let noteName = i.id.slice(0,-3);
         revertKey(noteName);
     })
