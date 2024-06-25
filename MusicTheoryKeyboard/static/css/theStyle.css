@@ -207,10 +207,6 @@ img {
     display:none;
 }
 
-.content.active{
-    display: block;
-}
-
 .previous {display: none;}
 
 #reference {
