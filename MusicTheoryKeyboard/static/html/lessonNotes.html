@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<title>Virtual Music Theory Keyboard</title>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="..//css/theStyle.css">
+
+	<!-- MIDI includes -->
+	<!-- polyfill -->
+	<script src="../inc/shim/Base64.js" type="text/javascript"></script>
+	<script src="../inc/shim/Base64binary.js" type="text/javascript"></script>
+	<script src="../inc/shim/WebAudioAPI.js" type="text/javascript"></script>
+	<!-- midi.js package -->
+	<script src="../js/midi/audioDetect.js" type="text/javascript"></script>
+	<script src="../js/midi/gm.js" type="text/javascript"></script>
+	<script src="../js/midi/loader.js" type="text/javascript"></script>
+	<script src="../js/midi/plugin.audiotag.js" type="text/javascript"></script>
+	<script src="../js/midi/plugin.webaudio.js" type="text/javascript"></script>
+	<script src="../js/midi/plugin.webmidi.js" type="text/javascript"></script>
+	<!-- utils -->
+	<script src="../js/util/dom_request_xhr.js" type="text/javascript"></script>
+	<script src="../js/util/dom_request_script.js" type="text/javascript"></script>
+</head>
+<body onload="" background="..//images/wood-grain.jpg">
+	<div id="window">
+		<div id="topBanner">
+		</div>
+
+		<div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+            <a href="lesson1.html">Lesson: Introduction</a>
+            <a href="quizNotes.html">Quiz: Notes</a>
+            <a href="quizSteps.html">Quiz: Steps</a>
+            <a href="lessonScales.html">Lesson: Scales</a>
+            <a href="quizMajorScales.html">Quiz: Major Scales</a>
+            <a href="quizMinorScales.html">Quiz: Minor Scales</a>
+            <a href="quizInterval.html">Quiz: Interval</a>
+            <a href="lessonStaff.html">Lesson: Staff</a>
+            <a href="lessonCircle.html">Lesson: Circle</a>
+            <a href="quizKeys.html">Quiz: Key Signature</a>
+            <a href="reference.html">Reference Guide</a>
+        </div>
+
+        <span id="menuButton" onclick="openNav()">&#9776; Menu</span>
+
+		<div id="keyboard">
+			<!-- keyboard keys that call functions to play corresponding note when clicked --><!--
+			--><div class="key lStraightKey" id="c3Key" onclick="pianoKeyClick('c3')"><div class="hardwareKey">z</div><div class="keyname">C</div></div><!--
+			--><div class="key blackKey" id="db3Key" onclick="pianoKeyClick('db3')"><div class="hardwareKey">s</div><div class="keyname">C<sup>#</sup> D<sup>b</sup></div></div><!--
+			--><div class="key cutKey" id="d3Key" onclick="pianoKeyClick('d3')"><div class="hardwareKey">x</div><div class="keyname">D</div></div><!--
+			--><div class="key blackKey" id="eb3Key" onclick="pianoKeyClick('eb3')"><div class="hardwareKey">d</div><div class="keyname">D<sup>#</sup> E<sup>b</sup></div></div><!--
+			--><div class="key rStraightKey" id="e3Key" onclick="pianoKeyClick('e3')"><div class="hardwareKey">c</div><div class="keyname">E</div></div><!--
+			--><div class="key lStraightKey" id="f3Key" onclick="pianoKeyClick('f3')"><div class="hardwareKey">v</div><div class="keyname">F</div></div><!--
+			--><div class="key blackKey" id="gb3Key" onclick="pianoKeyClick('gb3')"><div class="hardwareKey">g</div><div class="keyname">F<sup>#</sup> G<sup>b</sup></div></div><!--
+			--><div class="key cutKey" id="g3Key" onclick="pianoKeyClick('g3')"><div class="hardwareKey">b</div><div class="keyname">G</div></div><!--
+			--><div class="key blackKey" id="ab3Key" onclick="pianoKeyClick('ab3')"><div class="hardwareKey">h</div><div class="keyname">G<sup>#</sup> A<sup>b</sup></div></div><!--
+			--><div class="key cutKey" id="a3Key" onclick="pianoKeyClick('a3')"><div class="hardwareKey">n</div><div class="keyname">A</div></div><!--
+			--><div class="key blackKey" id="bb3Key" onclick="pianoKeyClick('bb3')"><div class="hardwareKey">j</div><div class="keyname">A<sup>#</sup> B<sup>b</sup></div></div><!--
+			--><div class="key rStraightKey" id="b3Key" onclick="pianoKeyClick('b3')"><div class="hardwareKey">m</div><div class="keyname">B</div></div><!--
+			--><div class="key lStraightKey" id="c4Key" onclick="pianoKeyClick('c4')"><div class="hardwareKey">q</div><div class="keyname">C</div></div><!--
+			--><div class="key blackKey" id="db4Key" onclick="pianoKeyClick('db4')"><div class="hardwareKey">2</div><div class="keyname">C<sup>#</sup> D<sup>b</sup></div></div><!--
+			--><div class="key cutKey" id="d4Key" onclick="pianoKeyClick('d4')"><div class="hardwareKey">w</div><div class="keyname">D</div></div><!--
+			--><div class="key blackKey" id="eb4Key" onclick="pianoKeyClick('eb4')"><div class="hardwareKey">3</div><div class="keyname">D<sup>#</sup> E<sup>b</sup></div></div><!--
+			--><div class="key rStraightKey" id="e4Key" onclick="pianoKeyClick('e4')"><div class="hardwareKey">e</div><div class="keyname">E</div></div><!--
+			--><div class="key lStraightKey" id="f4Key" onclick="pianoKeyClick('f4')"><div class="hardwareKey">r</div><div class="keyname">F</div></div><!--
+			--><div class="key blackKey" id="gb4Key" onclick="pianoKeyClick('gb4')"><div class="hardwareKey">5</div><div class="keyname">F<sup>#</sup> G<sup>b</sup></div></div><!--
+			--><div class="key cutKey" id="g4Key" onclick="pianoKeyClick('g4')"><div class="hardwareKey">t</div><div class="keyname">G</div></div><!--
+			--><div class="key blackKey" id="ab4Key" onclick="pianoKeyClick('ab4')"><div class="hardwareKey">6</div><div class="keyname">G<sup>#</sup> A<sup>b</sup></div></div><!--
+			--><div class="key cutKey" id="a4Key" onclick="pianoKeyClick('a4')"><div class="hardwareKey">y</div><div class="keyname">A</div></div><!--
+			--><div class="key blackKey" id="bb4Key" onclick="pianoKeyClick('bb4')"><div class="hardwareKey">7</div><div class="keyname">A<sup>#</sup> B<sup>b</sup></div></div><!--
+			--><div class="key rStraightKey" id="b4Key" onclick="pianoKeyClick('b4')"><div class="hardwareKey">u</div><div class="keyname">B</div></div><!--
+			--><div class="key lStraightKey" id="c5Key" onclick="pianoKeyClick('c5')"><div class="hardwareKey">i</div><div class="keyname">C</div></div><!--
+			--><div class="key blackKey" id="db5Key" onclick="pianoKeyClick('db5')"><div class="hardwareKey">9</div><div class="keyname">C<sup>#</sup> D<sup>b</sup></div></div><!--
+			--><div class="key cutKey" id="d5Key" onclick="pianoKeyClick('d5')"><div class="hardwareKey">o</div><div class="keyname">D</div></div><!--
+			--><div class="key blackKey" id="eb5Key" onclick="pianoKeyClick('eb5')"><div class="hardwareKey">0</div><div class="keyname">D<sup>#</sup> E<sup>b</sup></div></div><!--
+			--><div class="key rStraightKey" id="e5Key" onclick="pianoKeyClick('e5')"><div class="hardwareKey">p</div><div class="keyname">E</div></div>
+		</div>
+		<button onclick="loadMIDI()">Load MIDI Plugin</button>
+
+			<div class="lesson">
+				<div id="showKeys">
+					<input type="button" value="Toggle Key Names" onclick="toggleVisibility('keyname');">
+					<input type="button" value="Toggle Hardware Key Names" onclick="toggleVisibility('hardwareKey');">
+				</div>
+				<button class="previous" onclick="showPrevious()">Previous</button>
+				<button class="next" onclick="showNext()">Next</button>
+			    <p class="content" id="page1">
+				    Hello, and welcome to your first Music Theory lesson! <br>
+					We're going to start by getting to know the layout of the piano:<br>
+					As you can see, there are
+					<button onclick="highlightWhiteKeys()">White Keys</button>
+					and 
+					<button onclick="highlightBlackKeys()">Black Keys</button>.
+					These keys are assigned letter names which are repeated as the corresponding keys reappear. The pitches on the piano start with low pitches on the left, and move to higher ones on the right. <br>
+					To see these note names, click the button that says 'Toggle Key Names'.
+				</p>
+				<p class="content" id="page2">
+			        Now that you've turned on the note names you'll notice that the white keys have names which are simply the letters A-G, but the black keys are a little more complicated looking.
+					First you may notice that there are two names for every black key. These are called "Enharmonic Equivalences." Don't worry about that for now, though, all you need to remember is that a black key can be referred to by either of the names seen on it.
+				</p>
+				<p class="content" id="page3">
+			        The next thing that's different about the black key names is they each contain one of these symbols (#,b). These symbols are called accidentals.<br>
+				        
+					The '#' is called the "sharp" accidental. It raises a note one key higher (to the right). Notice how <button onclick="unhighlightAll();changeColor('gb3Key');">F#</button> is the key directly to the right of <button onclick="unhighlightAll();changeColor('f3Key');">F</button>.<br>
+				        The 'b' is called the "flat" accidental. It lowers a note one key lower (to the left). Notice how <button onclick="unhighlightAll();changeColor('eb4Key');">Eb</button> is the key directly to the left of <button onclick="unhighlightAll();changeColor('e4Key');">E</button>.
+		        </p>
+		        <p class="content" id="page4">
+			        You may notice that the flat symbol looks a lot like a lowercase 'B'. In our lessons the note 'B' will always be referred to as a capital letter, whereas the 'b' which denotes a flat will always be lowercase.<br>
+			        Knowing this information we can see that the note <button onclick="unhighlightAll();changeColor('gb3Key');">between F and G</button> can be referred to as F# (F sharp) or Gb (G flat).<br>
+			        There are some white keys which do not have black keys in-between them. For these keys a sharp or flat would actually refer to the white note next to it. As an example let's look at C: <br>
+			        If we were to try to find Cb we would begin on <button onclick="unhighlightAll();changeColor('c4Key');">C</button> and move back one key,finding ourselves on <button onclick="unhighlightAll();changeColor('b4Key');">B</button>. Depending on the context, B could be referred to as a Cb.
+		        </p>
+		        <p class="content" id="page5">
+			        The process of modifying a note with a sharp or flat changes that note by a musical distance. This distance is known as an "interval".
+					When we use a sharp, for instance, we are displacing a note up one key, also known as one "semitone".<br>
+					The number of semitones between two notes can be found by counting the number of spaces between them.<br><br>
+			        Musicians over time have come up with more vocabulary to speed up their communication. One of the conventions that has become commonplace today is using half-steps and whole-steps to measure distance.
+		        </p>
+		        <p class="content" id="page6">
+					A half step is an interval of one semitone. Here are some examples:<br> Half-steps: <br>
+			        <button onclick="unhighlightAll();changeColor('e4Key');changeColor('f4Key');">White-to-White</button>, <button onclick="unhighlightAll();changeColor('g4Key');changeColor('ab5Key');">White-to-Black</button>, <button onclick="unhighlightAll();changeColor('db4Key');changeColor('d4Key');">Black-to-White</button>. <br>
+			        These are all examples of half-steps.<br>
+					A whole step is an interval of two semitones. Here are some examples: <br>Whole-steps:<br>
+			        <button onclick="unhighlightAll();changeColor('c4Key');changeColor('d4Key');">White-to-White</button>, <button onclick="unhighlightAll();changeColor('e4Key');changeColor('gb4Key');">White-to-Black</button>, <button onclick="unhighlightAll();changeColor('db4Key');changeColor('eb4Key');">Black-to-Black</button>, <button onclick="unhighlightAll();changeColor('eb4Key');changeColor('f4Key');">Black-to-White</button>.<br>
+			        These are all examples of whole-steps. <br>
+			    </p>
+			    <p class="content" id="page7">
+					We've reached the end of the material for this lesson, next try taking a quiz to see if you understood! <button onclick="location.href='quizSteps'" type="button">Quiz: Steps</button>
+				</p>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="..//js/concepts.js"></script>
+	<script type="text/javascript" src="..//js/teoria/teoria.js"></script>
+</html>

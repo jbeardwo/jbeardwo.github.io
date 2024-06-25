@@ -203,9 +203,15 @@ img {
     margin: auto;
 }
 
-.lessonBlock {
-    display: none;
+.content {
+    display:none;
 }
+
+.content.active{
+    display: block;
+}
+
+.previous {display: none;}
 
 #reference {
     width: var(--mainWidth);

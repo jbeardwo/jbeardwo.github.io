@@ -108,6 +108,7 @@ function highlightKey(note) {
         document.getElementById(divID).className = "highlightKey lStraightKey";
     } else if(document.getElementById(divID).className.includes("cutKey")) {
         document.getElementById(divID).className = "highlightKey cutKey";
+        console.log(document.getElementById(divID).className );
     } else if(document.getElementById(divID).className.includes("rStraightKey")) {
         document.getElementById(divID).className = "highlightKey rStraightKey";
     } else if(document.getElementById(divID).className.includes("blackKey")) {
@@ -130,6 +131,7 @@ function selectKey(note){
 
 function revertKey(note){
     var divID = note + "Key";
+    console.log(document.getElementById(divID).className);
     if(document.getElementById(divID).className.includes("lStraightKey")) {
         document.getElementById(divID).className = "key lStraightKey";
     } else if(document.getElementById(divID).className.includes("cutKey")) {
@@ -139,6 +141,13 @@ function revertKey(note){
     } else if(document.getElementById(divID).className.includes("BlackKey")) {
         document.getElementById(divID).className = "key blackKey";
     }
+}
+
+function unhighlightAll(){
+    document.querySelectorAll('.key').forEach(function(i){
+        let noteName = i.id.slice(0,-3);
+        revertKey(noteName);
+    })
 }
 
 function hardwareKeyDown(e){
@@ -153,4 +162,67 @@ function hardwareKeyUp(e){
   if(keyMap[keyPressed]){
     pianoKeyUp(keyMap[keyPressed]);
   }
+}
+
+//Key label Visibility
+
+function toggleVisibility(inClass){
+    let classRef = '.' + inClass;
+    document.querySelectorAll(classRef).forEach(function(i){
+        if(i.style.display != 'none'){
+            i.style.display = 'none';
+        }else if(i.style.display=='none'){
+            i.style.display = 'block';
+        }
+    });
+    
+}
+
+
+//Lesson Navigation
+
+var currentPage = 1;
+document.getElementById('page1').style.display = 'block';
+var numPages = document.querySelectorAll('.content').length;
+
+function showNext() {
+    document.querySelectorAll('.content').forEach(function(i) {
+        i.style.display = 'none';
+    });
+
+    if(currentPage<numPages){
+        currentPage++;
+    }
+    document.getElementById('page'+currentPage).style.display = 'block';
+
+    if(currentPage>1){
+        document.querySelector('.previous').style.display = 'inline';
+    }
+    if(currentPage==numPages){
+        document.querySelector('.next').style.display = 'none';
+    }
+}
+
+function showPrevious() {
+    document.querySelectorAll('.content').forEach(function(i) {
+        i.style.display = 'none';
+    });
+
+
+    if(currentPage>1){
+        currentPage--;
+    }
+    document.getElementById('page'+currentPage).style.display = 'block';
+
+    if(currentPage>1){
+        document.querySelector('.previous').style.display = 'inline';
+    }
+
+    if(currentPage==1){
+        document.querySelector('.previous').style.display = 'none';
+    }
+
+    if(currentPage<numPages){
+        document.querySelector('.next').style.display = 'inline';
+    }
 }
