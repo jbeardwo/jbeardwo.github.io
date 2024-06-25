@@ -131,7 +131,6 @@ function selectKey(note){
 
 function revertKey(note){
     var divID = note + "Key";
-    console.log(document.getElementById(divID).className);
     if(document.getElementById(divID).className.includes("lStraightKey")) {
         document.getElementById(divID).className = "key lStraightKey";
     } else if(document.getElementById(divID).className.includes("cutKey")) {
@@ -149,6 +148,23 @@ function unhighlightAll(){
         revertKey(noteName);
     })
 }
+
+function highlightWhiteKeys(){
+    unhighlightAll();
+    document.querySelectorAll('.cutKey, .lStraightKey, .rStraightKey').forEach(function(i){
+        let noteName = i.id.slice(0,-3);
+        highlightKey(noteName);
+    })
+}
+
+function highlightBlackKeys(){
+    unhighlightAll();
+    document.querySelectorAll('.blackKey').forEach(function(i){
+        let noteName = i.id.slice(0,-3);
+        highlightKey(noteName);
+    })
+}
+
 
 function hardwareKeyDown(e){
     var keyPressed = e.code;
