@@ -30,6 +30,90 @@ var keyMap = {
     'Digit0' : 'eb5',
     'KeyP' : 'e5'
 };
+var numToNote = {
+    1:'c3',
+    2:'db3',
+    3:'d3',
+    4:'eb3',
+    5:'e3',
+    6:'f3',
+    7:'gb3',
+    8:'g3',
+    9:'ab3',
+    10: 'a3',
+    11: 'bb3',
+    12: 'b3',
+    13: 'c4',
+    14: 'db4',
+    15: 'd4',
+    16: 'eb4',
+    17: 'e4',
+    18: 'f4',
+    19: 'gb4',
+    20: 'g4',
+    21: 'ab4',
+    22: 'a4',
+    23: 'bb4',
+    24: 'b4',
+    25: 'c5',
+    26: 'db5',
+    27: 'd5',
+    28: 'eb5',
+    29: 'e5'
+};
+
+var noteToNum = {
+    'c3': 1,
+    'db3': 2,
+    'd3': 3,
+    'eb3': 4,
+    'e3': 5,
+    'f3': 6,
+    'gb3': 7,
+    'g3': 8,
+    'ab3': 9,
+    'a3': 10,
+    'bb3': 11,
+    'b3': 12,
+    'c4': 13,
+    'db4': 14,
+    'd4': 15,
+    'eb4': 16,
+    'e4': 17,
+    'f4': 18,
+    'gb4': 19,
+    'g4': 20,
+    'ab4': 21,
+    'a4': 22,
+    'bb4': 23,
+    'b4': 24,
+    'c5': 25,
+    'db5': 26,
+    'd5': 27,
+    'eb5': 28,
+    'e5': 29        
+};
+var majorScale = [
+    0,  // root
+    2,  // whole
+    4,  // whole
+    5,  // half
+    7,  // whole
+    9,  // whole
+    11, // whole
+    12  // half                 
+];
+var minorScale = [
+    0,  // root
+    2,  // whole
+    3,  // half
+    5,  // whole
+    7,  // whole
+    8,  // half
+    10, // whole
+    12  // whole
+];
+
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -165,6 +249,24 @@ function highlightBlackKeys(){
     })
 }
 
+function highlightMajorScale(rootNote){
+    highlightKey(rootNote);
+    var rootNum = noteToNum[rootNote];
+    for(var i=0;i<majorScale.length;i++){
+        let nextNote = rootNum + majorScale[i];
+        highlightKey(numToNote[nextNote]);
+    }
+}
+
+
+function highlightMinorScale(rootNote){
+    highlightKey(rootNote);
+    var rootNum = noteToNum[rootNote];
+    for(var i=0;i<minorScale.length;i++){
+        let nextNote = rootNum + minorScale[i];
+        highlightKey(numToNote[nextNote]);
+    }
+}
 
 function hardwareKeyDown(e){
     var keyPressed = e.code;

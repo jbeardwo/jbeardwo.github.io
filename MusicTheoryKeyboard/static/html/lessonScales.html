@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
 <title>Virtual Music Theory Keyboard</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="..//css/theStyle.css">
-<!-- MIDI includes -->
-<!-- polyfill -->
-<script src="../inc/shim/Base64.js" type="text/javascript"></script>
-<script src="../inc/shim/Base64binary.js" type="text/javascript"></script>
-<script src="../inc/shim/WebAudioAPI.js" type="text/javascript"></script>
-<!-- midi.js package -->
-<script src="../js/midi/audioDetect.js" type="text/javascript"></script>
-<script src="../js/midi/gm.js" type="text/javascript"></script>
-<script src="../js/midi/loader.js" type="text/javascript"></script>
-<script src="../js/midi/plugin.audiotag.js" type="text/javascript"></script>
-<script src="../js/midi/plugin.webaudio.js" type="text/javascript"></script>
-<script src="../js/midi/plugin.webmidi.js" type="text/javascript"></script>
-<!-- utils -->
-<script src="../js/util/dom_request_xhr.js" type="text/javascript"></script>
-<script src="../js/util/dom_request_script.js" type="text/javascript"></script>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="..//css/theStyle.css">
+    	
+	<!-- MIDI includes -->
+	<!-- polyfill -->
+	<script src="../inc/shim/Base64.js" type="text/javascript"></script>
+	<script src="../inc/shim/Base64binary.js" type="text/javascript"></script>
+	<script src="../inc/shim/WebAudioAPI.js" type="text/javascript"></script>
+	<!-- midi.js package -->
+	<script src="../js/midi/audioDetect.js" type="text/javascript"></script>
+	<script src="../js/midi/gm.js" type="text/javascript"></script>
+	<script src="../js/midi/loader.js" type="text/javascript"></script>
+	<script src="../js/midi/plugin.audiotag.js" type="text/javascript"></script>
+	<script src="../js/midi/plugin.webaudio.js" type="text/javascript"></script>
+	<script src="../js/midi/plugin.webmidi.js" type="text/javascript"></script>
+	<!-- utils -->
+	<script src="../js/util/dom_request_xhr.js" type="text/javascript"></script>
+	<script src="../js/util/dom_request_script.js" type="text/javascript"></script>
+</head>
 <body onload="" background="..//images/wood-grain.jpg">
 	<div id="window">
 		<div id="topBanner">
@@ -75,7 +78,47 @@
 			--><div class="key rStraightKey" id="e5Key" onclick="pianoKeyClick('e5')"><div class="hardwareKey">p</div><div class="keyname">E</div></div>
 		</div>
 		<button onclick="loadMIDI()">Load MIDI Plugin</button>
+
+			<div class="lesson">
+				<div id="showKeys">
+					<input type="button" value="Toggle Key Names" onclick="toggleVisibility('keyname');">
+					<input type="button" value="Toggle Hardware Key Names" onclick="toggleVisibility('hardwareKey');">
+				</div>
+				<button class="previous" onclick="showPrevious()">Previous</button>
+				<button class="next" onclick="showNext()">Next</button>
+			    <p class="content" id="page1">
+				    Hi and welcome to the next lesson in your music theory journey!<br>
+					Today we're going to talk about Major and Minor scales.<br>
+					A scale is a set of musical played in order from low to high.<br>
+					A scale is defined by the note that it starts on (its 'root note') and its quality.<br>
+					Major and Minor are examples of qualities.<br>
+					Examples of names of possible scales could be: A major, C minor, etc.<br>
+				</p>
+				<p class="content" id="page2">
+			        The quality of a scale is defined by the distance between each note on the scale. <br>
+					To form a major scale start at the root note and follow the following sequence of steps (expressed in Whole and Half Steps):<br>
+					Whole Whole Half Whole Whole Whole Half.<br><br>
+					For example if we wanted to form a D major scale we would start at the root note D and proceed as follows:
+					(D) Whole step (E) Whole step (F#) Half step (G) Whole step (A) Whole step (B) Whole step (C#) Half step (D)
+					Click <button onclick="unhighlightAll();highlightMajorScale('d3');">Here</button> to highlight the D major scale on the piano.<br>
+					Notice that we end at the same note we started on.<br>
+				</p>
+				<p class="content" id="page3">
+			        To construct a minor scale we do the same as before but we use the following sequence of steps instead:<br>
+					Whole Half Whole Whole Half Whole Whole<br>
+					If we wanted to form a C minor Scale:<br><br>
+					(C) Whole step (D) Half step (Eb) Whole step (F) Whole step (G) Half step (Ab) Whole step (Bb) Whole step (C)<br>
+					Click <button onclick="unhighlightAll();highlightMinorScale('c3');">Here</button> to highlight the C minor scale on the piano.<br>
+					Once again we end on the note we started on. <br>
+		        </p>
+		        <p class="content" id="page4">
+			       Now that we've finished the lesson, go check out the quiz!
+			       <button onclick="location.href='quizMajorScales'" type="button">Quiz: Major Scales</button>
+		        </p>
+			</div>
+		</div>
 	</body>
 	<script type="text/javascript" src="..//js/concepts.js"></script>
 	<script type="text/javascript" src="..//js/teoria/teoria.js"></script>
+
 </html>
