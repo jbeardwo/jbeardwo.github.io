@@ -1,4 +1,9 @@
+var state = document.title;
 var nowPlaying = [];
+var quizActive = false;
+var questionNumber = 0;
+var score = 0;
+var solution = '';
 var keyMap = {
     'KeyZ' : 'c3',
     'KeyS' : 'db3',
@@ -113,6 +118,7 @@ var minorScale = [
     10, // whole
     12  // whole
 ];
+var noteNameArray = ['a','bb','b','c','db','d','eb','e','f','gb','g'];
 
 
 function openNav() {
@@ -132,6 +138,7 @@ document.addEventListener('keydown',hardwareKeyDown);
 document.addEventListener('keyup', hardwareKeyUp);
 
 function pianoKeyClick(note){
+    
     pianoKeyDown(note);
     setTimeout(function(){
       pianoKeyUp(note);
@@ -139,6 +146,7 @@ function pianoKeyClick(note){
 }
 
 function pianoKeyDown(noteName) {
+    answerSelect(noteName);
     highlightKey(noteName);
     note = teoria.note(noteName);
     playNote(note);
@@ -304,6 +312,7 @@ document.getElementById('page1').style.display = 'block';
 var numPages = document.querySelectorAll('.content').length;
 
 function showNext() {
+    console.log(state);
     document.querySelectorAll('.content').forEach(function(i) {
         i.style.display = 'none';
     });
@@ -326,7 +335,6 @@ function showPrevious() {
         i.style.display = 'none';
     });
 
-
     if(currentPage>1){
         currentPage--;
     }
@@ -343,4 +351,42 @@ function showPrevious() {
     if(currentPage<numPages){
         document.querySelector('.next').style.display = 'inline';
     }
+}
+
+function answerSelect(note){
+    if(document.title.includes("Quiz: Notes") && quizActive){
+        console.log(note.slice(0,-1));
+        console.log(solution);
+        if(note.slice(0,-1)==solution){
+            score++;
+            document.querySelector(".score").innerHTML = score;
+        }
+        if(questionNumber == 10){
+            quizActive = false;
+            document.querySelector(".question").innerHTML = "Final Score:";
+            document.querySelector(".quizStart").disabled = false;
+        }
+        if(questionNumber<10){
+            noteQuizQuestion();
+        }
+    }
+}
+
+function startQuiz(){
+    if(document.title.includes("Quiz: Notes") && !quizActive){
+        questionNumber = 0;
+        score = 0;
+        document.querySelector(".score").innerHTML = score;
+        quizActive = true;
+        noteQuizQuestion();
+    }
+    document.querySelector(".quizStart").disabled = true;
+}
+
+function noteQuizQuestion(){
+    solution = noteNameArray[Math.floor(Math.random()*noteNameArray.length)];
+    var questionDiv = document.querySelector(".question");
+    console.log(questionDiv);
+    questionDiv.innerHTML = solution;
+    questionNumber++;
 }
