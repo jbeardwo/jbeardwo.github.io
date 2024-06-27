@@ -1,4 +1,3 @@
-var state = document.title;
 var nowPlaying = [];
 var quizActive = false;
 var questionNumber = 0;
@@ -119,7 +118,7 @@ var minorScale = [
     12  // whole
 ];
 var noteNameArray = ['a','bb','b','c','db','d','eb','e','f','gb','g'];
-
+var availableKeys = ['c3','db3','d3','eb3','e3','f3','gb3','g3','ab3','a3','bb3','b3','c4','db4','d4','eb4','e4','f4','gb4','g4','ab4','a4','bb4','b4','c5','db5','d5','eb5','e5']
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -186,10 +185,8 @@ function loadMIDI() {
 		soundfontUrl: "../js/soundfont/",
 		instrument: "acoustic_grand_piano",
 		onprogress: function(state, progress) {
-			console.log(state, progress);
 		},
 		onsuccess: function() {
-			console.log('MIDI loaded');
 		}
 	});
 }
@@ -221,6 +218,12 @@ function selectKey(note){
     }
 }
 
+function selectRandomKey(){
+    var randomKey = availableKeys[Math.floor(Math.random()*availableKeys.length)];
+    selectKey(randomKey);
+    return randomKey;
+}
+
 function revertKey(note){
     var divID = note + "Key";
     if(document.getElementById(divID).className.includes("lStraightKey")) {
@@ -236,6 +239,13 @@ function revertKey(note){
 
 function unhighlightAll(){
     document.querySelectorAll('.highlightBlackKey,.highlightKey').forEach(function(i){
+        let noteName = i.id.slice(0,-3);
+        revertKey(noteName);
+    })
+}
+
+function unSelectAll(){
+    document.querySelectorAll('.selectBlackKey,.selectKey').forEach(function(i){
         let noteName = i.id.slice(0,-3);
         revertKey(noteName);
     })
@@ -312,7 +322,6 @@ document.getElementById('page1').style.display = 'block';
 var numPages = document.querySelectorAll('.content').length;
 
 function showNext() {
-    console.log(state);
     document.querySelectorAll('.content').forEach(function(i) {
         i.style.display = 'none';
     });
@@ -354,39 +363,82 @@ function showPrevious() {
 }
 
 function answerSelect(note){
-    if(document.title.includes("Quiz: Notes") && quizActive){
-        console.log(note.slice(0,-1));
-        console.log(solution);
-        if(note.slice(0,-1)==solution){
-            score++;
-            document.querySelector(".score").innerHTML = score;
-        }
-        if(questionNumber == 10){
-            quizActive = false;
-            document.querySelector(".question").innerHTML = "Final Score:";
-            document.querySelector(".quizStart").disabled = false;
-        }
-        if(questionNumber<10){
-            noteQuizQuestion();
+    if(quizActive){
+        if(document.title.includes("Quiz: Notes")){
+            if(note.slice(0,-1)==solution){
+                score++;
+                document.querySelector(".score").innerHTML = score;
+            }
+            if(questionNumber == 10){
+                quizActive = false;
+                document.querySelector(".question").innerHTML = "Final Score:";
+                document.querySelector(".quizStart").disabled = false;
+            }
+            if(questionNumber<10){
+                noteQuizQuestion();
+            }
+        }else if(document.title.includes("Quiz: Steps")){
+            solution = numToNote[solution];
+            unSelectAll();
+            if(note==solution){
+                score++;
+                document.querySelector(".score").innerHTML = score;
+            }
+            if(questionNumber<10){
+                stepQuizQuestion();
+            }
         }
     }
 }
 
 function startQuiz(){
-    if(document.title.includes("Quiz: Notes") && !quizActive){
+    if(!quizActive){
         questionNumber = 0;
         score = 0;
         document.querySelector(".score").innerHTML = score;
+        if(document.title.includes("Quiz: Notes") ){
+            noteQuizQuestion();
+        }else if(document.title.includes("Quiz: Steps") ){
+            stepQuizQuestion();
+        }
+        document.querySelector(".quizStart").disabled = true;
         quizActive = true;
-        noteQuizQuestion();
     }
-    document.querySelector(".quizStart").disabled = true;
 }
 
 function noteQuizQuestion(){
     solution = noteNameArray[Math.floor(Math.random()*noteNameArray.length)];
     var questionDiv = document.querySelector(".question");
-    console.log(questionDiv);
     questionDiv.innerHTML = solution;
     questionNumber++;
+}
+
+function stepQuizQuestion(){
+    var baseNote = selectRandomKey();
+    var baseNoteNum = noteToNum[baseNote];
+    var qStep = Math.floor(Math.random()*2+1);
+    var direction;
+    var questionDiv = document.querySelector(".question");
+    if(Math.random()<.5){
+        direction = 'up';
+        solution = baseNoteNum + qStep;
+        if(baseNoteNum>numToNote.length){
+            solution = baseNoteNum - qStep;
+            direction = 'down';
+        }
+    }else{
+        direction = 'down';
+        solution = baseNoteNum - qStep;
+        if(baseNoteNum<1){
+            solution = baseNoteNum + qStep;
+            direction = 'up';
+        }
+    }
+    if(qStep == 1){
+        questionDiv.innerHTML = 'A Half-Step ' + direction + ' from the highlighted Key.';
+    }else if (qStep == 2){
+        questionDiv.innerHTML = 'A Whole-step ' + direction + ' from the highlighted Key.';
+    }    
+
+        questionNumber++;
 }
