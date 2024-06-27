@@ -384,6 +384,11 @@ function answerSelect(note){
                 score++;
                 document.querySelector(".score").innerHTML = score;
             }
+            if(questionNumber == 10){
+                quizActive = false;
+                document.querySelector(".question").innerHTML = "Final Score:";
+                document.querySelector(".quizStart").disabled = false;
+            }
             if(questionNumber<10){
                 stepQuizQuestion();
             }
