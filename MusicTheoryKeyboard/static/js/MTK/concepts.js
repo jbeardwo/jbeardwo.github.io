@@ -384,6 +384,7 @@ function answerSelect(note){
                 score++;
                 document.querySelector(".score").innerHTML = score;
             }
+            console.log(questionNumber);
             if(questionNumber == 10){
                 quizActive = false;
                 document.querySelector(".question").innerHTML = "Final Score:";
@@ -444,6 +445,5 @@ function stepQuizQuestion(){
     }else if (qStep == 2){
         questionDiv.innerHTML = 'A Whole-step ' + direction + ' from the highlighted Key.';
     }    
-
         questionNumber++;
 }
