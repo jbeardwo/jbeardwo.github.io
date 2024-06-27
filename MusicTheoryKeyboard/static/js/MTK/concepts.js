@@ -145,8 +145,9 @@ function pianoKeyClick(note){
 }
 
 function pianoKeyDown(noteName) {
-    answerSelect(noteName);
+    
     highlightKey(noteName);
+    answerSelect(noteName);
     note = teoria.note(noteName);
     playNote(note);
 }
@@ -175,7 +176,10 @@ function stopNote(note){
 }
 
 function pianoKeyUp(note) {
-    revertKey(note);
+    var keyDiv = document.getElementById(note + "Key");
+    if(!(keyDiv.className.includes("selectKey")||keyDiv.className.includes("selectBlackKey"))){
+        revertKey(note);
+    }
     note = teoria.note(note);
     stopNote(note);
 }
@@ -206,7 +210,6 @@ function highlightKey(note) {
 }
 
 
-//SELECT MUST OVERRIDE HIGHLIGHTING
 function selectKey(note){
     var divID = note + "Key";
     if(document.getElementById(divID).className.includes("lStraightKey")) {
@@ -215,7 +218,7 @@ function selectKey(note){
         document.getElementById(divID).className = "selectKey cutKey";
     } else if(document.getElementById(divID).className.includes("rStraightKey")) {
         document.getElementById(divID).className = "selectKey rStraightKey";
-    } else if(document.getElementById(divID).className.includes("blackKey")) {
+    } else if(document.getElementById(divID).className.includes("blackKey")||document.getElementById(divID).className.includes("highlightBlackKey")) {
         document.getElementById(divID).className = "key selectBlackKey";
     }
 }
@@ -420,6 +423,7 @@ function noteQuizQuestion(){
     questionNumber++;
 }
 
+
 function stepQuizQuestion(){
     var baseNote = selectRandomKey();
     var baseNoteNum = noteToNum[baseNote];
@@ -429,14 +433,14 @@ function stepQuizQuestion(){
     if(Math.random()<.5){
         direction = 'up';
         solution = baseNoteNum + qStep;
-        if(baseNoteNum>numToNote.length){
+        if(solution>29){
             solution = baseNoteNum - qStep;
             direction = 'down';
         }
     }else{
         direction = 'down';
         solution = baseNoteNum - qStep;
-        if(baseNoteNum<1){
+        if(solution<1){
             solution = baseNoteNum + qStep;
             direction = 'up';
         }
@@ -445,6 +449,6 @@ function stepQuizQuestion(){
         questionDiv.innerHTML = 'A Half-Step ' + direction + ' from the highlighted Key.';
     }else if (qStep == 2){
         questionDiv.innerHTML = 'A Whole-step ' + direction + ' from the highlighted Key.';
-    }    
+    }   
         questionNumber++;
 }
