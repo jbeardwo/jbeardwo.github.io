@@ -205,6 +205,8 @@ function highlightKey(note) {
     }
 }
 
+
+//SELECT MUST OVERRIDE HIGHLIGHTING
 function selectKey(note){
     var divID = note + "Key";
     if(document.getElementById(divID).className.includes("lStraightKey")) {
@@ -384,7 +386,6 @@ function answerSelect(note){
                 score++;
                 document.querySelector(".score").innerHTML = score;
             }
-            console.log(questionNumber);
             if(questionNumber == 10){
                 quizActive = false;
                 document.querySelector(".question").innerHTML = "Final Score:";
