@@ -197,15 +197,17 @@ function loadMIDI() {
 
 function highlightKey(note) {
     var divID = note + "Key";
-    if(document.getElementById(divID).className.includes("lStraightKey")) {
-        document.getElementById(divID).className = "highlightKey lStraightKey";
-    } else if(document.getElementById(divID).className.includes("cutKey")) {
-        document.getElementById(divID).className = "highlightKey cutKey";
-        
-    } else if(document.getElementById(divID).className.includes("rStraightKey")) {
-        document.getElementById(divID).className = "highlightKey rStraightKey";
-    } else if(document.getElementById(divID).className.includes("blackKey")) {
-        document.getElementById(divID).className = "key highlightBlackKey";
+    if(!document.getElementById(divID).className.includes("selectKey")){
+        if(document.getelementbyid(divid).classname.includes("lstraightkey") ) {
+            document.getelementbyid(divid).classname = "highlightkey lstraightkey";
+        } else if(document.getelementbyid(divid).classname.includes("cutkey")) {
+            document.getelementbyid(divid).classname = "highlightkey cutkey";
+            
+        } else if(document.getelementbyid(divid).classname.includes("rstraightkey")) {
+            document.getelementbyid(divid).classname = "highlightkey rstraightkey";
+        } else if(document.getelementbyid(divid).classname.includes("blackkey")) {
+            document.getelementbyid(divid).classname = "key highlightblackkey";
+        }
     }
 }
 
