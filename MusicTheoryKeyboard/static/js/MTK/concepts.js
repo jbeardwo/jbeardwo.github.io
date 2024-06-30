@@ -121,14 +121,14 @@ var noteNameArray = ['a','bb','b','c','db','d','eb','e','f','gb','g'];
 var availableKeys = ['c3','db3','d3','eb3','e3','f3','gb3','g3','ab3','a3','bb3','b3','c4','db4','d4','eb4','e4','f4','gb4','g4','ab4','a4','bb4','b4','c5','db5','d5','eb5','e5']
 
 function openNav() {
-    document.getElementById("mySIDenav").style.wIDth = "250px";
+    document.getElementById("mySidenav").style.width = "250px";
     document.getElementById("window").style.marginLeft = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
 
 /* Set the wIDth of the sIDe navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
 function closeNav() {
-    document.getElementById("mySIDenav").style.wIDth = "0";
+    document.getElementById("mySidenav").style.width = "0";
     document.getElementById("window").style.marginLeft = "0";
     document.body.style.backgroundColor = "white";
 }
@@ -247,14 +247,14 @@ function revertKey(note){
 
 function unhighlightAll(){
     document.querySelectorAll('.highlightBlackKey,.highlightKey').forEach(function(i){
-        let noteName = i.ID.slice(0,-3);
+        let noteName = i.id.slice(0,-3);
         revertKey(noteName);
     })
 }
 
 function unSelectAll(){
     document.querySelectorAll('.selectBlackKey,.selectKey').forEach(function(i){
-        let noteName = i.ID.slice(0,-3);
+        let noteName = i.id.slice(0,-3);
         revertKey(noteName);
     })
 }
@@ -262,7 +262,7 @@ function unSelectAll(){
 function highlightWhiteKeys(){
     unhighlightAll();
     document.querySelectorAll('.cutKey, .lStraightKey, .rStraightKey').forEach(function(i){
-        let noteName = i.ID.slice(0,-3);
+        let noteName = i.id.slice(0,-3);
         highlightKey(noteName);
     })
 }
@@ -270,7 +270,7 @@ function highlightWhiteKeys(){
 function highlightBlackKeys(){
     unhighlightAll();
     document.querySelectorAll('.blackKey').forEach(function(i){
-        let noteName = i.ID.slice(0,-3);
+        let noteName = i.id.slice(0,-3);
         highlightKey(noteName);
     })
 }
