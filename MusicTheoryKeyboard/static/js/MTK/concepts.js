@@ -121,14 +121,14 @@ var noteNameArray = ['a','bb','b','c','db','d','eb','e','f','gb','g'];
 var availableKeys = ['c3','db3','d3','eb3','e3','f3','gb3','g3','ab3','a3','bb3','b3','c4','db4','d4','eb4','e4','f4','gb4','g4','ab4','a4','bb4','b4','c5','db5','d5','eb5','e5']
 
 function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("mySIDenav").style.wIDth = "250px";
     document.getElementById("window").style.marginLeft = "250px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
 
-/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+/* Set the wIDth of the sIDe navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySIDenav").style.wIDth = "0";
     document.getElementById("window").style.marginLeft = "0";
     document.body.style.backgroundColor = "white";
 }
@@ -154,22 +154,22 @@ function pianoKeyDown(noteName) {
 
 function playNote(note){
 	var delay = 0; // play one note every quarter second
-	var midiNote = note.midi(); // the MIDI note
+	var mIDiNote = note.mIDi(); // the MIDI note
 	var velocity = 127; // how hard the note hits
-  var noteName = note.name() + note.accidental() + note.octave();
+  var noteName = note.name() + note.accIDental() + note.octave();
 	// play the note
 	MIDI.setVolume(0, 127);
   if(!nowPlaying.includes(noteName)){
-  	MIDI.noteOn(0, midiNote, velocity, delay);
+  	MIDI.noteOn(0, mIDiNote, velocity, delay);
     nowPlaying.push(noteName);
   }
 
 }
 
 function stopNote(note){
-  var midiNote = note.midi();
-  var noteName = note.name() + note.accidental() + note.octave();
-  MIDI.noteOff(0, midiNote, 0);
+  var mIDiNote = note.mIDi();
+  var noteName = note.name() + note.accIDental() + note.octave();
+  MIDI.noteOff(0, mIDiNote, 0);
   if(nowPlaying.includes(noteName)){
     nowPlaying.splice(nowPlaying.indexOf(noteName), 1);
   }
@@ -196,17 +196,18 @@ function loadMIDI() {
 }
 
 function highlightKey(note) {
+    console.log(note);
     var divID = note + "Key";
     if(!document.getElementById(divID).className.includes("selectKey")){
-        if(document.getelementbyid(divid).classname.includes("lstraightkey") ) {
-            document.getelementbyid(divid).classname = "highlightkey lstraightkey";
-        } else if(document.getelementbyid(divid).classname.includes("cutkey")) {
-            document.getelementbyid(divid).classname = "highlightkey cutkey";
+        if(document.getElementById(divID).className.includes("lStraightKey") ) {
+            document.getElementById(divID).className = "highlightKey lStraightKey";
+        } else if(document.getElementById(divID).className.includes("cutKey")) {
+            document.getElementById(divID).className = "highlightKey cutKey";
             
-        } else if(document.getelementbyid(divid).classname.includes("rstraightkey")) {
-            document.getelementbyid(divid).classname = "highlightkey rstraightkey";
-        } else if(document.getelementbyid(divid).classname.includes("blackkey")) {
-            document.getelementbyid(divid).classname = "key highlightblackkey";
+        } else if(document.getElementById(divID).className.includes("rStraightKey")) {
+            document.getElementById(divID).className = "highlightKey rStraightKey";
+        } else if(document.getElementById(divID).className.includes("blackKey")) {
+            document.getElementById(divID).className = "key highlightBlackKey";
         }
     }
 }
@@ -246,14 +247,14 @@ function revertKey(note){
 
 function unhighlightAll(){
     document.querySelectorAll('.highlightBlackKey,.highlightKey').forEach(function(i){
-        let noteName = i.id.slice(0,-3);
+        let noteName = i.ID.slice(0,-3);
         revertKey(noteName);
     })
 }
 
 function unSelectAll(){
     document.querySelectorAll('.selectBlackKey,.selectKey').forEach(function(i){
-        let noteName = i.id.slice(0,-3);
+        let noteName = i.ID.slice(0,-3);
         revertKey(noteName);
     })
 }
@@ -261,7 +262,7 @@ function unSelectAll(){
 function highlightWhiteKeys(){
     unhighlightAll();
     document.querySelectorAll('.cutKey, .lStraightKey, .rStraightKey').forEach(function(i){
-        let noteName = i.id.slice(0,-3);
+        let noteName = i.ID.slice(0,-3);
         highlightKey(noteName);
     })
 }
@@ -269,7 +270,7 @@ function highlightWhiteKeys(){
 function highlightBlackKeys(){
     unhighlightAll();
     document.querySelectorAll('.blackKey').forEach(function(i){
-        let noteName = i.id.slice(0,-3);
+        let noteName = i.ID.slice(0,-3);
         highlightKey(noteName);
     })
 }
