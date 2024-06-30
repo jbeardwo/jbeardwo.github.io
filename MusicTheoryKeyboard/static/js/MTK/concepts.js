@@ -154,22 +154,22 @@ function pianoKeyDown(noteName) {
 
 function playNote(note){
 	var delay = 0; // play one note every quarter second
-	var mIDiNote = note.mIDi(); // the MIDI note
+	var midiNote = note.midi(); // the MIDI note
 	var velocity = 127; // how hard the note hits
-  var noteName = note.name() + note.accIDental() + note.octave();
+  var noteName = note.name() + note.accidental() + note.octave();
 	// play the note
 	MIDI.setVolume(0, 127);
   if(!nowPlaying.includes(noteName)){
-  	MIDI.noteOn(0, mIDiNote, velocity, delay);
+  	MIDI.noteOn(0, midiNote, velocity, delay);
     nowPlaying.push(noteName);
   }
 
 }
 
 function stopNote(note){
-  var mIDiNote = note.mIDi();
-  var noteName = note.name() + note.accIDental() + note.octave();
-  MIDI.noteOff(0, mIDiNote, 0);
+  var midiNote = note.midi();
+  var noteName = note.name() + note.accidental() + note.octave();
+  MIDI.noteOff(0, midiNote, 0);
   if(nowPlaying.includes(noteName)){
     nowPlaying.splice(nowPlaying.indexOf(noteName), 1);
   }
