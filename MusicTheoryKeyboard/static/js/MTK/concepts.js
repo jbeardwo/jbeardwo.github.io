@@ -291,6 +291,25 @@ function highlightMinorScale(rootNote){
     }
 }
 
+function selectMajorScale(rootNote){
+    selectKey(rootNote);
+    var rootNum = noteToNum[rootNote];
+    for(var i=0;i<majorScale.length;i++){
+        let nextNote = rootNum + majorScale[i];
+        selectKey(numToNote[nextNote]);
+    }
+}
+
+
+function selectMinorScale(rootNote){
+    selectKey(rootNote);
+    var rootNum = noteToNum[rootNote];
+    for(var i=0;i<minorScale.length;i++){
+        let nextNote = rootNum + minorScale[i];
+        selectKey(numToNote[nextNote]);
+    }
+}
+
 function hardwareKeyDown(e){
     var keyPressed = e.code;
     if(keyMap[keyPressed]){
@@ -410,6 +429,12 @@ function startQuiz(){
             noteQuizQuestion();
         }else if(document.title.includes("Quiz: Steps") ){
             stepQuizQuestion();
+        }else if(document.title.includes("Quiz: Scale Identification")){
+            scaleIDQuizQuestion();
+            document.querySelectorAll(".IDQuizButton").forEach(function (i){
+                i.disabled = false;
+            });
+            document.querySelector(".question").innerHTML = "Identify the quality of the highlighted scale."
         }
         document.querySelector(".quizStart").disabled = true;
         quizActive = true;
@@ -452,3 +477,35 @@ function stepQuizQuestion(){
     }   
         questionNumber++;
 }
+
+function scaleIDQuizQuestion(){
+    var randomKey = availableKeys[Math.floor(Math.random()*(availableKeys.length-12))];
+    if(Math.random()<.5){
+        selectMajorScale(randomKey);
+        solution = 'major';
+    }else{
+        selectMinorScale(randomKey);
+        solution = 'minor';
+    }
+}
+
+function scaleIDQuizAnswer(ans){
+    unSelectAll();
+    if(ans==solution){
+        score++;
+        document.querySelector(".score").innerHTML = score;
+    }
+    questionNumber++;
+    if(questionNumber == 10){
+        quizActive = false;
+        document.querySelector(".question").innerHTML = "Final Score:";
+        document.querySelector(".quizStart").disabled = false;
+        document.querySelectorAll(".IDQuizButton").forEach(function (i){
+            i.disabled = true;
+        });
+    }else{
+        scaleIDQuizQuestion();
+    }
+}
+
+//SPLIT SCALE QUIZZES INTO IDENTIFICATION AND PLAYING THEM INSTEAD OF MAJOR AND MINOR

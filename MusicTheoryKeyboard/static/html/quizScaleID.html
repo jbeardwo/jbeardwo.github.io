@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Virtual Music Theory Keyboard: Quiz: Steps</title>
+<title>Virtual Music Theory Keyboard: Quiz: Scale Identification</title>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -87,6 +87,8 @@
 				<p class="content" id="page1">
 					<input type="button" class="quizStart" value="Start Quiz" onclick="startQuiz();">
 				    <div class="question" id="quizQuestion">questionHere</div>
+				    <input type="button" class="IDQuizButton" value="Major Scale" onclick="scaleIDQuizAnswer('major');" disabled>
+				    <input type="button" class="IDQuizButton" value="Minor Scale" onclick="scaleIDQuizAnswer('minor');" disabled>
 				    <div class="score" id="quizScore">0</div>
 				</p>
 
