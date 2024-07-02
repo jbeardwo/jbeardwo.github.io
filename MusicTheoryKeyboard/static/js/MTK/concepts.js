@@ -3,6 +3,8 @@ var quizActive = false;
 var questionNumber = 0;
 var score = 0;
 var solution = '';
+var scaleSolution = new Set;
+var scaleAnswer = new Set;
 var keyMap = {
     'KeyZ' : 'c3',
     'KeyS' : 'db3',
@@ -196,7 +198,6 @@ function loadMIDI() {
 }
 
 function highlightKey(note) {
-    console.log(note);
     var divID = note + "Key";
     if(!document.getElementById(divID).className.includes("selectKey")){
         if(document.getElementById(divID).className.includes("lStraightKey") ) {
@@ -303,13 +304,30 @@ function selectMajorScale(rootNote){
     }
 }
 
-
 function selectMinorScale(rootNote){
     selectKey(rootNote);
     var rootNum = noteToNum[rootNote];
     for(var i=0;i<minorScale.length;i++){
         let nextNote = rootNum + minorScale[i];
         selectKey(numToNote[nextNote]);
+    }
+}
+
+function constructMajorScale(rootNote){
+    scaleSolution.add(rootNote);
+    var rootNum = noteToNum[rootNote];
+    for(var i=0;i<majorScale.length;i++){
+        let nextNote = rootNum + majorScale[i];
+        scaleSolution.add(numToNote[nextNote]);
+    }
+}
+
+function constructMinorScale(rootNote){
+    scaleSolution.add(rootNote);
+    var rootNum = noteToNum[rootNote];
+    for(var i=0;i<minorScale.length;i++){
+        let nextNote = rootNum + minorScale[i];
+        scaleSolution.add(numToNote[nextNote]);
     }
 }
 
@@ -419,6 +437,16 @@ function answerSelect(note){
             if(questionNumber<10){
                 stepQuizQuestion();
             }
+        }else if(document.title.includes("Quiz: Scale Construction")){
+            unSelectAll();
+            if(scaleAnswer.has(note)){
+                scaleAnswer.delete(note);
+            }else{
+                scaleAnswer.add(note);
+            }
+            for(const key of scaleAnswer){
+                selectKey(key);
+            }
         }
     }
 }
@@ -438,6 +466,9 @@ function startQuiz(){
                 i.disabled = false;
             });
             document.querySelector(".question").innerHTML = "Identify the quality of the highlighted scale."
+        }else if(document.title.includes("Quiz: Scale Construction")){
+            scaleConstructionQuizQuestion();
+            document.querySelector(".scaleQuizSubmit").disabled = false;
         }
         document.querySelector(".quizStart").disabled = true;
         quizActive = true;
@@ -511,4 +542,53 @@ function scaleIDQuizAnswer(ans){
     }
 }
 
-//SPLIT SCALE QUIZZES INTO IDENTIFICATION AND PLAYING THEM INSTEAD OF MAJOR AND MINOR
+function scaleConstructionQuizQuestion(){
+    var randomKey = availableKeys[Math.floor(Math.random()*(availableKeys.length-12))];
+    formattedKey = randomKey.charAt(0).toUpperCase() + randomKey.slice(1,-1);
+    console.l
+    if(Math.random()<.5){
+        constructMajorScale(randomKey);
+        scaleAnswer.add(randomKey);
+        selectKey(randomKey);
+        document.querySelector(".question").innerHTML = "Construct a " + formattedKey + " Major scale starting from the highlighted note";
+    }else{
+        constructMinorScale(randomKey);
+        scaleAnswer.add(randomKey);
+        selectKey(randomKey);
+        document.querySelector(".question").innerHTML = "Construct a " + formattedKey + " Minor scale starting from the highlighted note";
+    }
+}
+
+function submitScaleAnswer(){
+    if(checkScaleAnswer()){
+        console.log("right");
+        score++;
+        document.querySelector(".score").innerHTML = score;
+    }else{
+        console.log("wrong");
+    }
+    unSelectAll();
+    scaleAnswer = new Set;
+    scaleSolution = new Set;
+    questionNumber++;
+    if(questionNumber==10){
+        quizActive = false;
+        document.querySelector(".question").innerHTML = "Final Score:";
+        document.querySelector(".quizStart").disabled = false;
+        document.querySelector(".scaleQuizSubmit").disabled = true;
+    }else{
+        scaleConstructionQuizQuestion();
+    }
+}
+
+function checkScaleAnswer(){
+    if(scaleAnswer.size!=8){
+        return false;
+    }
+    for(const note of scaleAnswer){
+        if(!scaleSolution.has(note)){
+            return false;
+        }
+    }
+    return true;
+}
