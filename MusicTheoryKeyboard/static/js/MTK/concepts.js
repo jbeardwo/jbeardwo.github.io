@@ -119,7 +119,17 @@ var minorScale = [
     10, // whole
     12  // whole
 ];
-var noteNameArray = ['a','bb','b','c','db','d','eb','e','f','gb','g'];
+var enharmonicEquivalent = {
+    'bb': 'a#',
+    'db': 'c#',
+    'eb': 'd#',
+    'gb': 'f#',
+    'ab': 'g#'
+};
+
+
+
+var noteNameArray = ['a','bb','b','c','db','d','eb','e','f','gb','g','ab'];
 var availableKeys = ['c3','db3','d3','eb3','e3','f3','gb3','g3','ab3','a3','bb3','b3','c4','db4','d4','eb4','e4','f4','gb4','g4','ab4','a4','bb4','b4','c5','db5','d5','eb5','e5']
 
 function openNav() {
@@ -478,10 +488,25 @@ function startQuiz(){
 function noteQuizQuestion(){
     solution = noteNameArray[Math.floor(Math.random()*noteNameArray.length)];
     var questionDiv = document.querySelector(".question");
-    questionDiv.innerHTML = solution;
+    questionDiv.innerHTML = randEnharmonic(solution);
     questionNumber++;
 }
 
+function randEnharmonic(note){
+    if(Math.random()<.5){
+        return getEnharmonic(note);
+    }else{
+        return note;
+    }
+}
+
+function getEnharmonic(note){
+    if(note.length>1){
+        return enharmonicEquivalent[note];
+    }else{
+        return note;
+    }
+}
 
 function stepQuizQuestion(){
     var baseNote = selectRandomKey();
@@ -511,6 +536,8 @@ function stepQuizQuestion(){
     }   
         questionNumber++;
 }
+
+
 
 function scaleIDQuizQuestion(){
     var randomKey = availableKeys[Math.floor(Math.random()*(availableKeys.length-12))];
@@ -561,11 +588,9 @@ function scaleConstructionQuizQuestion(){
 
 function submitScaleAnswer(){
     if(checkScaleAnswer()){
-        console.log("right");
         score++;
         document.querySelector(".score").innerHTML = score;
     }else{
-        console.log("wrong");
     }
     unSelectAll();
     scaleAnswer = new Set;
