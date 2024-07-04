@@ -253,6 +253,9 @@ function selectKey(note){
     } else if(document.getElementById(divID).className.includes("blackKey")||document.getElementById(divID).className.includes("highlightBlackKey")) {
         document.getElementById(divID).className = "key selectBlackKey";
     }
+    note = teoria.note(note);
+    playNote(note);
+    
 }
 
 function selectRandomKey(){
