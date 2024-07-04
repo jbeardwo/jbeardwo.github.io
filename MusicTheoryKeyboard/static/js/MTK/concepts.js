@@ -205,6 +205,13 @@ function stopNote(note){
   }
 }
 
+function stopAllNotes(){
+    for(var note in nowPlaying){
+        teoNote = teoria.note(note);
+        stopNote(teoNote);
+    }
+}
+
 function pianoKeyUp(note) {
     var keyDiv = document.getElementById(note + "Key");
     if(!(keyDiv.className.includes("selectKey")||keyDiv.className.includes("selectBlackKey"))){
@@ -466,7 +473,9 @@ function answerSelect(note){
                 document.querySelector(".quizStart").disabled = false;
             }
             if(questionNumber<10){
-                stepQuizQuestion();
+                setTimeout(function(){
+                        stepQuizQuestion();
+                    }, 2000);
             }
         }else if(document.title.includes("Quiz: Scale Construction")){
             unSelectAll();
@@ -491,7 +500,10 @@ function answerSelect(note){
                 document.querySelector(".quizStart").disabled = false;
             }
             if(questionNumber<10){
-                intervalQuizQuestion();
+                setTimeout(function(){
+                        intervalQuizQuestion();
+                    }, 2000);
+                
             }
         }
     }
@@ -674,6 +686,7 @@ function submitScaleAnswer(){
     }else{
         scaleConstructionQuizQuestion();
     }
+    stopAllNotes();
 }
 
 function checkScaleAnswer(){
