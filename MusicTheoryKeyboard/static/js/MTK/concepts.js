@@ -198,7 +198,6 @@ function playNote(note){
 }
 
 function stopNote(note){
-    console.log(note);
   var midiNote = note.midi();
   var noteName = note.name() + note.accidental() + note.octave();
   MIDI.noteOff(0, midiNote, 0);
@@ -261,7 +260,9 @@ function selectKey(note){
     }
     note = teoria.note(note);
     playNote(note);
-    
+    setTimeout(function(){
+        stopNote(note);
+    }, 1000);
 }
 
 function selectRandomKey(){
@@ -706,3 +707,8 @@ function checkScaleAnswer(){
     }
     return true;
 }
+
+//Fix whole scale playing in scale ID quiz
+//also clicking to play notes while they're highlighted in scale ID quiz takes multiple clicks
+//fix first note cutting off in scale construct quiz
+//last 2 may both be related to the notes not being turned off properly.
