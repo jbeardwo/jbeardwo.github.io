@@ -482,14 +482,12 @@ function answerSelect(note){
                     }, 1000);
             }
         }else if(document.title.includes("Quiz: Scale Construction")){
-            unSelectAll();
             if(scaleAnswer.has(note)){
                 scaleAnswer.delete(note);
+                revertKey(note);
             }else{
                 scaleAnswer.add(note);
-            }
-            for(const key of scaleAnswer){
-                selectKey(key);
+                selectKey(note);
             }
         }else if(document.title.includes("Quiz: Intervals")&&canAnswer){
             canAnswer = false;
