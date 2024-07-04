@@ -479,9 +479,11 @@ function answerSelect(note){
             if(questionNumber<10){
                 setTimeout(function(){
                         stopAllNotes();
-                        stepQuizQuestion();
                         canAnswer = true;
                     }, 1000);
+                setTimeout(function(){
+                        stepQuizQuestion();
+                    }, 500);
             }
         }else if(document.title.includes("Quiz: Scale Construction")){
             if(scaleAnswer.has(note)){
