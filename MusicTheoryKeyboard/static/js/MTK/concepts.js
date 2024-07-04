@@ -282,6 +282,8 @@ function revertKey(note){
     } else if(document.getElementById(divID).className.includes("BlackKey")) {
         document.getElementById(divID).className = "key blackKey";
     }
+    note = teoria.note(note);
+    stopNote(note);
 }
 
 function unhighlightAll(){
@@ -502,8 +504,8 @@ function answerSelect(note){
             if(questionNumber<10){
                 setTimeout(function(){
                         intervalQuizQuestion();
-                    }, 2000);
-                
+                        stopAllNotes();
+                    }, 200);
             }
         }
     }
