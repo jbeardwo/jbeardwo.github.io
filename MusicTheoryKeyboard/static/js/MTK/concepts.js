@@ -207,10 +207,7 @@ function stopNote(note){
 }
 
 function stopAllNotes(){
-    for(var note in nowPlaying){
-        teoNote = teoria.note(note);
-        stopNote(teoNote);
-    }
+    MIDI.player.stop();
 }
 
 function pianoKeyUp(note) {
