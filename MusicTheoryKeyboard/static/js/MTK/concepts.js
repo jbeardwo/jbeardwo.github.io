@@ -5,6 +5,7 @@ var score = 0;
 var solution = '';
 var scaleSolution = new Set;
 var scaleAnswer = new Set;
+var canAnswer = false;
 var keyMap = {
     'KeyZ' : 'c3',
     'KeyS' : 'db3',
@@ -461,13 +462,15 @@ function answerSelect(note){
             if(questionNumber<10){
                 noteQuizQuestion();
             }
-        }else if(document.title.includes("Quiz: Steps")){
+        }else if(document.title.includes("Quiz: Steps")&&canAnswer){
+            canAnswer = false;
             solution = numToNote[solution];
             unSelectAll();
             if(note==solution){
                 score++;
                 document.querySelector(".score").innerHTML = score;
             }
+
             if(questionNumber == 10){
                 quizActive = false;
                 document.querySelector(".question").innerHTML = "Final Score:";
@@ -475,8 +478,10 @@ function answerSelect(note){
             }
             if(questionNumber<10){
                 setTimeout(function(){
+                        stopAllNotes();
                         stepQuizQuestion();
-                    }, 2000);
+                        canAnswer = true;
+                    }, 1000);
             }
         }else if(document.title.includes("Quiz: Scale Construction")){
             unSelectAll();
@@ -488,7 +493,8 @@ function answerSelect(note){
             for(const key of scaleAnswer){
                 selectKey(key);
             }
-        }else if(document.title.includes("Quiz: Intervals")){
+        }else if(document.title.includes("Quiz: Intervals")&&canAnswer){
+            canAnswer = false;
             solution = numToNote[solution];
             unSelectAll();
             if(note==solution){
@@ -504,6 +510,7 @@ function answerSelect(note){
                 setTimeout(function(){
                         stopAllNotes();
                         intervalQuizQuestion();
+                        canAnswer = true;
                     }, 1000);
             }
         }
@@ -533,6 +540,7 @@ function startQuiz(){
         }
         document.querySelector(".quizStart").disabled = true;
         quizActive = true;
+        canAnswer = true;
     }
 }
 
