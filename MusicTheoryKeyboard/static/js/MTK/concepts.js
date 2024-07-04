@@ -198,6 +198,7 @@ function playNote(note){
 }
 
 function stopNote(note){
+    console.log(note);
   var midiNote = note.midi();
   var noteName = note.name() + note.accidental() + note.octave();
   MIDI.noteOff(0, midiNote, 0);
