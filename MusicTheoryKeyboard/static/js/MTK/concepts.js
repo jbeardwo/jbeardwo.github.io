@@ -479,11 +479,9 @@ function answerSelect(note){
             if(questionNumber<10){
                 setTimeout(function(){
                         stopAllNotes();
+                        stepQuizQuestion();
                         canAnswer = true;
                     }, 1000);
-                setTimeout(function(){
-                        stepQuizQuestion();
-                    }, 500);
             }
         }else if(document.title.includes("Quiz: Scale Construction")){
             if(scaleAnswer.has(note)){
@@ -684,6 +682,7 @@ function submitScaleAnswer(){
     }else{
     }
     unSelectAll();
+    stopAllNotes();
     scaleAnswer = new Set;
     scaleSolution = new Set;
     questionNumber++;
@@ -695,7 +694,7 @@ function submitScaleAnswer(){
     }else{
         scaleConstructionQuizQuestion();
     }
-    stopAllNotes();
+    
 }
 
 function checkScaleAnswer(){
