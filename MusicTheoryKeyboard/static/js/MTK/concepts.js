@@ -207,7 +207,7 @@ function stopNote(note){
 }
 
 function stopAllNotes(){
-    MIDI.player.stop();
+    MIDI.Player.stop();
 }
 
 function pianoKeyUp(note) {
