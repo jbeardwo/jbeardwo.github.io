@@ -200,7 +200,6 @@ function playNote(note){
 function stopNote(note){
   var midiNote = note.midi();
   var noteName = note.name() + note.accidental() + note.octave();
-  console.log(noteName);
   MIDI.noteOff(0, midiNote, 0);
   if(nowPlaying.includes(noteName)){
     nowPlaying.splice(nowPlaying.indexOf(noteName), 1);
@@ -216,7 +215,6 @@ function pianoKeyUp(note) {
     if(!(keyDiv.className.includes("selectKey")||keyDiv.className.includes("selectBlackKey"))){
         revertKey(note);
     }
-    console.log(note);
     note = teoria.note(note);
     stopNote(note);
 }
