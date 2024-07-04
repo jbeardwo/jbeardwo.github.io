@@ -488,7 +488,7 @@ function startQuiz(){
 function noteQuizQuestion(){
     solution = noteNameArray[Math.floor(Math.random()*noteNameArray.length)];
     var questionDiv = document.querySelector(".question");
-    questionDiv.innerHTML = randEnharmonic(solution);
+    questionDiv.innerHTML = capitalizeFirst(randEnharmonic(solution));
     questionNumber++;
 }
 
@@ -501,6 +501,7 @@ function randEnharmonic(note){
 }
 
 function getEnharmonic(note){
+    note = note.toLowerCase();
     if(note.length>1){
         return enharmonicEquivalent[note];
     }else{
@@ -569,20 +570,25 @@ function scaleIDQuizAnswer(ans){
     }
 }
 
+function capitalizeFirst(foo){
+    var output = foo.charAt(0).toUpperCase() + foo.slice(1);
+    return output;
+}
+
 function scaleConstructionQuizQuestion(){
     var randomKey = availableKeys[Math.floor(Math.random()*(availableKeys.length-12))];
-    formattedKey = randomKey.charAt(0).toUpperCase() + randomKey.slice(1,-1);
+    formattedKey = randomKey.slice(0,-1);
     console.l
     if(Math.random()<.5){
         constructMajorScale(randomKey);
         scaleAnswer.add(randomKey);
         selectKey(randomKey);
-        document.querySelector(".question").innerHTML = "Construct a " + formattedKey + " Major scale starting from the highlighted note";
+        document.querySelector(".question").innerHTML = "Construct a " + capitalizeFirst(randEnharmonic( formattedKey ))+ " Major scale starting from the highlighted note";
     }else{
         constructMinorScale(randomKey);
         scaleAnswer.add(randomKey);
         selectKey(randomKey);
-        document.querySelector(".question").innerHTML = "Construct a " + formattedKey + " Minor scale starting from the highlighted note";
+        document.querySelector(".question").innerHTML = "Construct a " + capitalizeFirst(randEnharmonic(formattedKey ))+ " Minor scale starting from the highlighted note";
     }
 }
 
