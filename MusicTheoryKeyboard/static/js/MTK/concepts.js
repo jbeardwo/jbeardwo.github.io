@@ -502,9 +502,9 @@ function answerSelect(note){
             }
             if(questionNumber<10){
                 setTimeout(function(){
-                        intervalQuizQuestion();
                         stopAllNotes();
-                    }, 200);
+                        intervalQuizQuestion();
+                    }, 1000);
             }
         }
     }
