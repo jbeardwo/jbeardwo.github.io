@@ -127,10 +127,28 @@ var enharmonicEquivalent = {
     'ab': 'g#'
 };
 
+var enharmonicEquivalent = {
+    'bb': 'a#',
+    'db': 'c#',
+    'eb': 'd#',
+    'gb': 'f#',
+    'ab': 'g#'
+};
+
+var enharmonicEquivalent = {
+    'bb': 'a#',
+    'db': 'c#',
+    'eb': 'd#',
+    'gb': 'f#',
+    'ab': 'g#'
+};
+
 
 
 var noteNameArray = ['a','bb','b','c','db','d','eb','e','f','gb','g','ab'];
 var availableKeys = ['c3','db3','d3','eb3','e3','f3','gb3','g3','ab3','a3','bb3','b3','c4','db4','d4','eb4','e4','f4','gb4','g4','ab4','a4','bb4','b4','c5','db5','d5','eb5','e5']
+var intervalArray = ['unison','minor 2nd','major 2nd','minor 3rd','major 3rd','perfect 4th','tritone','perfect 5th','minor 6th','major 6th','minor 7th','major 7th','octave'];
+
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -457,6 +475,21 @@ function answerSelect(note){
             for(const key of scaleAnswer){
                 selectKey(key);
             }
+        }else if(document.title.includes("Quiz: Intervals")){
+            solution = numToNote[solution];
+            unSelectAll();
+            if(note==solution){
+                score++;
+                document.querySelector(".score").innerHTML = score;
+            }
+            if(questionNumber == 10){
+                quizActive = false;
+                document.querySelector(".question").innerHTML = "Final Score:";
+                document.querySelector(".quizStart").disabled = false;
+            }
+            if(questionNumber<10){
+                intervalQuizQuestion();
+            }
         }
     }
 }
@@ -479,6 +512,8 @@ function startQuiz(){
         }else if(document.title.includes("Quiz: Scale Construction")){
             scaleConstructionQuizQuestion();
             document.querySelector(".scaleQuizSubmit").disabled = false;
+        }else if(document.title.includes("Quiz: Intervals")){
+            intervalQuizQuestion();
         }
         document.querySelector(".quizStart").disabled = true;
         quizActive = true;
@@ -531,11 +566,38 @@ function stepQuizQuestion(){
         }
     }
     if(qStep == 1){
-        questionDiv.innerHTML = 'A Half-Step ' + direction + ' from the highlighted Key.';
+        questionDiv.innerHTML = 'A Half-step ' + direction + ' from the highlighted Key.';
     }else if (qStep == 2){
         questionDiv.innerHTML = 'A Whole-step ' + direction + ' from the highlighted Key.';
     }   
         questionNumber++;
+}
+
+function intervalQuizQuestion(){
+    var baseNote = selectRandomKey();
+    var baseNoteNum = noteToNum[baseNote];
+    var intervalNum = Math.floor(Math.random()*intervalArray.length);
+    var qInterval = intervalArray[intervalNum];
+    var direction;
+    var questionDiv = document.querySelector(".question");
+    if(Math.random()<.5){
+        direction = 'up';
+        solution = baseNoteNum + intervalNum;
+        if(solution>29){
+            solution = baseNoteNum - intervalNum;
+            direction = 'down';
+        }
+    }else{
+        direction = 'down';
+        solution = baseNoteNum - intervalNum;
+        if(solution<1){
+            solution = baseNoteNum + intervalNum;
+            direction = 'up';
+        }
+    }
+    
+    questionDiv.innerHTML = capitalizeFirst(qInterval) + ' ' + direction + ' from the highlighted Key.'
+    questionNumber++;
 }
 
 
@@ -578,7 +640,6 @@ function capitalizeFirst(foo){
 function scaleConstructionQuizQuestion(){
     var randomKey = availableKeys[Math.floor(Math.random()*(availableKeys.length-12))];
     formattedKey = randomKey.slice(0,-1);
-    console.l
     if(Math.random()<.5){
         constructMajorScale(randomKey);
         scaleAnswer.add(randomKey);
