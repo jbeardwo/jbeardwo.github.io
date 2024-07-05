@@ -127,7 +127,7 @@ var enharmonicEquivalent = {
     'db': 'c#',
     'eb': 'd#',
     'gb': 'f#',
-    'ab': 'g#'
+    'ab': 'g#',
     'a#': 'bb',
     'c#': 'db',
     'd#': 'eb',
