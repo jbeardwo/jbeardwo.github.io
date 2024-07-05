@@ -134,7 +134,21 @@ var enharmonicEquivalent = {
     'f#': 'gb',
     'g#': 'ab'
 };
-
+var majorToRelativeMinor = {
+    'f': 'd',
+    'c': 'a',
+    'g': 'e',
+    'd': 'b',
+    'a': 'f#',
+    'e': 'c#',
+    'b': 'g#',
+    'f#': 'd#',
+    'gb' : 'eb',
+    'db' : 'bb',
+    'ab' : 'f',
+    'eb' : 'c',
+    'bb' : 'g',
+}
 
 
 
@@ -748,11 +762,14 @@ function keySignatureQuizQuestion(){
     var randomNote = noteNameArray[Math.floor(Math.random()*noteNameArray.length)];
     constructMajorKeySignature(randomNote);
 
-    document.querySelector(".question").innerHTML = "Key signature for " + randomNote + "major";
+    if(Math.random()<.5){
+        document.querySelector(".question").innerHTML = "Key signature for " + randomNote + " major";
+    }else{
+        document.querySelector(".question").innerHTML = "Key signature for " + majorToRelativeMinor(randomNote) + " minor";
+    }
 }
 
 function submitKeySignatureAnswer(){
-    console.log(checkKeyAnswer());
     if(checkKeyAnswer()){
         score++;
         document.querySelector(".score").innerHTML = score;
@@ -780,9 +797,6 @@ function checkKeyAnswer(){
     for(const note of keySignatureAnswer){
         formatAnswer.add(note.slice(0,-1));
     }
-    console.log(keySignatureAnswer);
-    console.log(formatAnswer);
-    console.log(keySignatureSolution);
     for(const formatNote of formatAnswer){
         if(!keySignatureSolution.has(formatNote)&&!keySignatureSolution.has(enharmonicEquivalent[formatNote])){
             return false;
