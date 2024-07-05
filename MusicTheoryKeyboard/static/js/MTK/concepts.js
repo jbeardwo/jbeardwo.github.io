@@ -258,11 +258,13 @@ function selectKey(note){
     } else if(document.getElementById(divID).className.includes("blackKey")||document.getElementById(divID).className.includes("highlightBlackKey")) {
         document.getElementById(divID).className = "key selectBlackKey";
     }
-    note = teoria.note(note);
-    playNote(note);
-    setTimeout(function(){
-        stopNote(note);
-    }, 1000);
+    if(!document.title.includes("Quiz: Scale Identification")){
+        note = teoria.note(note);
+        playNote(note);
+        setTimeout(function(){
+            stopNote(note);
+        }, 1000);
+    }
 }
 
 function selectRandomKey(){
@@ -682,7 +684,7 @@ function submitScaleAnswer(){
     }else{
     }
     unSelectAll();
-    stopAllNotes();
+
     scaleAnswer = new Set;
     scaleSolution = new Set;
     questionNumber++;
