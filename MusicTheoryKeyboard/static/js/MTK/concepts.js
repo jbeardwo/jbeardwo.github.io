@@ -530,7 +530,7 @@ function answerSelect(note){
                         canAnswer = true;
                     }, 1000);
             }
-        }else if(document.title.includes("Quiz: Scale Construction")){
+        }else if(document.title.includes("Quiz: Key Signatures")){
             if(keySignatureAnswer.has(note)){
                 keySignatureAnswer.delete(note);
                 revertKey(note);
@@ -746,7 +746,7 @@ function keySignatureQuizQuestion(){
     document.querySelector(".question").innerHTML = "Key signature for " + randomNote + "major";
 }
 
-function submitKeyAnswer(){
+function submitKeySignatureAnswer(){
     console.log(checkKeyAnswer());
     if(checkKeyAnswer()){
         score++;
