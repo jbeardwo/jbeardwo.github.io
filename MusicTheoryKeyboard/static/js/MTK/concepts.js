@@ -765,7 +765,7 @@ function keySignatureQuizQuestion(){
     if(Math.random()<.5){
         document.querySelector(".question").innerHTML = "Key signature for " + randomNote + " major";
     }else{
-        document.querySelector(".question").innerHTML = "Key signature for " + majorToRelativeMinor(randomNote) + " minor";
+        document.querySelector(".question").innerHTML = "Key signature for " + majorToRelativeMinor[randomNote] + " minor";
     }
 }
 
