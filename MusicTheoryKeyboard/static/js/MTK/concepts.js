@@ -5,6 +5,8 @@ var score = 0;
 var solution = '';
 var scaleSolution = new Set;
 var scaleAnswer = new Set;
+var keySignatureSolution = new Set;
+var keySignatureAnswer = new Set;
 var canAnswer = false;
 var keyMap = {
     'KeyZ' : 'c3',
@@ -128,27 +130,13 @@ var enharmonicEquivalent = {
     'ab': 'g#'
 };
 
-var enharmonicEquivalent = {
-    'bb': 'a#',
-    'db': 'c#',
-    'eb': 'd#',
-    'gb': 'f#',
-    'ab': 'g#'
-};
-
-var enharmonicEquivalent = {
-    'bb': 'a#',
-    'db': 'c#',
-    'eb': 'd#',
-    'gb': 'f#',
-    'ab': 'g#'
-};
 
 
 
 var noteNameArray = ['a','bb','b','c','db','d','eb','e','f','gb','g','ab'];
 var availableKeys = ['c3','db3','d3','eb3','e3','f3','gb3','g3','ab3','a3','bb3','b3','c4','db4','d4','eb4','e4','f4','gb4','g4','ab4','a4','bb4','b4','c5','db5','d5','eb5','e5']
 var intervalArray = ['unison','minor 2nd','major 2nd','minor 3rd','major 3rd','perfect 4th','tritone','perfect 5th','minor 6th','major 6th','minor 7th','major 7th','octave'];
+var notesKeySigOrder = ['f','c','g','d','a','e','b'];
 
 
 function openNav() {
@@ -373,6 +361,35 @@ function constructMinorScale(rootNote){
     }
 }
 
+function constructMajorKeySignature(note){
+    var keySigNum = getKeySigNum(note);
+    if(keySigNum>0){
+        for(var i=0;i<keySigNum;i++){
+            var formatNote = notesKeySigOrder[i]+'#';
+            if(formatNote == 'e#'){
+                formatNote = 'f'
+            }
+            keySignatureSolution.add(formatNote);
+        }
+    }else if(keySigNum<0){
+        for(var i=notesKeySigOrder.length-1;i>=notesKeySigOrder.length+keySigNum;i--){
+            var formatNote = notesKeySigOrder[i]+'b';
+            if(formatNote == 'cb'){
+                formatNote = 'b'
+            }
+            keySignatureSolution.add(formatNote);
+        }
+    }
+}
+
+function getKeySigNum(note){
+    var keySigNum = notesKeySigOrder.indexOf(note.slice(0,1)) - 1;
+    if(note.length==2){
+        keySigNum -= 7;
+    }
+    return keySigNum;
+}
+
 function hardwareKeyDown(e){
     var keyPressed = e.code;
     if(keyMap[keyPressed]){
@@ -513,6 +530,14 @@ function answerSelect(note){
                         canAnswer = true;
                     }, 1000);
             }
+        }else if(document.title.includes("Quiz: Scale Construction")){
+            if(keySignatureAnswer.has(note)){
+                keySignatureAnswer.delete(note);
+                revertKey(note);
+            }else{
+                keySignatureAnswer.add(note);
+                selectKey(note);
+            }
         }
     }
 }
@@ -537,6 +562,9 @@ function startQuiz(){
             document.querySelector(".scaleQuizSubmit").disabled = false;
         }else if(document.title.includes("Quiz: Intervals")){
             intervalQuizQuestion();
+        }else if(document.title.includes("Quiz: Key Signatures")){
+            keySignatureQuizQuestion();
+            document.querySelector(".keySignatureQuizSubmit").disabled = false;
         }
         document.querySelector(".quizStart").disabled = true;
         quizActive = true;
@@ -711,7 +739,49 @@ function checkScaleAnswer(){
     return true;
 }
 
-//Fix whole scale playing in scale ID quiz
-//also clicking to play notes while they're highlighted in scale ID quiz takes multiple clicks
-//fix first note cutting off in scale construct quiz
-//last 2 may both be related to the notes not being turned off properly.
+function keySignatureQuizQuestion(){
+    var randomNote = noteNameArray[Math.floor(Math.random()*noteNameArray.length)];
+    constructMajorKeySignature(randomNote);
+
+    document.querySelector(".question").innerHTML = "Key signature for " + randomNote "major";
+}
+
+function submitKeyAnswer(){
+    console.log(checkKeyAnswer());
+    if(checkKeyAnswer()){
+        score++;
+        document.querySelector(".score").innerHTML = score;
+    }else{
+    }
+    unSelectAll();
+    keySignatureAnswer = new Set;
+    keySignatureSolution = new Set;
+    questionNumber++;
+    if(questionNumber==10){
+        quizActive = false;
+        document.querySelector(".question").innerHTML = "Final Score:";
+        document.querySelector(".quizStart").disabled = false;
+        document.querySelector(".keySignatureQuizSubmit").disabled = true;
+    }else{
+        keySignatureQuizQuestion();
+    }
+}
+
+function checkKeyAnswer(){
+    if (keySignatureAnswer.size != keySignatureSolution.size){
+        return false;
+    }
+    var formatAnswer = new Set;
+    for(const note of keySignatureAnswer){
+        formatAnswer.add(note.slice(0,-1));
+    }
+    console.log(keySignatureAnswer);
+    console.log(formatAnswer);
+    console.log(keySignatureSolution);
+    for(const formatNote of formatAnswer){
+        if(!keySignatureSolution.has(formatNote)){
+            return false;
+        }
+    }
+    return true;
+}
