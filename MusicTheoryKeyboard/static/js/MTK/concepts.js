@@ -128,6 +128,11 @@ var enharmonicEquivalent = {
     'eb': 'd#',
     'gb': 'f#',
     'ab': 'g#'
+    'a#': 'bb',
+    'c#': 'db',
+    'd#': 'eb',
+    'f#': 'gb',
+    'g#': 'ab'
 };
 
 
@@ -779,7 +784,7 @@ function checkKeyAnswer(){
     console.log(formatAnswer);
     console.log(keySignatureSolution);
     for(const formatNote of formatAnswer){
-        if(!keySignatureSolution.has(formatNote)){
+        if(!keySignatureSolution.has(formatNote)&&!keySignatureSolution.has(enharmonicEquivalent[formatNote])){
             return false;
         }
     }
