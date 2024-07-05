@@ -743,7 +743,7 @@ function keySignatureQuizQuestion(){
     var randomNote = noteNameArray[Math.floor(Math.random()*noteNameArray.length)];
     constructMajorKeySignature(randomNote);
 
-    document.querySelector(".question").innerHTML = "Key signature for " + randomNote "major";
+    document.querySelector(".question").innerHTML = "Key signature for " + randomNote + "major";
 }
 
 function submitKeyAnswer(){
