@@ -171,6 +171,10 @@ function closeNav() {
     document.body.style.backgroundColor = "white";
 }
 
+function closeSplash(){
+    document.getElementById("splash-screen").style.display = 'none';
+}
+
 document.addEventListener('keydown',hardwareKeyDown);
 document.addEventListener('keyup', hardwareKeyUp);
 
@@ -804,3 +808,4 @@ function checkKeyAnswer(){
     }
     return true;
 }
+

@@ -410,12 +410,25 @@ img {
 /* Step Quiz */
 /*********************************************/
 
+.checkerboard {
+    width: 400px; /* Adjust width as needed */
+    height: 400px; /* Adjust height as needed */
+    background-size: 20px 20px; /* Size of each square in the checkerboard */
+    background-image:
+        linear-gradient(45deg, rgba(0, 0, 0, 0.5) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0, 0, 0, 0.5) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.5) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.5) 75%);
+    background-position: 0 0, 10px 0, 10px -10px, 0px 10px; /* Offset to create the checkerboard effect */
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
+}
+
 .instruction {
     border: 4px solid black;
     width: calc(var(--whiteKeyWidth) * var(--numberOfWhiteKeys));
     margin: auto;
-    /*border-top: 4px solid black;*/
-    /*border-bottom: 4px solid black;*/
+    border-top: 4px solid black;
+    border-bottom: 4px solid black;
     background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, 1), rgba(255, 255, 255, .5));
 }
 
@@ -526,4 +539,35 @@ However, delay the fade out process for 2.5 seconds */
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+}
+
+/*********************************************/
+/* Splsh */
+/*********************************************/
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#splash-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    z-index: 9999;
+}
+
+#splash-content {
+    background-image: url("..//images/wood-grain.jpg");
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
 }

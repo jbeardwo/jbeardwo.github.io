@@ -20,6 +20,20 @@
 <script src="../js/util/dom_request_xhr.js" type="text/javascript"></script>
 <script src="../js/util/dom_request_script.js" type="text/javascript"></script>
 <body onload="" background="..//images/wood-grain.jpg">
+
+	<div id="splash-screen"> 
+        <div id="splash-content">
+        	<p  class='instruction'>
+            	Welcome to Music Theory Keyboard<br>
+            	Play the piano with your mouse or keyboard<br>
+            	For Mouse control, simply click on the key you'd like to play.<br>
+            	For Keyboard there are shortcut keys that are written in orange on each key<br>
+            	If you'd like to explore more, there are lessons and quizzes available in the Side Pane.<br>
+            	Have fun playing!<br>
+        	</p>
+            <button id="close-splash" onclick="closeSplash();loadMIDI();">Close</button>
+        </div>
+    </div>
 	<div id="window">
 		<div id="topBanner">
 		</div>
@@ -37,7 +51,8 @@
             <a href="lessonStaff.html">Lesson: Staff</a>
             <a href="lessonCircle.html">Lesson: Circle</a>
             <a href="quizKeys.html">Quiz: Key Signature</a>
-            <a href="reference.html">Reference Guide</a>
+            <a href="reference.html">Reference Guide</a
+>
         </div>
 
         <span id="menuButton" onclick="openNav()">&#9776; Menu</span>
@@ -74,9 +89,9 @@
 			--><div class="key blackKey" id="eb5Key" onclick="pianoKeyClick('eb5')"><div class="hardwareKey">0</div><div class="keyname">D<sup>#</sup> E<sup>b</sup></div></div><!--
 			--><div class="key rStraightKey" id="e5Key" onclick="pianoKeyClick('e5')"><div class="hardwareKey">p</div><div class="keyname">E</div></div>
 		</div>
-		<button onclick="loadMIDI()">Load MIDI Plugin</button>
 		<p class="content" id="page1">
 		</p>
+	</div>
 	</body>
 	<script type="text/javascript" src="..//js/MTK/concepts.js"></script>
 	<script type="text/javascript" src="..//js/teoria/teoria.js"></script>
