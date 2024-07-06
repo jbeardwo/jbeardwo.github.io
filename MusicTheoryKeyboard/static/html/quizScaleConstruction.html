@@ -23,6 +23,22 @@
 	<script src="../js/util/dom_request_script.js" type="text/javascript"></script>
 </head>
 <body onload="" background="..//images/wood-grain.jpg">
+
+	<div id="splash-screen"> 
+        <div id="splash-content">
+        	<p  class='instruction'>
+            	Welcome to the Scale Construction Quiz<br>
+            	When you click start quiz a note will be highlighted on the keyboard.<br>
+            	You will also be given a scale quality (Major or Minor).
+            	Click or key in the rest of the notes of that scale for one octave (including the repeated root). <br>
+            	When all the notes you want are highlighted blue, you're ready.<br>
+            	Then you can click Submit to see if you were right<br>
+            	The Quiz is 10 questions, see if you can get 100%!
+        	</p>
+            <button id="close-splash" onclick="closeSplash();loadMIDI();">Close</button>
+        </div>
+    </div>
+
 	<div id="window">
 		<div id="topBanner">
 		</div>

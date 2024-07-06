@@ -24,6 +24,17 @@
 </head>
 <body onload="toggleVisibility('keyname');" background="..//images/wood-grain.jpg">
 	<div id="window">
+		<div id="splash-screen"> 
+        <div id="splash-content">
+        	<p  class='instruction'>
+            	Welcome to your first Quiz!<br>
+            	When you click start quiz you will be given a note name.<br>
+            	Click that note (or choose it on your keyboard) to choose your answer. <br>
+            	The Quiz is 10 questions, see if you can get 100%!
+        	</p>
+            <button id="close-splash" onclick="closeSplash();loadMIDI();">Close</button>
+        </div>
+    </div>
 		<div id="topBanner">
 		</div>
 
