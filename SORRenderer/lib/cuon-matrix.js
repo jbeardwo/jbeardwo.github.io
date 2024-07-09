@@ -731,6 +731,36 @@ Vector3.prototype.dot = function(otherVector) {
     return this.elements[0] * otherVector.elements[0] + this.elements[1] * otherVector.elements[1]+ this.elements[2]* otherVector.elements[2];
 };
 
+Vector3.prototype.subtract = function(otherVector) {
+    var v = this.elements;         // Get the elements of the current vector
+    var o = otherVector.elements;  // Get the elements of the other vector
+
+    // Perform the subtraction directly on this.elements
+    v[0] -= o[0];
+    v[1] -= o[1];
+    v[2] -= o[2];
+
+    // No need to assign a new Float32Array
+    // this.elements remains the same array object, but with updated values
+}
+
+Vector3.prototype.cross = function(otherVector) {
+    var v = this.elements;
+    var o = otherVector.elements;
+    var a = new Vector3();
+    console.log("v",v);
+    console.log("o",o);
+    a.elements = [
+        v[1] * o[2] - v[2] * o[1],
+        v[2] * o[0] - v[0] * o[2],
+        v[0] * o[1] - v[1] * o[0]
+    ];
+    console.log("a",a);
+    this.elements = a.elements;
+    return this
+};
+
+
 /**
  * Constructor of Vector4
  * If opt_src is specified, new vector is initialized by opt_src.

@@ -13,6 +13,8 @@ var bottom = -500
 var theTop = 500
 var near = -500
 var far = 500
+var SORPreview = null;
+let throttleActive = false;
 
 var mouseDown = false;
 var dragging = false;
@@ -23,6 +25,7 @@ var pickedObject
 
 var camera = new myCamera(new coord(0, 0, 3000));
 var scene = new myScene(camera);
+
 
 function main() {
 	gl.clearColor(1.0, 1.0, 1.0, 0.0);
@@ -123,11 +126,17 @@ function main() {
 
     // Register function to be called on mouse movement
     canvas.onmousemove = function(ev) {
+
+      if(!throttleActive){
         if(drawMode){
-    		drawModeMove(ev, gl, canvas);
-    	}else{
+    		  drawModeMove(ev, gl, canvas);
+        }else{
         	move(ev, gl, canvas);
         }
+        setTimeout(function() {
+            throttleActive = false;
+        }, 16);
+      }
     }
 
     canvas.onmousewheel = function(ev) {
@@ -236,36 +245,129 @@ function click(ev, gl, canvas) {
  scene.drawEverything();
 }
 
+let requestId = null;
+
 function move(ev, gl, canvas) {
-  var x = ev.clientX;
-  var y = ev.clientY;
-  var rect = ev.target.getBoundingClientRect();
-  x = ((x - rect.left) - canvas.width / 2) * 2;
-  y = (canvas.height / 2 - (y - rect.top)) * 2;
-  if(dragging&&ctrlDown){
-    rotateObject(ev.movementX,ev.movementY);
-  }else if(dragging){
-    dragObject(ev.movementX,ev.movementY);
-  }
-  scene.drawEverything();
+    var x = ev.clientX;
+    var y = ev.clientY;
+    var rect = ev.target.getBoundingClientRect();
+    x = ((x - rect.left) - canvas.width / 2) * 2;
+    y = (canvas.height / 2 - (y - rect.top)) * 2;
+  
+    if (dragging && ctrlDown) {
+    var cameraPosition = new Vector3([scene.camera.position[0],scene.camera.position[1],scene.camera.position[2]]);
+    var objectPosition = new Vector3([
+        pickedObject.translation.elements[12],
+        pickedObject.translation.elements[13],
+        pickedObject.translation.elements[14]
+    ]); 
+//     console.log("pickedObject.translation.elements:", pickedObject.translation.elements);
+// console.log("objectPosition.elements:", objectPosition.elements);
+// console.log("cameraPosition: ", cameraPosition);
+    var rotationAxis = objectPosition; // Example axis calculation
+    rotationAxis.subtract(cameraPosition);
+    // Apply rotation using the dynamically determined axis
+    // rotateObjectRelativeToCamera(ev.movementX, ev.movementY);
+        rotateObject(ev.movementX, ev.movementY);
+        if (!requestId) {
+            requestId = requestAnimationFrame(() => {
+                scene.drawEverything();
+                requestId = null; // Reset request ID after drawing
+            });
+        }
+        
+    } else if (dragging) {
+        dragObject(ev.movementX, ev.movementY);
+        // Request a new animation frame only if it's not already scheduled
+        if (!requestId) {
+            requestId = requestAnimationFrame(() => {
+                scene.drawEverything();
+                requestId = null; // Reset request ID after drawing
+            });
+        }
+    }
 }
 
 function dragObject(x,y) {
   y = y*-1;
+  x*= 2;
+  y*= 2;
   var translate = new Matrix4;
   var xTranslate = [x*camera.cameraRight[0],x*camera.cameraRight[1],x*camera.cameraRight[2]];
   var yTranslate = [y*camera.cameraUp[0],y*camera.cameraUp[1],y*camera.cameraUp[2]];
   translate.setTranslate(xTranslate[0]+yTranslate[0],xTranslate[1]+yTranslate[1],xTranslate[2]+yTranslate[2])
   pickedObject.translation = pickedObject.translation.multiply(translate)
+
 }
 
 function rotateObject(x,y){
   var rotationX = new Matrix4;
   var rotationY = new Matrix4;
+  // console.log(rotationAxis);
+  // rotationX.setRotate(x,0,1,0);
+  // rotationY.setRotate(y,1,0,0);
+  // var xTranslate = [x*rotationAxis.elements[0],x*rotationAxis.elements[1],x*rotationAxis.elements];
+  // var yTranslate = [y*rotationAxis.elements[0],y*rotationAxis.elements[1],y*rotationAxis.elements[2]];
 
   rotationX.setRotate(x,camera.cameraUp[0],camera.cameraUp[1],camera.cameraUp[2]);
   rotationY.setRotate(y,camera.cameraRight[0],camera.cameraRight[1],camera.cameraRight[2]);
 
-  pickedObject.rotation = pickedObject.rotation.multiply(rotationX);
-  pickedObject.rotation = pickedObject.rotation.multiply(rotationY);
+
+  pickedObject.rotation = pickedObject.rotation.multiply(rotationX).multiply(rotationY);
+  // pickedObject.rotation = pickedObject.rotation.multiply(rotationY);
+}
+
+function rotateObjectRelativeToCamera(mouseMovementX, mouseMovementY) {
+
+    // Step 1: Get camera and object positions
+    var cameraPosition = new Vector3([scene.camera.position[0], scene.camera.position[1], scene.camera.position[2]]);
+    var objectPosition = new Vector3([
+        pickedObject.translation.elements[12],
+        pickedObject.translation.elements[13],
+        pickedObject.translation.elements[14]
+    ]);
+
+    // Step 2: Calculate direction vector from camera to object
+    var directionVector = objectPosition;
+    directionVector.subtract(cameraPosition);
+    directionVector.normalize();
+
+
+//RIGHT HERE YOU NEED TO MODIFY THE EXISTING CODE SO ITS CLEAR WHICH AXIS
+    //THEN REPLICATE FOR OTHER AXIS
+    //HOPEFULLY THIS GETS THE SCREENSPACE ROTATIONWE'RE LOOKING FOR
+
+
+    // Step 3: Determine rotation axis (perpendicular to direction and camera's up vector)
+    var cameraUp = new Vector3([scene.camera.cameraUp[0],scene.camera.cameraUp[1],scene.camera.cameraUp[2]]);
+    var rotationAxis = directionVector;
+    cameraUp.elements = [0,1,0];
+    rotationAxis.elements = [0,0,-1];
+    rotationAxis.cross(cameraUp);
+
+    rotationAxis.normalize();
+
+    // Step 4: Determine rotation angle (based on mouse movement or another parameter)
+    var rotationAngle = mouseMovementY;  // Adjust the sign and scale as needed
+
+    // Step 5: Create rotation matrix and apply to object
+    var rotationMatrix = new Matrix4();
+    rotationMatrix.setRotate(rotationAngle, rotationAxis.elements[0], rotationAxis.elements[1], rotationAxis.elements[2]);
+
+    // Apply the rotation to the object's transformation matrix
+    pickedObject.rotation = pickedObject.rotation.multiply(rotationMatrix);
+
+    // Step 6: Redraw the scene
+    scene.drawEverything();
+}
+
+function drawLoop(){
+  
+  if (drawMode && penDown && newSORPoints.length>0) {
+    SORPreview.draw();
+  }else{
+    
+    scene.drawEverything();
+  }
+  requestAnimationFrame(drawLoop);
 }

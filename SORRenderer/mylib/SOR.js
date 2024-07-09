@@ -17,7 +17,7 @@ function mySORClass(name, baseLine, color) {
 
     this.flatVertices = this.calcFlatVertices();
     this.flatIndices = this.calcFlatIndices();
-    this.drawFlat = true;
+    this.drawFlat = false;
 
 
     this.faceNormals = this.calcFaceNormals();
