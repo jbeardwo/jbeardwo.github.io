@@ -57,22 +57,38 @@
       attribute vec4 a_Normal;
       varying vec4 v_Normal;
       uniform mat4 u_Transforms;
-      uniform mat4 u_Scale;
-      uniform mat4 u_Rotation;
-      uniform mat4 u_Translation;
-      uniform mat4 u_ScaleNormals;
-      uniform mat4 u_RotationNormals;
-      uniform mat4 u_TranslationNormals;
       uniform mat4 u_NormalTransforms;
+      uniform vec3 u_CameraPosition;
+      varying vec3 v_ToCamera;
 
       uniform vec4 u_Color;
       varying vec4 v_Color;
+      varying vec3 v_dirLightDirGlobal;
+      varying vec3 v_dirLightDir;
 
-      void main(){
-        gl_Position = u_MvpMatrix *u_Translation*u_Rotation*u_Scale* a_Position;
-        v_Color = u_Color;
-        v_Normal = u_NormalTransforms*a_Normal;
-      }
+       void main() {
+    // Transform vertex position
+    gl_Position = u_MvpMatrix * u_Transforms * a_Position;
+
+    // Transform normal
+    vec4 transformedNormal = u_NormalTransforms * a_Normal;
+
+    // Compute direction from vertex to camera
+    vec3 vertexPosition = (u_Transforms * a_Position).xyz;
+    vec3 v_ToCamera = normalize(u_CameraPosition - vertexPosition);
+
+    // Calculate dot product of transformed normal and vector to camera
+    float dotProduct = dot(normalize(transformedNormal.xyz), v_ToCamera);
+
+    // Conditionally flip normal if facing away from camera
+  //  vec3 finalNormal = dotProduct > 0.0 ? -normalize(transformedNormal.xyz) : normalize(transformedNormal.xyz);
+
+    // Pass transformed normal to fragment shader
+    v_Normal = vec4(transformedNormal.xyz, transformedNormal.w); // Preserve original w component if needed
+
+    // Pass color to fragment shader
+    v_Color = u_Color;
+}
     </script>
 
     <script id="objectShader-fs" type="x-shader/x-fragment">
@@ -81,18 +97,30 @@
       #endif
       varying vec4 v_Normal;
       varying vec4 v_Color;
+      varying vec3 v_ToCamera;
 
-      void main(){
-        vec3 dirLightDir = vec3(0,0,1);
-        vec4 v_dirLightColor = vec4(1,1,1,1);
-        vec3 normal = normalize(v_Normal.xyz);
+      void main() {
+    vec3 dirLightDir = vec3(0, 0, 1);  // Example light direction
+    vec3 v_dirLightColor = vec3(1.0, 1.0, 1.0);   // Light color
+    vec3 normal = v_Normal.xyz;
+    vec3 toCamera = normalize(v_ToCamera);
 
-        dirLightDir = normalize(dirLightDir);
-        float nDotL = max(dot(dirLightDir,normal),0.0);
-        vec3 dirDiffuse = v_dirLightColor.rgb * v_Color.rgb * nDotL;
 
-        gl_FragColor = vec4(dirDiffuse,v_Color.a);
-      }
+    // Compute dot product between normal and view direction
+    float facing = dot(normal, v_ToCamera);
+
+    // Reverse normals if they are facing away from the camera
+  // if (facing < 0.0) {
+   //     normal = -normal;
+   //  }
+
+
+    // Compute diffuse lighting
+    float diffuse = max(dot(dirLightDir, normal), 0.0);
+    vec3 dirDiffuse = v_dirLightColor.rgb * v_Color.rgb * diffuse;
+
+    gl_FragColor = vec4(dirDiffuse, v_Color.a);
+  }
     </script>
   </body>
 </html>

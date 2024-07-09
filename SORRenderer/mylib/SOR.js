@@ -5,12 +5,19 @@ function mySORClass(name, baseLine, color) {
     this.shape = this.generateSOR();
     this.color = color;
 
+    if(name.includes("In")){
+        this.inside = null;
+    }else{
+        this.inside = new mySORClass(name+"In",baseLine,color);
+    }
+
+
     this.vertices = this.calcVertices();
     this.indices = this.calcIndices();
 
     this.flatVertices = this.calcFlatVertices();
     this.flatIndices = this.calcFlatIndices();
-    this.drawFlat = false;
+    this.drawFlat = true;
 
 
     this.faceNormals = this.calcFaceNormals();
@@ -37,6 +44,10 @@ function mySORClass(name, baseLine, color) {
     this.normalScale.setIdentity();
     this.normalRotation.setIdentity();
     this.normalTranslation.setIdentity();
+
+    
+
+
 
 }
 
@@ -95,8 +106,27 @@ mySORClass.prototype.calcIndices = function() {
     var lineSize = this.shape[0].length
     for (var i = 0; i < this.shape.length - 1; i++) {
         for (var j = 0; j < lineSize - 1 ; j++) {
-            indices.push(i*lineSize+j,i*lineSize+j+1,(i+1)*lineSize+j+1);
-            indices.push(i*lineSize+j,(i+1)*lineSize+j+1,(i+1)*lineSize+j);
+            if(this.shape[0][j].y>this.shape[0][j+1].y){
+                if (this.inside == null) {
+                    // Reverse the triangle winding order for back-face culling
+                    indices.push(i * lineSize + j, (i + 1) * lineSize + j + 1, i * lineSize + j + 1);
+                    indices.push(i * lineSize + j, (i + 1) * lineSize + j, (i + 1) * lineSize + j + 1);
+                } else {
+                    // Normal winding order
+                    indices.push(i * lineSize + j, i * lineSize + j + 1, (i + 1) * lineSize + j + 1);
+                    indices.push(i * lineSize + j, (i + 1) * lineSize + j + 1, (i + 1) * lineSize + j);
+                }
+            }else{
+                if (this.inside == null) {
+                    // Reverse the triangle winding order for back-face culling
+                    indices.push(i * lineSize + j, i * lineSize + j + 1, (i + 1) * lineSize + j + 1);
+                    indices.push(i * lineSize + j, (i + 1) * lineSize + j + 1, (i + 1) * lineSize + j);
+                } else {
+                    // Normal winding order
+                    indices.push(i * lineSize + j, (i + 1) * lineSize + j + 1, i * lineSize + j + 1);
+                    indices.push(i * lineSize + j, (i + 1) * lineSize + j, (i + 1) * lineSize + j + 1);
+                }
+            }
         }
     }
     return indices;
@@ -119,8 +149,23 @@ mySORClass.prototype.calcFlatIndices = function() {
 	var flatIndices = [];
 	for(var i = 0; i< this.shape.length-1; i++){
 		for(var j = 0; j< this.baseLine.length-1;j++){
-			flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+1,(i*(this.baseLine.length-1)+j)*4+2);
-			flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+2,(i*(this.baseLine.length-1)+j)*4+3);
+            if(this.shape[0][j].y>this.shape[0][j+1].y){
+                if(this.inside==null){
+                    flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+2,(i*(this.baseLine.length-1)+j)*4+1);
+                    flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+3,(i*(this.baseLine.length-1)+j)*4+2);
+                }else{
+        			flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+1,(i*(this.baseLine.length-1)+j)*4+2);
+        			flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+2,(i*(this.baseLine.length-1)+j)*4+3);
+                }
+            }else{
+                if(this.inside==null){
+                    flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+1,(i*(this.baseLine.length-1)+j)*4+2);
+                    flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+2,(i*(this.baseLine.length-1)+j)*4+3);
+               }else{
+                    flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+2,(i*(this.baseLine.length-1)+j)*4+1);
+                    flatIndices.push((i*(this.baseLine.length-1)+j)*4,(i*(this.baseLine.length-1)+j)*4+3,(i*(this.baseLine.length-1)+j)*4+2);
+                }
+            }
 		}
 	}
 	return flatIndices;
@@ -288,8 +333,7 @@ mySORClass.prototype.drawNormals = function() {
 
 
     var normalCluster = new lineCluster(normalLines,[1.0,0.0,0.0,1.0]);
-    normalCluster.transforms.elements = this.normalTransforms.elements;
-    normalCluster.transforms.transpose().invert();
+    normalCluster.transforms.elements = this.transforms.elements;
     normalCluster.draw();
 }
 
@@ -324,6 +368,16 @@ mySORClass.prototype.draw = function() {
         drawNormals = vector3ToFloat32(this.smoothNormals);
     }
 
+    if(this.inside==null){
+        for(let i=0; i<drawVerts.length;i+=3){
+
+        drawNormals[i] = drawNormals[i]*-1;
+        drawNormals[i+1] = drawNormals[i+1]*-1;
+        drawNormals[i+2] = drawNormals[i+2]*-1;
+    }
+
+    }
+        
     //Initialize shaders
     program = createProgramFromScripts(gl, "objectShader-vs", "objectShader-fs")
     gl.useProgram(program);
@@ -339,40 +393,58 @@ mySORClass.prototype.draw = function() {
     var u_Color = gl.getUniformLocation(program, 'u_Color')
     var u_MvpMatrix = gl.getUniformLocation(program, 'u_MvpMatrix')
     var u_Transforms = gl.getUniformLocation(program,'u_Transforms')
-    var u_Scale = gl.getUniformLocation(program,'u_Scale')
-    var u_Rotation = gl.getUniformLocation(program,'u_Rotation')
-    var u_Translation = gl.getUniformLocation(program,'u_Translation')
-    var u_ScaleNormals = gl.getUniformLocation(program,'u_Scale')
-    var u_RotationNormals = gl.getUniformLocation(program,'u_Rotation')
-    var u_TranslationNormals = gl.getUniformLocation(program,'u_Translation')
     var u_NormalTransforms = gl.getUniformLocation(program,'u_NormalTransforms')
+    var u_CameraPosition = gl.getUniformLocation(program,'u_CameraPosition')
 
     if(this.selected){
       gl.uniform4f(u_Color, 1, 0, 0, this.color[3])
     }else{
       gl.uniform4f(u_Color, this.color[0], this.color[1], this.color[2], this.color[3])
     }
-    gl.enable(gl.DEPTH_TEST)
+    gl.enable(gl.DEPTH_TEST);
+    gl.depthFunc(gl.LESS);
+
     var mvpMatrix = new Matrix4()
     // mvpMatrix.setOrtho(-500, 500, -500, 500, -5000, 5000)
     mvpMatrix =  scene.camera.getViewMatrix();
 
+    this.transforms.setIdentity();
+    this.transforms.multiply(this.translation).multiply(this.rotation).multiply(this.scale);
+    this.normalTransforms.setIdentity();
+    this.normalTransforms.multiply(this.translation).multiply(this.rotation).multiply(this.scale);
+    this.normalTransforms.invert().transpose();
+    
+    gl.enable(gl.CULL_FACE);
+    gl.cullFace(gl.FRONT); 
+
+    
+
+
+    gl.uniform3f(u_CameraPosition,false, scene.camera.position[0],scene.camera.position[1],scene.camera.position[2]);
 
 
     gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements)
     gl.uniformMatrix4fv(u_NormalTransforms, false, this.normalTransforms.elements)
-    gl.uniformMatrix4fv(u_Scale, false, this.scale.elements)
-    gl.uniformMatrix4fv(u_Rotation, false, this.rotation.elements)
-    gl.uniformMatrix4fv(u_Translation, false, this.translation.elements)
-    this.normalTransforms.setIdentity();
-    this.normalTransforms.multiply(this.scale);
-    this.normalTransforms.multiply(this.rotation);
-    this.normalTransforms.multiply(this.translation)
-    this.normalTransforms.invert();
-    this.normalTransforms.transpose();
+    gl.uniformMatrix4fv(u_Transforms,false,this.transforms.elements)
+
     gl.uniformMatrix4fv(u_NormalTransforms,false, this.normalTransforms.elements)
     gl.drawElements(gl.TRIANGLES, drawIndices.length, gl.UNSIGNED_SHORT, 0)
 
+    if(this.inside!=null){
+        this.inside.translation=(this.translation);
+        this.inside.rotation=(this.rotation);
+        this.inside.scale= new Matrix4
+        this.inside.scale.multiply(this.scale);
+        var insideScaling = new Matrix4;
+        insideScaling.setScale(1,1,1);
+        this.inside.scale.multiply(insideScaling);
+        this.inside.drawFlat = this.drawFlat;
+        this.inside.selected = this.selected;
+        this.inside.draw();
+    }
+
+
     if(this.showNormals){this.drawNormals()}
+
 
 }

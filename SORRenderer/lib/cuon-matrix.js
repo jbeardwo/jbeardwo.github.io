@@ -727,6 +727,10 @@ Vector3.prototype.normalize = function() {
    return this;
 };
 
+Vector3.prototype.dot = function(otherVector) {
+    return this.elements[0] * otherVector.elements[0] + this.elements[1] * otherVector.elements[1]+ this.elements[2]* otherVector.elements[2];
+};
+
 /**
  * Constructor of Vector4
  * If opt_src is specified, new vector is initialized by opt_src.
