@@ -44,11 +44,8 @@ function mySORClass(name, baseLine, color) {
     this.normalScale.setIdentity();
     this.normalRotation.setIdentity();
     this.normalTranslation.setIdentity();
-
-    
-
-
-
+    this.rotationXAxis = new Vector3([0,1,0]);
+    this.rotationYAxis = new Vector3([1,0,0]);
 }
 
 mySORClass.prototype.formatBaseLine = function() {

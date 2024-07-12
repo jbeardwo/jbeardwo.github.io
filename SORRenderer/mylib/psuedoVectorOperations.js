@@ -65,3 +65,28 @@ function degreesToRadians(angle){
     radians = ((angle * Math.PI) / 180)
     return radians;
 }
+
+function vectorLength(vector){
+   var e = vector.elements;
+   let sum = 0;
+   for(let i = 0;i<e.length;i++){
+    sum+=e[i]*e[i];
+   }
+   return Math.floor(Math.sqrt(sum));
+}
+
+function getRotateToCamera(camera){
+    var xRotate = new Matrix4;
+    var yRotate = new Matrix4;
+    var zRotate = new Matrix4;
+    var output = new Matrix4;
+    var position = camera.position;
+    var v = new Vector3(position);
+    v.normalize();
+
+    xRotate.setRotate(v.elements[0],camera.cameraUp[0],camera.cameraUp[1],camera.cameraUp[2]);
+    yRotate.setRotate(v.elements[1],camera.cameraRight[0],camera.cameraRight[1],camera.cameraRight[2]);
+    zRotate.setRotate(v.elements[2],camera.cameraFront[0],camera.cameraFront[1],camera.cameraFront[2]);
+    output = output.multiply(xRotate).multiply(yRotate).multiply(zRotate);
+    return output;
+}

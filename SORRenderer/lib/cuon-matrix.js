@@ -160,6 +160,7 @@ Matrix4.prototype.setInverseOf = function(other) {
 
   s = other.elements;
   d = this.elements;
+//  console.log(s,d)
   inv = new Float32Array(16);
 
   inv[0]  =   s[5]*s[10]*s[15] - s[5] *s[11]*s[14] - s[9] *s[6]*s[15]
@@ -538,6 +539,7 @@ Matrix4.prototype.setRotate = function(angle, x, y, z) {
     ys = y * s;
     zs = z * s;
 
+
     e[ 0] = x*x*nc +  c;
     e[ 1] = xy *nc + zs;
     e[ 2] = zx *nc - ys;
@@ -701,12 +703,14 @@ Matrix4.prototype.dropShadowDirectionally = function(normX, normY, normZ, planeX
  * @param opt_src source vector(option)
  */
 var Vector3 = function(opt_src) {
-  var v = new Float32Array(3);
-  if (opt_src && typeof opt_src === 'object') {
-    v[0] = opt_src[0]; v[1] = opt_src[1]; v[2] = opt_src[2];
-  } 
-  this.elements = v;
-}
+    var v = new Float32Array(3);
+    if (opt_src && typeof opt_src === 'object') {
+        v[0] = opt_src[0] || 0;
+        v[1] = opt_src[1] || 0;
+        v[2] = opt_src[2] || 0;
+    }
+    this.elements = v;
+};
 
 /**
   * Normalize.
@@ -747,19 +751,15 @@ Vector3.prototype.subtract = function(otherVector) {
 Vector3.prototype.cross = function(otherVector) {
     var v = this.elements;
     var o = otherVector.elements;
-    var a = new Vector3();
-    console.log("v",v);
-    console.log("o",o);
-    a.elements = [
+    var a = new Float32Array(3);
+    a = [
         v[1] * o[2] - v[2] * o[1],
         v[2] * o[0] - v[0] * o[2],
         v[0] * o[1] - v[1] * o[0]
     ];
-    console.log("a",a);
-    this.elements = a.elements;
+    this.elements = a;
     return this
 };
-
 
 /**
  * Constructor of Vector4

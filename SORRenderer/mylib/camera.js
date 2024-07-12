@@ -1,7 +1,7 @@
 function myCamera(position, worldUp){
 	this.position = position.toVector3();
-	this.cameraFront = [0,0,-1]
-	this.worldUp = [0,1,0];
+	this.cameraFront = [0.0,0.0,-1.0]
+	this.worldUp = [0.0,1.0,0.0];
 	this.cameraUp = [];
 	this.cameraRight = [];
 	this.pitch = 0;
@@ -59,4 +59,12 @@ myCamera.prototype.updateVectors = function(){
 	this.cameraFront = normalize(this.cameraFront);
 	this.cameraRight = vectorCalcNormal(this.cameraFront,this.worldUp);
 	this.cameraUp = vectorCalcNormal(this.cameraRight,this.cameraFront);
+}
+
+myCamera.prototype.snapTo = function(newPos, lookAt){
+	for(var i = 0;i<3;i++){
+		this.position[i] = newPos[i];
+		this.cameraFront[i] = lookAt[i];
+		this.updateVectors();
+	}
 }

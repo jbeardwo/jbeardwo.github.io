@@ -7,12 +7,12 @@ var drawMode = false;
 var newSORPoints = []; // The array for the position of a mouse press
 var penDown = 1; // Keeps track of when lines should be drawn
 var objects = []; //contains all objects to be drawn
-var left = -500
-var right = 500
-var bottom = -500
-var theTop = 500
-var near = -500
-var far = 500
+var left = -1*canvas.width;
+var right = canvas.width;
+var bottom = -1*canvas.width;
+var theTop = canvas.width;
+var near = -1*canvas.width;
+var far = canvas.width;
 var SORPreview = null;
 let throttleActive = false;
 
@@ -86,13 +86,20 @@ function main() {
         }
         //-
         if(ev.which==189){
-          if(dragging==true){
-            var translate = new Matrix4;
-            translate.setTranslate(0,0,25)
-            pickedObject.transforms = pickedObject.transforms.multiply(translate);
-            pickedObject.translation = pickedObject.translation.multiply(translate);
-            scene.drawEverything();
+          // if(dragging==true){
+          //   var translate = new Matrix4;
+          //   translate.setTranslate(0,0,25)
+          //   pickedObject.transforms = pickedObject.transforms.multiply(translate);
+          //   pickedObject.translation = pickedObject.translation.multiply(translate);
+          //   scene.drawEverything();
+          // }
+          for(var i = 0;i<60;i++){
+            scene.camera.updatePosition('FORWARD');
           }
+          for(var i = 0;i<60;i++){
+            scene.camera.updatePosition('LEFT');
+          }
+          scene.camera.updateAngles(0,90);
         }
         // console.log(ev.which)
         //ctrl
@@ -127,16 +134,13 @@ function main() {
     // Register function to be called on mouse movement
     canvas.onmousemove = function(ev) {
 
-      if(!throttleActive){
         if(drawMode){
     		  drawModeMove(ev, gl, canvas);
         }else{
         	move(ev, gl, canvas);
         }
-        setTimeout(function() {
-            throttleActive = false;
-        }, 16);
-      }
+        
+      
     }
 
     canvas.onmousewheel = function(ev) {
@@ -227,7 +231,7 @@ function click(ev, gl, canvas) {
 
 
   x = x-rect.left
-  y = 500-(y-rect.top)
+  y = canvas.width-(y-rect.top)
 
  var pixel = new Uint8Array(4);
  gl.readPixels(x, y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel)
@@ -255,19 +259,7 @@ function move(ev, gl, canvas) {
     y = (canvas.height / 2 - (y - rect.top)) * 2;
   
     if (dragging && ctrlDown) {
-    var cameraPosition = new Vector3([scene.camera.position[0],scene.camera.position[1],scene.camera.position[2]]);
-    var objectPosition = new Vector3([
-        pickedObject.translation.elements[12],
-        pickedObject.translation.elements[13],
-        pickedObject.translation.elements[14]
-    ]); 
-//     console.log("pickedObject.translation.elements:", pickedObject.translation.elements);
-// console.log("objectPosition.elements:", objectPosition.elements);
-// console.log("cameraPosition: ", cameraPosition);
-    var rotationAxis = objectPosition; // Example axis calculation
-    rotationAxis.subtract(cameraPosition);
-    // Apply rotation using the dynamically determined axis
-    // rotateObjectRelativeToCamera(ev.movementX, ev.movementY);
+        //rotateObjectRelativeToCamera(ev.movementX, ev.movementY);
         rotateObject(ev.movementX, ev.movementY);
         if (!requestId) {
             requestId = requestAnimationFrame(() => {
@@ -301,73 +293,20 @@ function dragObject(x,y) {
 }
 
 function rotateObject(x,y){
+
   var rotationX = new Matrix4;
   var rotationY = new Matrix4;
-  // console.log(rotationAxis);
-  // rotationX.setRotate(x,0,1,0);
-  // rotationY.setRotate(y,1,0,0);
-  // var xTranslate = [x*rotationAxis.elements[0],x*rotationAxis.elements[1],x*rotationAxis.elements];
-  // var yTranslate = [y*rotationAxis.elements[0],y*rotationAxis.elements[1],y*rotationAxis.elements[2]];
+  var xAxis = new Vector3(camera.cameraUp);
+  var yAxis = new Vector3(camera.cameraRight);
+  var invObjectRotation = new Matrix4;
+  invObjectRotation.setInverseOf(pickedObject.rotation);
 
-  rotationX.setRotate(x,camera.cameraUp[0],camera.cameraUp[1],camera.cameraUp[2]);
-  rotationY.setRotate(y,camera.cameraRight[0],camera.cameraRight[1],camera.cameraRight[2]);
+  xAxis = invObjectRotation.multiplyVector3(xAxis);
+  yAxis = invObjectRotation.multiplyVector3(yAxis);
 
+  rotationX.setRotate(x,xAxis.elements[0],xAxis.elements[1],xAxis.elements[2]);
+  rotationY.setRotate(y,yAxis.elements[0],yAxis.elements[1],yAxis.elements[2]);
 
   pickedObject.rotation = pickedObject.rotation.multiply(rotationX).multiply(rotationY);
-  // pickedObject.rotation = pickedObject.rotation.multiply(rotationY);
-}
 
-function rotateObjectRelativeToCamera(mouseMovementX, mouseMovementY) {
-
-    // Step 1: Get camera and object positions
-    var cameraPosition = new Vector3([scene.camera.position[0], scene.camera.position[1], scene.camera.position[2]]);
-    var objectPosition = new Vector3([
-        pickedObject.translation.elements[12],
-        pickedObject.translation.elements[13],
-        pickedObject.translation.elements[14]
-    ]);
-
-    // Step 2: Calculate direction vector from camera to object
-    var directionVector = objectPosition;
-    directionVector.subtract(cameraPosition);
-    directionVector.normalize();
-
-
-//RIGHT HERE YOU NEED TO MODIFY THE EXISTING CODE SO ITS CLEAR WHICH AXIS
-    //THEN REPLICATE FOR OTHER AXIS
-    //HOPEFULLY THIS GETS THE SCREENSPACE ROTATIONWE'RE LOOKING FOR
-
-
-    // Step 3: Determine rotation axis (perpendicular to direction and camera's up vector)
-    var cameraUp = new Vector3([scene.camera.cameraUp[0],scene.camera.cameraUp[1],scene.camera.cameraUp[2]]);
-    var rotationAxis = directionVector;
-    cameraUp.elements = [0,1,0];
-    rotationAxis.elements = [0,0,-1];
-    rotationAxis.cross(cameraUp);
-
-    rotationAxis.normalize();
-
-    // Step 4: Determine rotation angle (based on mouse movement or another parameter)
-    var rotationAngle = mouseMovementY;  // Adjust the sign and scale as needed
-
-    // Step 5: Create rotation matrix and apply to object
-    var rotationMatrix = new Matrix4();
-    rotationMatrix.setRotate(rotationAngle, rotationAxis.elements[0], rotationAxis.elements[1], rotationAxis.elements[2]);
-
-    // Apply the rotation to the object's transformation matrix
-    pickedObject.rotation = pickedObject.rotation.multiply(rotationMatrix);
-
-    // Step 6: Redraw the scene
-    scene.drawEverything();
-}
-
-function drawLoop(){
-  
-  if (drawMode && penDown && newSORPoints.length>0) {
-    SORPreview.draw();
-  }else{
-    
-    scene.drawEverything();
-  }
-  requestAnimationFrame(drawLoop);
 }
