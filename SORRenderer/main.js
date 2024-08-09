@@ -296,7 +296,9 @@ function dragObject(x,y) {
   var xTranslate = [x*camera.cameraRight[0],x*camera.cameraRight[1],x*camera.cameraRight[2]];
   var yTranslate = [y*camera.cameraUp[0],y*camera.cameraUp[1],y*camera.cameraUp[2]];
   translate.setTranslate(xTranslate[0]+yTranslate[0],xTranslate[1]+yTranslate[1],xTranslate[2]+yTranslate[2])
-  pickedObject.translation = pickedObject.translation.multiply(translate)
+  try{
+    pickedObject.translation = pickedObject.translation.multiply(translate)
+  }catch(err){}
 
 }
 
