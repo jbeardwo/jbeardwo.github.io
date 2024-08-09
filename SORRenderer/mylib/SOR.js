@@ -220,7 +220,7 @@ mySORClass.prototype.calcSmoothNormals = function() {
     }
     //This is the last vertex from the first set
     //top Right
-    currentNormal = this.faceNormals[baseSize-1];
+    currentNormal = this.faceNormals[baseSize-2];
     //top Left (wraparound)
     addedNormal = this.faceNormals[this.faceNormals.length-1];
     currentNormal = normalize(addVectors(currentNormal, addedNormal));
@@ -284,12 +284,14 @@ mySORClass.prototype.calcSmoothNormals = function() {
         smoothNormals.push(currentNormal);
     }
     //final vertex of final group
-    //top right
+    //top righ<C-r>
     currentNormal = this.faceNormals[baseSize-2];
     //top left
-    addedNormal = this.faceNormals[this.faceNormals.length-1];
+    console.log(currentNormal);
+    addedNormal = this.faceNormals[(baseSize-1)*35-1];
     currentNormal = normalize(addVectors(currentNormal,addedNormal));
-    smoothNormals.push(currentNormal);
+    
+    smoothNormals.push(smoothNormals[baseSize-1]);
 
     return smoothNormals;
 }
@@ -329,7 +331,7 @@ mySORClass.prototype.drawNormals = function() {
     }
 
 
-    var normalCluster = new lineCluster(normalLines,[1.0,0.0,0.0,1.0]);
+    var normalCluster = new lineCluster(normalLines,[1.0,0.0,0.0,1.0],50);
     normalCluster.transforms.elements = this.transforms.elements;
     normalCluster.draw();
 }
@@ -413,9 +415,6 @@ mySORClass.prototype.draw = function() {
     
     gl.enable(gl.CULL_FACE);
     gl.cullFace(gl.FRONT); 
-
-    
-
 
     gl.uniform3f(u_CameraPosition,false, scene.camera.position[0],scene.camera.position[1],scene.camera.position[2]);
 

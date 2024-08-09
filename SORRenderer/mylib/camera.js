@@ -9,11 +9,21 @@ function myCamera(position, worldUp){
 	this.velocity = 50;
 	this.sensitivity = 2;
 	this.updateVectors();
+	this.orthoView = false;
+}
+
+myCamera.prototype.toggleOrtho = function() {
+	this.orthoView = !this.orthoView;
+	scene.drawEverything();
 }
 
 myCamera.prototype.getViewMatrix = function() {
 	var mvpMatrix = new Matrix4()
-	mvpMatrix.setPerspective(30, canvas.width / canvas.height, 1, 10000);
+	if(this.orthoView){
+		mvpMatrix.setOrtho(-1*canvas.width,canvas.width,-1*canvas.height,canvas.height,1,10000);
+	}else{
+		mvpMatrix.setPerspective(30, canvas.width / canvas.height, 1, 10000);
+	}
 	var lookAt = addVectors(this.position,this.cameraFront)
 	mvpMatrix.lookAt(this.position[0], this.position[1], this.position[2],
     				 lookAt[0], lookAt[1], lookAt[2],

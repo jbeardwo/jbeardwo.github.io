@@ -6,7 +6,7 @@ function lineStrip(vertices, color) {
 }
 
 lineStrip.prototype.stripIndices = function() {
-    var indices = []
+    var indices = [];
     for (var i = 0; i < this.vertices.length / 3; i++) {
         indices.push(i)
     }

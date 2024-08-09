@@ -1,6 +1,7 @@
 function myScene(camera){
 	this.camera = camera;
 	this.objects = [];
+	this.directionalLight = new myDirectionalLight([-1,-1,1],[0,191,255]);
 }
 
 myScene.prototype.drawEverything = function() {
@@ -10,6 +11,7 @@ myScene.prototype.drawEverything = function() {
 
 		this.objects[i].draw();
 	}
+	this.directionalLight.draw();
 }
 
 myScene.prototype.findObject = function(alphaPicked) {
@@ -22,4 +24,13 @@ myScene.prototype.findObject = function(alphaPicked) {
 		}
 	}
 	return target;
+}
+
+myScene.prototype.toggleAllFlat = function() {
+	for(var i = 0;i<this.objects.length;i++){
+		if(this.objects[i].drawFlat!=null){
+			this.objects[i].drawFlat = !this.objects[i].drawFlat;
+		}
+	}
+	this.drawEverything();
 }

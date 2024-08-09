@@ -12,7 +12,12 @@
     <input type="checkbox" id="normalsCheck" onclick="scene.drawEverything();">Show Normals</input>
 
     <button type="button" id="draw" onclick="drawNewSOR()">Create New SOR</button>
+    <button type="button" id="ortho" onclick="scene.camera.toggleOrtho();">Toggle Ortho</button>
 
+    <button type="button" id="flat" onclick="scene.toggleAllFlat();">Toggle Flat</button>
+
+    <script src="./mylib/directionalLight.js"></script>
+    <script src="./mylib/thickLine.js"></script>
     <script src="./lib/webgl-utils.js"></script>
     <script src="./lib/webgl-debug.js"></script>
     <script src="./lib/cuon-utils.js"></script>

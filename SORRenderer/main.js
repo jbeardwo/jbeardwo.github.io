@@ -3,6 +3,8 @@ var gl = WebGLUtils.setupWebGL(canvas, {
     preserveDrawingBuffer: true
 });
 
+
+
 var drawMode = false;
 var newSORPoints = []; // The array for the position of a mouse press
 var penDown = 1; // Keeps track of when lines should be drawn
@@ -27,19 +29,21 @@ var camera = new myCamera(new coord(0, 0, 3000));
 var scene = new myScene(camera);
 
 
+
 function main() {
 	gl.clearColor(1.0, 1.0, 1.0, 0.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     // Disable the right click context menu
+    scene.drawEverything();
     canvas.addEventListener('contextmenu', function(e) {
         if (e.button == 2) {
             e.preventDefault();
             return false;
         }
     }, false)
-
+    
     canvas.tabIndex = 1000;
-
+    
     canvas.onkeydown = function (ev)  {
       scene.drawEverything();
         //w
@@ -107,6 +111,13 @@ function main() {
           ctrlDown = true;
         }
 
+        if (!requestId) {
+            requestId = requestAnimationFrame(() => {
+                scene.drawEverything();
+                requestId = null; // Reset request ID after drawing
+            });
+        }
+
     }
 
     canvas.onkeyup = function (ev)  {
@@ -162,6 +173,7 @@ function main() {
 function drawNewSOR(){
     drawMode = true;
     penDown = 1;
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 }
 
 function drawModeClick(ev, gl, canvas) {
@@ -241,12 +253,8 @@ function click(ev, gl, canvas) {
    pickedObject.selected = true;
    dragging = true;
  }
- initialX = ((x - rect.left) - canvas.width / 2) * 2;
- initialY = (canvas.height / 2 - (y - rect.top)) * 2;
-
- translate = new Matrix4()
- translate.setTranslate(20,0,0)
  scene.drawEverything();
+ console.log(pickedObject);
 }
 
 let requestId = null;

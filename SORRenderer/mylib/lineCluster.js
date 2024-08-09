@@ -1,10 +1,11 @@
-function lineCluster(vertices, color) {
+function lineCluster(vertices, color, thickness) {
     this.vertices = vertices
     this.color = color
     this.indices = this.clusterIndices()
     this.selectable = false;
     this.transforms = new Matrix4;
     this.transforms.setIdentity();
+    this.lineThickness = thickness
 }
 
 lineCluster.prototype.clusterIndices = function() {
@@ -16,7 +17,7 @@ lineCluster.prototype.clusterIndices = function() {
 }
 
 lineCluster.prototype.draw = function() {
-    gl.lineWidth(50.0);
+    gl.lineWidth(this.lineThickness);
     var drawVerts = Float32Array.from(this.vertices)
     var drawIndices = Uint16Array.from(this.indices)
         // Initialize shaders
