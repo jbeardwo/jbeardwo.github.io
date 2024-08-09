@@ -287,7 +287,6 @@ mySORClass.prototype.calcSmoothNormals = function() {
     //top righ<C-r>
     currentNormal = this.faceNormals[baseSize-2];
     //top left
-    console.log(currentNormal);
     addedNormal = this.faceNormals[(baseSize-1)*35-1];
     currentNormal = normalize(addVectors(currentNormal,addedNormal));
     
