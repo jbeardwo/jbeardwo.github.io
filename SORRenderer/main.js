@@ -254,7 +254,7 @@ function click(ev, gl, canvas) {
    dragging = true;
  }
  scene.drawEverything();
- console.log(pickedObject);
+ // console.log(pickedObject);
 }
 
 let requestId = null;
