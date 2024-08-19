@@ -403,7 +403,7 @@ mySORClass.prototype.draw = function() {
     }else{
       gl.uniform4f(u_Color, this.color[0], this.color[1], this.color[2], this.color[3])
     }
-    gl.uniform3f(u_dirLightDir,-1*scene.directionalLight.direction[0],scene.directionalLight.direction[1],scene.directionalLight.direction[2]);
+    gl.uniform3f(u_dirLightDir,-1*scene.directionalLight.direction[0],-1*scene.directionalLight.direction[1],scene.directionalLight.direction[2]);
     gl.uniform3f(u_dirLightColor,scene.directionalLight.color[0],scene.directionalLight.color[1],scene.directionalLight.color[2])
     gl.uniform1f(u_dirStrength,scene.dirStrength)
     gl.uniform1f(u_ambientStrength,scene.ambientStrength)
