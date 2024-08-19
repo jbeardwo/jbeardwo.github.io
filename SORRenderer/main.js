@@ -309,7 +309,10 @@ function rotateObject(x,y){
   var xAxis = new Vector3(camera.cameraUp);
   var yAxis = new Vector3(camera.cameraRight);
   var invObjectRotation = new Matrix4;
-  invObjectRotation.setInverseOf(pickedObject.rotation);
+  try{
+    invObjectRotation.setInverseOf(pickedObject.rotation);
+  }catch(err){}
+
 
   xAxis = invObjectRotation.multiplyVector3(xAxis);
   yAxis = invObjectRotation.multiplyVector3(yAxis);
@@ -317,6 +320,7 @@ function rotateObject(x,y){
   rotationX.setRotate(x,xAxis.elements[0],xAxis.elements[1],xAxis.elements[2]);
   rotationY.setRotate(y,yAxis.elements[0],yAxis.elements[1],yAxis.elements[2]);
 
-  pickedObject.rotation = pickedObject.rotation.multiply(rotationX).multiply(rotationY);
-
+  try{
+    pickedObject.rotation = pickedObject.rotation.multiply(rotationX).multiply(rotationY);
+  }catch(err){}
 }

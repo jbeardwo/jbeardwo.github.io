@@ -393,12 +393,20 @@ mySORClass.prototype.draw = function() {
     var u_Transforms = gl.getUniformLocation(program,'u_Transforms')
     var u_NormalTransforms = gl.getUniformLocation(program,'u_NormalTransforms')
     var u_CameraPosition = gl.getUniformLocation(program,'u_CameraPosition')
+    var u_dirLightDir = gl.getUniformLocation(program,'u_dirLightDir')
+    var u_dirLightColor = gl.getUniformLocation(program,'u_dirLightColor')
+    var u_dirStrength = gl.getUniformLocation(program,'u_dirStrength')
+    var u_ambientStrength = gl.getUniformLocation(program, 'u_ambientStrength')
 
     if(this.selected){
       gl.uniform4f(u_Color, 1, 0, 0, this.color[3])
     }else{
       gl.uniform4f(u_Color, this.color[0], this.color[1], this.color[2], this.color[3])
     }
+    gl.uniform3f(u_dirLightDir,-1*scene.directionalLight.direction[0],scene.directionalLight.direction[1],scene.directionalLight.direction[2]);
+    gl.uniform3f(u_dirLightColor,scene.directionalLight.color[0],scene.directionalLight.color[1],scene.directionalLight.color[2])
+    gl.uniform1f(u_dirStrength,scene.dirStrength)
+    gl.uniform1f(u_ambientStrength,scene.ambientStrength)
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LESS);
 

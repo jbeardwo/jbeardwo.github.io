@@ -1,7 +1,12 @@
 function myScene(camera){
 	this.camera = camera;
 	this.objects = [];
-	this.directionalLight = new myDirectionalLight([-1,-1,1],[0,191,255]);
+	this.directionalLight = new myDirectionalLight([-1,-1,1],[1.0,1.0,1.0]);
+	this.objects.push(this.directionalLight);
+	this.dirStrength = .9;
+	this.dirActive = true;
+	this.ambientStrength = .1;
+	this.ambientActive = true;
 }
 
 myScene.prototype.drawEverything = function() {
@@ -11,7 +16,7 @@ myScene.prototype.drawEverything = function() {
 
 		this.objects[i].draw();
 	}
-	this.directionalLight.draw();
+	// this.directionalLight.draw();
 }
 
 myScene.prototype.findObject = function(alphaPicked) {
@@ -31,6 +36,25 @@ myScene.prototype.toggleAllFlat = function() {
 		if(this.objects[i].drawFlat!=null){
 			this.objects[i].drawFlat = !this.objects[i].drawFlat;
 		}
+	}
+	this.drawEverything();
+}
+
+myScene.prototype.toggleDirLight = function() {
+	this.dirActive = !this.dirActive;
+		if(this.dirActive){
+			this.dirStrength = .9;
+		}else{
+			this.dirStrength = 0;
+		}
+		this.drawEverything();
+	}
+myScene.prototype.toggleAmbient = function(){
+	this.ambientActive = !this.ambientActive;
+	if(this.ambientActive){
+		this.ambientStrength = .1;
+	}else{
+		this.ambientStrength = 0;
 	}
 	this.drawEverything();
 }
