@@ -3,10 +3,12 @@ function myScene(camera){
 	this.objects = [];
 	this.directionalLight = new myDirectionalLight([-1,-1,1],[1.0,1.0,1.0]);
 	this.objects.push(this.directionalLight);
-	this.dirStrength = .9;
+	this.dirStrength = .8;
 	this.dirActive = true;
 	this.ambientStrength = .1;
 	this.ambientActive = true;
+	this.specularStrength = 0.0000000000000000000000000000001;
+	this.specularActive = true;
 }
 
 myScene.prototype.drawEverything = function() {
@@ -43,7 +45,7 @@ myScene.prototype.toggleAllFlat = function() {
 myScene.prototype.toggleDirLight = function() {
 	this.dirActive = !this.dirActive;
 		if(this.dirActive){
-			this.dirStrength = .9;
+			this.dirStrength = .8;
 		}else{
 			this.dirStrength = 0;
 		}
@@ -55,6 +57,15 @@ myScene.prototype.toggleAmbient = function(){
 		this.ambientStrength = .1;
 	}else{
 		this.ambientStrength = 0;
+	}
+	this.drawEverything();
+}
+myScene.prototype.toggleSpecular = function(){
+	this.specularActive = !this.specularActive;
+	if(this.specularActive){
+		this.specularStrength = 0.0000000000000000000000000000001;
+	}else{
+		this.specularStrength = 0;
 	}
 	this.drawEverything();
 }

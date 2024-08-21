@@ -397,21 +397,24 @@ mySORClass.prototype.draw = function() {
     var u_dirLightColor = gl.getUniformLocation(program,'u_dirLightColor')
     var u_dirStrength = gl.getUniformLocation(program,'u_dirStrength')
     var u_ambientStrength = gl.getUniformLocation(program, 'u_ambientStrength')
+    var u_specularStrength = gl.getUniformLocation(program, 'u_specularStrength')
+    var u_ViewPos = gl.getUniformLocation(program,'u_ViewPos')
 
     if(this.selected){
       gl.uniform4f(u_Color, 1, 0, 0, this.color[3])
     }else{
       gl.uniform4f(u_Color, this.color[0], this.color[1], this.color[2], this.color[3])
     }
+    gl.uniform3f(u_ViewPos,scene.camera.position[0],scene.camera.position[1],scene.camera.position[2])
     gl.uniform3f(u_dirLightDir,-1*scene.directionalLight.direction[0],-1*scene.directionalLight.direction[1],scene.directionalLight.direction[2]);
     gl.uniform3f(u_dirLightColor,scene.directionalLight.color[0],scene.directionalLight.color[1],scene.directionalLight.color[2])
     gl.uniform1f(u_dirStrength,scene.dirStrength)
     gl.uniform1f(u_ambientStrength,scene.ambientStrength)
+    gl.uniform1f(u_specularStrength,scene.specularStrength)
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LESS);
 
     var mvpMatrix = new Matrix4()
-    // mvpMatrix.setOrtho(-500, 500, -500, 500, -5000, 5000)
     mvpMatrix =  scene.camera.getViewMatrix();
 
     this.transforms.setIdentity();
