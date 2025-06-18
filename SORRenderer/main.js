@@ -90,20 +90,13 @@ function main() {
         }
         //-
         if(ev.which==189){
-          // if(dragging==true){
-          //   var translate = new Matrix4;
-          //   translate.setTranslate(0,0,25)
-          //   pickedObject.transforms = pickedObject.transforms.multiply(translate);
-          //   pickedObject.translation = pickedObject.translation.multiply(translate);
-          //   scene.drawEverything();
-          // }
-          for(var i = 0;i<60;i++){
-            scene.camera.updatePosition('FORWARD');
-          }
-          for(var i = 0;i<60;i++){
-            scene.camera.updatePosition('LEFT');
-          }
-          scene.camera.updateAngles(0,90);
+           if(dragging==true){
+             var translate = new Matrix4;
+             translate.setTranslate(0,0,25)
+             pickedObject.transforms = pickedObject.transforms.multiply(translate);
+             pickedObject.translation = pickedObject.translation.multiply(translate);
+             scene.drawEverything();
+           }
         }
         // console.log(ev.which)
         //ctrl
