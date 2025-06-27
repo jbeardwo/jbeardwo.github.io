@@ -1,15 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import './App.css'; // Import the CSS for styling
 
 function App() {
   return (
-    <div style={{ textAlign: 'center', paddingTop: '20vh', color: 'white' }}>
-      <h1>Hello, I’m John</h1>
-      <p>Welcome to my new site!</p>
+    <div className="app-container">
+      <div className="title">
+        AHHH
+      </div>
+      {/* Left half of the page */}
+      <div className="image-half left-half">
+        <div className="half-text">
+          Creative
+        </div>
+      </div>
+
+      {/* Right half of the page */}
+      <div className="image-half right-half">
+        <div className="half-text">
+          Technical
+        </div> 
+      </div>
     </div>
   );
 }
 
-export default App
+export default App;
