@@ -18,7 +18,6 @@
   width: 100vw;
   height: 100vh;
 
-  background-size: cover;
   background-position: right;  
   z-index: 1;
 }
@@ -45,7 +44,7 @@
 .right-half {
   background-image: url('/public/images/technical-bg.jpg');
   background-position: left center;
-  z-index: 2;
+  z-index: 3;
 }
 
 /* Styles for the page title (moved from App.css) */

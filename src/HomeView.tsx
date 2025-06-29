@@ -15,7 +15,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
 
   const [isCreativeClicked, setIsCreativeClicked] = useState(false);
   const [isTechnicalClicked, setIsTechnicalClicked] = useState(false);
-  const [bgImagePath, setBgImagePath] = useState(false);
+  const [bgImagePath, setBgImagePath] = useState(DEFAULT_BG_IMAGE);
 
   const bgAnimationControls = useAnimationControls();
 
@@ -31,7 +31,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
     });
 
     setTimeout(() => {
-    // onSelectView('creative');
+     onSelectView('creative');
     }, 600);
   };
 
@@ -47,7 +47,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
       })
 
     setTimeout(() => {
-    //  onSelectView('technical');
+      onSelectView('technical');
     }, 300);
   };
 
@@ -56,7 +56,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
 
       <motion.div 
         className="full-background-layer"
-        initial={{ x: 0, opacity: 1 }}
+        initial={{ x: "-50vw", opacity: 1 }}
         animate={bgAnimationControls}
         transition={{ type: "spring", duration: .5, bounce: 0 }}
         style={{ backgroundImage: `url(${bgImagePath})`  }}
@@ -85,7 +85,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
         onClick={handleTechnicalClick}
         initial={{ x: 0, opacity: 1 }}
         animate={isTechnicalClicked ? { x: "-50vw", opacity:1 } : { x:0, opacity:1 }}
-        transition={{ type: "spring", stiffness: 150, damping: 20 }}
+        transition={{ type: "spring", duration: .5, bounce: 0 }}
       >
         <div className="half-content">
           <h2>Technical Work</h2>
