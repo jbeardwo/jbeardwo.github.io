@@ -32,7 +32,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
 
     setTimeout(() => {
      onSelectView('creative');
-    }, 600);
+    }, 150);
   };
 
   const handleTechnicalClick = async () => {
@@ -48,7 +48,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
 
     setTimeout(() => {
       onSelectView('technical');
-    }, 300);
+    }, 150);
   };
 
   return (

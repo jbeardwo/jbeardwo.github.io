@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion'
 import HomeView from './HomeView';
 import CreativeView from './CreativeView'; 
 import TechnicalView from './TechnicalView'; 
@@ -19,17 +20,46 @@ function App() {
 
   return (
     <div className="app-container">
-      {currentView === 'home' && (
-        <HomeView onSelectView={handleSelectView} />
-      )}
+      <AnimatePresence> 
+        {currentView === 'home' && (
+          <motion.div
+            key="homeView"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1, zIndex : 1 }}
+            exit={{ opacity: 0, zIndex : 2 }}
+            transition={{ duration: 0.5 }}
+            className="full-screen-overlay"
+          >
+            <HomeView onSelectView={handleSelectView} />
+          </motion.div>
+        )}
 
-      {currentView === 'creative' && (
-        <CreativeView onBack={handleBackToHome} />
-      )}
+        {currentView === 'creative' && (
+          <motion.div
+            key="creativeView"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1, zIndex : 1 }}
+            exit={{ opacity: 0, zIndex : 2 }}
+            transition={{ duration: 0.5 }}
+            className="full-screen-overlay"
+          >
+            <CreativeView onBackToHome={handleBackToHome} />
+          </motion.div>
+        )}
 
-      {currentView === 'technical' && (
-        <TechnicalView onBack={handleBackToHome} />
-      )}
+        {currentView === 'technical' && (
+          <motion.div
+            key="technicalView"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1, zIndex : 1 }}
+            exit={{ opacity: 0, zIndex : 2 }}
+            transition={{ duration: 0.5 }}
+            className="full-screen-overlay"
+          >
+            <TechnicalView onBackToHome={handleBackToHome} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

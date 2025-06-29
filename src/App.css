@@ -25,3 +25,11 @@ html, body, #root, .app-container {
   align-items: center;
   overflow: hidden;
 }
+
+.full-screen-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
