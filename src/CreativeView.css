@@ -1,9 +1,14 @@
 .creative-view {
   background-image: url('/public/images/creative-bg.jpg'); 
-  background-size: cover;
-  background-position: right center;
-  background-repeat: no-repeat;
-  flex-direction: column;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-position: right;  
+  z-index: 1;
 }
 
 .creative-view .view-content {

@@ -1,9 +1,13 @@
 .technical-view {
   background-image: url('/public/images/technical-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-position: left;  
+  z-index: 1;
 }
 
 .technical-view .view-content {

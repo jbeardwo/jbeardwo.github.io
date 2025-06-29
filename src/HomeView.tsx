@@ -24,7 +24,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
     setIsTechnicalClicked(false);
     setBgImagePath(CREATIVE_BG_IMAGE);
     
-    await bgAnimationControls.set({ x: "-50vw" });
+    await bgAnimationControls.set({ x: "-50vw", backgroundPosition: "right" });
     await bgAnimationControls.start({
         x: 0,
         transition: { type: "spring", duration: .5, bounce: 0 }
@@ -40,7 +40,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
       setIsCreativeClicked(false);
       setBgImagePath(TECHNICAL_BG_IMAGE);
 
-      await bgAnimationControls.set({ x: "50vw" });
+      await bgAnimationControls.set({ x: "50vw" , backgroundPosition: "left"});
       await bgAnimationControls.start({
         x:0,
         transition: { type: "spring", duration: .5, bounce: 0 }
@@ -71,7 +71,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
         className="image-half left-half"
         onClick={handleCreativeClick}
         initial={{ x: 0, opacity: 1 }}
-        animate={isCreativeClicked ? { x: "50vw", opacity:1 } : { x:0, opacity:1 }}
+        animate={isCreativeClicked ? { x: "50vw", opacity:1, zIndex: 3 } : { x:0, opacity:1, zIndex: 2 }}
         transition={{ type: "spring", duration: .5, bounce: 0 }}
       >
         <div className="half-content">
@@ -84,7 +84,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
         className="image-half right-half"
         onClick={handleTechnicalClick}
         initial={{ x: 0, opacity: 1 }}
-        animate={isTechnicalClicked ? { x: "-50vw", opacity:1 } : { x:0, opacity:1 }}
+        animate={isTechnicalClicked ? { x: "-50vw", opacity:1 } : { x:0, opacity:1, zIndex: 2 }}
         transition={{ type: "spring", duration: .5, bounce: 0 }}
       >
         <div className="half-content">
