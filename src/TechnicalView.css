@@ -1,0 +1,33 @@
+.technical-view {
+  background-image: url('/public/images/technical-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-direction: column;
+}
+
+.technical-view .view-content {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.technical-view .back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.technical-view .back-button:hover {
+  background-color: #1e7e34;
+}

@@ -1,52 +1,27 @@
-/* Basic Reset for the page */
 html, body, #root, .app-container {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden; /* Prevents scrollbars if content slightly overflows */
+  overflow: hidden;
+  box-sizing: border-box; 
 }
 
-/* Container for the two halves */
 .app-container {
-  display: flex; /* Arranges children (image-halves) in a row */
-  flex-direction: row; /* Explicitly sets horizontal layout */
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-family: sans-serif;
 }
 
-.title {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-}
-
-/* Common styles for both image halves */
-.image-half {
-  width: 50vw; /* Each half takes exactly 50% of the viewport width */
-  height: 100vh; /* Each half takes 100% of the viewport height */
-  background-size: cover; /* Ensures the image covers the entire area without stretching */
-  background-repeat: no-repeat; /* Prevents image from repeating */
-}
-
-/* Specific background images for each half */
-.left-half {
-  background-image: url('/images/creative-bg.jpg'); /* Path to your creative image */
-  background-position: right; /* Centers the image within its half */
-}
-
-.right-half {
-  background-image: url('/images/technical-bg.jpg'); /* Path to your technical image */
-  background-position: left; /* Centers the image within its half */
-}
-
-.half-text {
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    width: 50vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.full-screen-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }

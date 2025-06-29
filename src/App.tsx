@@ -1,25 +1,35 @@
-import React from 'react';
-import './App.css'; // Import the CSS for styling
+import React, { useState } from 'react';
+import HomeView from './HomeView';
+import CreativeView from './CreativeView'; 
+import TechnicalView from './TechnicalView'; 
+import './App.css';
+
+type View = 'home' | 'creative' | 'technical';
 
 function App() {
+  const [currentView, setCurrentView] = useState<View>('home');
+
+  const handleSelectView = (view: View) => {
+    setCurrentView(view);
+  };
+
+  const handleBackToHome = () => {
+    setCurrentView('home');
+  };
+
   return (
     <div className="app-container">
-      <div className="title">
-        AHHH
-      </div>
-      {/* Left half of the page */}
-      <div className="image-half left-half">
-        <div className="half-text">
-          Creative
-        </div>
-      </div>
+      {currentView === 'home' && (
+        <HomeView onSelectView={handleSelectView} />
+      )}
 
-      {/* Right half of the page */}
-      <div className="image-half right-half">
-        <div className="half-text">
-          Technical
-        </div> 
-      </div>
+      {currentView === 'creative' && (
+        <CreativeView onBack={handleBackToHome} />
+      )}
+
+      {currentView === 'technical' && (
+        <TechnicalView onBack={handleBackToHome} />
+      )}
     </div>
   );
 }
