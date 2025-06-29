@@ -1,14 +1,11 @@
-/* src/HomeView.css */
-
 .home-view {
-  display: flex; /* Overrides full-screen-view's default to arrange halves in a row */
+  display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: stretch; /* Makes halves stretch to full height */
-  position: relative; /* Needed for positioning the title */
+  align-items: stretch;
+  position: relative;
   width: 100vw;
   height: 100vh;
-  /* This view will be visible when currentView is 'home' */
 }
 
 .full-background-layer{
@@ -22,19 +19,16 @@
   z-index: 1;
 }
 
-/* Common styles for both image halves */
 .image-half {
   width: 50vw;
   height: 100vh;
-  cursor: pointer; /* Indicates it's clickable */
+  cursor: pointer;
   z-index: 2;
-  /* Flexbox for centering content (like text) */
   display: flex;
-  justify-content: center; /* Horizontally centers content */
-  align-items: center;     /* Vertically centers content */
+  justify-content: center; 
+  align-items: center; 
 }
 
-/* Specific background images for each half */
 .left-half {
   background-image: url('/public/images/creative-bg.jpg');
   background-position: right;
@@ -45,13 +39,12 @@
   background-position: left;
 }
 
-/* Styles for the page title (moved from App.css) */
 .page-title {
   position: absolute;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10; /* Ensure it's on top */
+  z-index: 4;
 
   color: white;
   font-size: 3em;
@@ -60,7 +53,6 @@
   white-space: nowrap;
 }
 
-/* Styles for text within each image half (moved from App.css) */
 .half-content {
   color: white;
   font-size: 2.5em;
@@ -68,5 +60,5 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   text-align: center;
   padding: 10px;
-  transform: translate(0, -50px); /* Adjust as needed for offset */
+  transform: translate(0, -50px); 
 }

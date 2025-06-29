@@ -26,7 +26,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
     
     await bgAnimationControls.set({ x: "-50vw", backgroundPosition: "right" });
     await bgAnimationControls.start({
-        x: 0,
+        x: "0vw",
         transition: { type: "spring", duration: .5, bounce: 0 }
     });
 
@@ -42,7 +42,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
 
       await bgAnimationControls.set({ x: "50vw" , backgroundPosition: "left"});
       await bgAnimationControls.start({
-        x:0,
+        x:"0vw",
         transition: { type: "spring", duration: .5, bounce: 0 }
       })
 
@@ -71,7 +71,8 @@ function HomeView({ onSelectView }: HomeViewProps) {
         className="image-half left-half"
         onClick={handleCreativeClick}
         initial={{ x: 0, opacity: 1 }}
-        animate={isCreativeClicked ? { x: "50vw", opacity:1, zIndex: 3 } : { x:0, opacity:1, zIndex: 2 }}
+        //Moves image across screen, width adjustment is to prevent sub-pixel overlap issues
+        animate={isCreativeClicked ? { x: "50vw", opacity:1, zIndex: 3, width: "50.1vw" } : { x:0, opacity:1, zIndex: 2 }}
         transition={{ type: "spring", duration: .5, bounce: 0 }}
       >
         <div className="half-content">
@@ -84,7 +85,8 @@ function HomeView({ onSelectView }: HomeViewProps) {
         className="image-half right-half"
         onClick={handleTechnicalClick}
         initial={{ x: 0, opacity: 1 }}
-        animate={isTechnicalClicked ? { x: "-50vw", opacity:1 } : { x:0, opacity:1, zIndex: 2 }}
+        //Moves image across screen, width adjustment is to prevent sub-pixel overlap issues
+        animate={isTechnicalClicked ? { x: "-50vw", opacity:1, zIndex: 3, width: "50.1vw" } : { x:0, opacity:1, zIndex: 2 }}
         transition={{ type: "spring", duration: .5, bounce: 0 }}
       >
         <div className="half-content">
