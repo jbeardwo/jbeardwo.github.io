@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'technical';
+  src: url('/fonts/Kalmansk-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal; 
+}
+
+@font-face {
+  font-family: 'creative';
+  src: url('/fonts/SyneMono-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal; 
+}
+
 html, body, #root, .app-container {
   margin: 0;
   padding: 0;

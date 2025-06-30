@@ -8,52 +8,111 @@
   height: 100vh;
 }
 
-.full-background-layer{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
-  background-size: cover;
-  background-position: center;  
-  z-index: 1;
-  display:flex;
-  align-items: center;
-}
-
-.left-half {
-  background-image: url('/images/creative-bg.jpg');
-  background-position: right;
-  justify-content: right
-}
-
-.right-half {
-  background-image: url('/images/technical-bg3.jpg');
-  background-position: left;
-  justify-content: left;
-}
-
-.page-title {
+.page-header{
   position: absolute;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 5;
+}
+
+.portrait{
+  position: relative;
+  background-image: url('/images/me.jpg')
+}
+
+.page-title {
+  position: relative;
+  top: 20px;
   z-index: 4;
 
   color: white;
   font-size: 3em;
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
   font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   white-space: nowrap;
 }
 
+
+
+.full-background-layer{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+
+  background-size: cover;
+  z-index: 1;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-half {
+  background-image: url('/images/technical-bg3.jpg');
+  background-position: right ;
+}
+
+.right-half {
+  background-image: url('/images/creative-bg.jpg');
+  background-position: left;
+}
+
+
+
+
 .half-content {
-  color: white;
-  font-size: 2.5em;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  
   text-align: center;
   padding: 10px;
-  transform: translate(0, -50px); 
+  box-sizing: border-box;
+
+  max-width:450px;
+  min-width: 280px;
+}
+
+
+
+.left-content {
+  font-family : 'technical';
+  color: black;
+  font-size: 3vw;
+  transform: translateX(25vw);
+  letter-spacing: 2px;
+  
+  text-shadow:
+    -1px -1px 0 #A56A6F,
+     1px -1px 0 #A56A6F,
+    -1px  1px 0 #A56A6F,
+     1px  1px 0 #A56A6F;
+}
+
+.left-content h2 {
+  font-weight: 100;
+  margin-bottom: .5em;
+}
+
+.left-content p {
+  line-height: ;
+}
+
+.right-content {
+  font-family: 'creative';
+  color: white;
+  font-size: 2.24vw;
+  transform: translateX(-25vw);
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+
+.right-content h2 {
+  font-weight: 300;
+  margin-bottom: 1.2em;
+  margin-top: 1em;
 }

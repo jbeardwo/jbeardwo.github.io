@@ -34,37 +34,46 @@ function HomeView({ onSelectView }: HomeViewProps) {
   return (
     <div className="home-view full-screen-view">
 
+      <motion.div
+        className="page-header"
+        //animate={}
+        //transition={{ type: "spring", duration: .5, bounce: 0 }}
+      >
+
+        <div className="page-title">
+          My Awesome Portfolio
+        </div>
+        <div className="portrait">
+        </div>  
+      </motion.div>
+
       <motion.div 
         className="full-background-layer left-half"
-        onClick={handleCreativeClick}
+        onClick={handleTechnicalClick}
         initial={{ x: "-50vw", opacity: 1 }}
-        animate={isCreativeClicked ? { x: "0vw", opacity:1, zIndex:2 } : { x: "-50vw", opacity: 1 }}
-        transition={{ type: "spring", duration: .5, bounce: 0 }}
+        animate={isTechnicalClicked ? { x: "0vw", opacity:1, zIndex:2 } : { x: "-50vw", opacity: 1 }}
+        transition={{ type: "spring", duration: .5, bounce: 0 }} 
       >
-        <div className="half-content">
+        <div className="half-content left-content">
           <h2>Technical Work</h2>
           <p>Explore my technical portfolio.</p>
         </div>
+
       </motion.div>
 
       <motion.div 
         className="full-background-layer right-half"
-        onClick={handleTechnicalClick}
+        onClick={handleCreativeClick}
         initial={{ x: "50vw", opacity: 1 }}
-        animate={isTechnicalClicked ? { x: "0vw", opacity:1, zIndex:2 } : { x: "50vw", opacity: 1 }}
-        transition={{ type: "spring", duration: .5, bounce: 0 }} 
+        animate={isCreativeClicked ? { x: "0vw", opacity:1, zIndex:2 } : { x: "50vw", opacity: 1 }}
+        transition={{ type: "spring", duration: .5, bounce: 0 }}
       >
-        <div className="half-content">
-          <h2>Technical Work</h2>
-          <p>Explore my technical portfolio.</p>
+        <div className="half-content right-content">
+          <h2>Creative Work</h2>
+          <p>Explore my creative portfolio.</p>
         </div>
-
       </motion.div>
-
-      <div className="page-title">
-        My Awesome Portfolio
-      </div>
-
+      
     </div>
   );
 }
