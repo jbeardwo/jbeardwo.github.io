@@ -30,12 +30,12 @@
 }
 
 .left-half {
-  background-image: url('/public/images/creative-bg.jpg');
+  background-image: url('/images/creative-bg.jpg');
   background-position: right;
 }
 
 .right-half {
-  background-image: url('/public/images/technical-bg.jpg');
+  background-image: url('/images/technical-bg.jpg');
   background-position: left;
 }
 

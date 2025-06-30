@@ -6,7 +6,7 @@ interface HomeViewProps {
   onSelectView: (view: 'creative' | 'technical') => void;
 }
 
-const CREATIVE_BG_IMAGE = '/public/images/creative-bg.jpg';
+const CREATIVE_BG_IMAGE = '/images/creative-bg.jpg';
 const TECHNICAL_BG_IMAGE = '/public/images/technical-bg.jpg';
 const DEFAULT_BG_IMAGE = '/public/images/technical-bg1.jpg';
 
@@ -85,7 +85,6 @@ function HomeView({ onSelectView }: HomeViewProps) {
         className="image-half right-half"
         onClick={handleTechnicalClick}
         initial={{ x: 0, opacity: 1 }}
-        //Moves image across screen, width adjustment is to prevent sub-pixel overlap issues
         animate={isTechnicalClicked ? { x: "-50vw", opacity:1, zIndex: 3, width: "50.1vw" } : { x:0, opacity:1, zIndex: 2 }}
         transition={{ type: "spring", duration: .5, bounce: 0 }}
       >
