@@ -15,28 +15,23 @@
   width: 100vw;
   height: 100vh;
 
+  background-size: cover;
   background-position: center;  
   z-index: 1;
-}
-
-.image-half {
-  width: 50vw;
-  height: 100vh;
-  cursor: pointer;
-  z-index: 2;
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
+  display:flex;
+  align-items: center;
 }
 
 .left-half {
   background-image: url('/images/creative-bg.jpg');
   background-position: right;
+  justify-content: right
 }
 
 .right-half {
   background-image: url('/images/technical-bg.jpg');
   background-position: left;
+  justify-content: left;
 }
 
 .page-title {
