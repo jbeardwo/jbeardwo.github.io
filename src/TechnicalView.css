@@ -1,13 +1,16 @@
 .technical-view {
-  background-image: url('/public/images/technical-bg.jpg');
+  background-image: url('/images/technical-bg3.jpg');
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
 
-  background-position: left;  
+  background-size: cover;
+  background-position: center;  
   z-index: 1;
+  display:flex;
+  align-items: center;
 }
 
 .technical-view .view-content {
