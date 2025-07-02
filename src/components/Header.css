@@ -1,0 +1,78 @@
+/* Header.css - Styles for the reusable Header component */
+
+.page-header {
+
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  pad: 1px;
+}
+
+
+.oval-container {
+  padding: 3px 5px;
+  border-radius: 25px;
+  background-color: rgba(128, 128, 128, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-hover-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+}
+
+.icon-description {
+  position: absolute;
+  bottom: -40px;
+  white-space: nowrap;
+  font-size: 0.8em;
+  color: #fff;
+  text-align: center;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.portrait-description .icon-description {
+  bottom: -45px;
+}
+
+.icon-description::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid rgba(0, 0, 0, 0.7);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+}
+
+.portrait {
+  width: 45px;
+  height: 45px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  z-index: 2;
+}
