@@ -61,7 +61,7 @@
   border-radius: 25px;
   background-color: rgba(128, 128, 128, 0.5);
   display: flex;
-  justify-content: left; 
+  justify-content: center; 
   align-items: center;
   gap: 8px; 
 }

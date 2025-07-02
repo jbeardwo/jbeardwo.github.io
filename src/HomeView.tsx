@@ -35,7 +35,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
     setIsTechnicalClicked(false);
 
     setTimeout(() => {
-    onSelectView('creative');
+  //  onSelectView('creative');
     }, 600);
   };
   //clicking the Technical Half
@@ -44,7 +44,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
       setIsCreativeClicked(false);
 
     setTimeout(() => {
-      onSelectView('technical');
+  //    onSelectView('technical');
     }, 600);
   };
   //states for icons' hover text
@@ -61,7 +61,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
           <motion.div
             key="loading-overlay"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.4 } }}
+            exit={{ opacity: 0, transition: { duration: .75 } }}
             className="loading-overlay"
           >
             <div className="spinner"></div>
@@ -75,10 +75,18 @@ function HomeView({ onSelectView }: HomeViewProps) {
         icons all fan out from the middle, relative position based on width and gap*/}
       <motion.div
         className="page-header"
-        //animate={}
-        //transition={{ type: "spring", duration: .5, bounce: 0 }}
+        animate={isTechnicalClicked ? {left:"100%", x:"-105%"}
+                : isCreativeClicked ? {left: "0%", x:"+10%"}
+                : {left:"50%", x:"-50%"}}
+        transition={{ type: "spring", duration: .5, bounce: 0 }}
       >
-        <div className="oval-container">
+        <motion.div
+          className="oval-container"
+          initial={{width: 45, x:-3 }}
+          animate={animateIcons? {width: 199, x:"-3px"} : {width: 45, x:-3}}
+          transition={{ type: "spring", duration: .5, bounce: 0 }}
+        >
+
           {/* portrait */}
           <motion.div
               className="icon-hover-wrapper portrait-description"
@@ -181,7 +189,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
               </motion.p>
             </motion.div>
           </a>
-        </div>
+        </motion.div>
         
       </motion.div>
       
@@ -192,7 +200,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
         animate={isLoading ? { x: "-100vw", opacity: 1 }
          : (isTechnicalClicked ? { x: "0vw", opacity: 1, zIndex: 2 }
          : { x: "-50vw", opacity: 1 })}
-        transition={{ type: "spring", duration: .5, bounce: 0 }} 
+        transition={{ type: "spring", duration: .5, bounce: .2 }} 
       >
         <div className="half-content left-content">
           <h2>Technical Work</h2>
@@ -208,7 +216,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
         animate={isLoading ? { x: "100vw", opacity: 1 }
          : (isCreativeClicked ? { x: "0vw", opacity: 1, zIndex: 2 }
          : { x: "50vw", opacity: 1 })}
-        transition={{ type: "spring", duration: .5, bounce: 0 }}
+        transition={{ type: "spring", duration: .5, bounce: .2 }}
       >
         <div className="half-content right-content">
           <h2>Creative Work</h2>
