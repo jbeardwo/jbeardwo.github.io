@@ -50,7 +50,7 @@ function App() {
         {currentView === 'technical' && (
           <motion.div
             key="technicalView"
-            initial={{ opacity: 1 }}
+            initial={{ opacity: 1}}
             animate={{ opacity: 1, zIndex : 1 }}
             exit={{ opacity: 0, zIndex : 2 }}
             transition={{ duration: 0.5 }}

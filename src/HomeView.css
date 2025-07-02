@@ -1,3 +1,35 @@
+
+
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #222;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
 .home-view {
   display: flex;
   flex-direction: row;
@@ -6,19 +38,89 @@
   position: relative;
   width: 100vw;
   height: 100vh;
+  background-image: url('/images/home-bg.jpg');
 }
 
 .page-header{
   position: absolute;
   top: 20px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% - 3px));
   z-index: 5;
+
+  display: flex;
+  flex-direction: column;  
+  align-items: center;   
+  gap: 15px;
+}
+
+.oval-container {
+  
+  padding: 3px 5px;
+
+  border-radius: 25px;
+  background-color: rgba(128, 128, 128, 0.5);
+  display: flex;
+  justify-content: left; 
+  align-items: center;
+  gap: 8px; 
+}
+
+.icon-hover-wrapper {
+  position: relative;   
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  cursor: default;
+}
+
+.icon-description {
+  position: absolute;
+  bottom: -40px;
+  white-space: nowrap;
+  font-size: 0.8em;
+  color: #000;
+  text-align: center;
+  pointer-events: none; 
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.portrait-description .icon-description {
+  bottom: -45px;
+}
+
+.icon-description::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /*trick for making a triangle to point at icons */
+  /* make an empty div and set borders like this, can change arrow direction using border-top too. */
+  border-left: 6px solid transparent;  /* Left side of the triangle (transparent) */
+  border-right: 6px solid transparent; /* Right side of the triangle (transparent) */
+  border-bottom: 6px solid rgba(0, 0, 0, 0.7); /* Bottom side of the triangle (matches background color) */
+}
+
+.icon{
+  width: 40px;
+  height: 40px;
+  z-index: 1;
 }
 
 .portrait{
-  position: relative;
-  background-image: url('/images/me.jpg')
+
+  width: 45px;
+  height: 45px;
+  background-size: contain;
+  background-repeat: no-repeat; 
+  background-position: center;
+
+  border-radius: 50%;
+  z-index: 2;
 }
 
 .page-title {
@@ -49,6 +151,8 @@
   display:flex;
   align-items: center;
   justify-content: center;
+
+  opacity: 0;
 }
 
 .left-half {
@@ -95,9 +199,6 @@
   margin-bottom: .5em;
 }
 
-.left-content p {
-  line-height: ;
-}
 
 .right-content {
   font-family: 'creative';
