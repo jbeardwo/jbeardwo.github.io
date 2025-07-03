@@ -39,6 +39,27 @@
   background-color: #1e7e34;
 }
 
+.layout {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 10;
+
+  display: grid;
+  grid:
+    "header header header" auto
+    "leftSide body rightSide" 1fr
+    "footer footer footer" auto
+    / auto 1fr auto;
+  gap: 8px;
+}
+
+.header { grid-area: header; }
+.leftSide { grid-area: leftSide; }
+.body { grid-area: body; }
+.rightSide { grid-area: rightSide; }
+.footer { grid-area: footer; }
+
 .technical-intro-text {
   position: absolute;
   top: 0;

@@ -45,11 +45,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
       onSelectView('technical');
     }, 600);
   };
-  //states for icons' hover text
-  const hoverTextVariants = {
-    rest: { opacity: 0, y: -5, transition: { duration: 0.2, ease: "easeOut" } },
-    hover: { opacity: 1, y: 0, transition: { duration: 0.2, ease: "easeIn" } }
-  };
+
 
   return (
     // this is called a react fragment, lets us have 2 top level divs without parents.
@@ -113,6 +109,17 @@ function HomeView({ onSelectView }: HomeViewProps) {
         </div>
       </motion.div>
       
+      <motion.div
+        className="signature"
+        initial={{ bottom: "20px", left: "50%", x:"-50%"}}
+        animate={isTechnicalClicked ? { left:"100%", x:"calc(-100% - 60px)"}
+            : isCreativeClicked ? {left: "0%", x:"60px"} // Added x to creative side too for consistency
+            : {left:"50%", x:"-50%"}}
+        transition={{  type: "spring", duration: .5, bounce: .2 }}
+      >
+        John Beardwood
+      </motion.div>
+
     </div>
     </> //close the fragment
   );

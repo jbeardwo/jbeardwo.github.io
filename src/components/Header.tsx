@@ -40,11 +40,11 @@ function Header({ shouldAnimateFanOut = false }: HeaderProps) {
         ? {
             initial: { x: initialXOffset },
             animate: animateIcons ? { x: "0px" } : undefined,
-            transition: { // ADD bounce: 0 HERE
+            transition: {
                 type: "spring",
                 stiffness: 200,
                 damping: 15,
-                bounce: 0 // <--- ADDED THIS LINE previously!
+                bounce: 0
             }
           }
         : {
@@ -52,7 +52,6 @@ function Header({ shouldAnimateFanOut = false }: HeaderProps) {
             };
     };
 
-  // ADD THE 'return' STATEMENT HERE:
   return (
     <motion.div
       className="page-header"
@@ -146,7 +145,7 @@ function Header({ shouldAnimateFanOut = false }: HeaderProps) {
       </motion.div>
 
     </motion.div>
-  ); // CLOSE THE 'return' STATEMENT
+  ); 
 }
 
 export default Header;
