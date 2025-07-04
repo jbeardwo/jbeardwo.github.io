@@ -128,7 +128,7 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
         className="signature"
         initial={{y:"-50vh", left: "50%", x:"-50%", fontSize:"50px"}}
         animate={isTechnicalClicked ? {y:"0vh", left:"auto", right:"0%", x:"-60px", fontSize: "25px"}
-            : isCreativeClicked ? {y:"0vh", left: "0%", x:"60px", fontSize: "25px"} // Added x to creative side too for consistency
+            : isCreativeClicked ? {y:"0vh", left: "0%", right:"auto", x:"60px", fontSize: "25px"} // Added x to creative side too for consistency
             : {y:"0vh", left: "50%", x: "-50%", fontSize:"24px"}}
         transition={isTechnicalClicked||isCreativeClicked ? { type: "spring", duration: .5, bounce: .2 , delay:0} 
             : {  type: "spring", duration: 1, bounce: .2 , delay:1.5}}
