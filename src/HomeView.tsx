@@ -14,34 +14,32 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
   const [isCreativeClicked, setIsCreativeClicked] = useState(false);
   const [isTechnicalClicked, setIsTechnicalClicked] = useState(false);
   const[BgClass, setBgClass] = useState('default-home-bg')
-  const [isLoading, setIsLoading] = useState(() => {
-    const hasVisitedHomeViewInSession = sessionStorage.getItem('hasVisitedHomeViewInSession');
-    console.log(hasVisitedHomeViewInSession)
-    return hasVisitedHomeViewInSession ? false : true;
+  const [showLoading, setShowLoading] = useState(() => {
+    const loadShow = !lastView;
+    return loadShow;
   });
 
   //Offset the initial animations so they don't conflict with page load
   useEffect(() => {
-    const loadingTimer = setTimeout(() => {
-      setIsLoading(false);
-      sessionStorage.setItem('hasVisitedHomeViewInSession', 'true');
-    }, 500);
-
-    return () => {
-      clearTimeout(loadingTimer);
-    };
-  }, [isLoading]);
+    if (showLoading) {
+      const loadingTimer = setTimeout(() => {
+        setShowLoading(false);
+      }, 500);
+      
+      return () => {
+        clearTimeout(loadingTimer); };
+      }
+  }, [showLoading]);
 
   useEffect(() => {
-    console.log(`HomeView: BgClass determination useEffect triggered. isLoading: ${isLoading}, lastView: ${lastView}`);
-    if(isLoading){
+    if(showLoading){
       setBgClass("default-home-bg");
     }else if(lastView == "creative"){
       setBgClass("creative-home-bg");
     }else if(lastView == "technical"){
       setBgClass("technical-home-bg");
     }
-  },[isLoading,lastView]);
+  },[showLoading,lastView]);
 
 
   //clicking the Creative Half
@@ -69,7 +67,7 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
     <>
     {/* Loading Overlay */}
     <AnimatePresence>
-        {isLoading && (
+        {showLoading && (
           <motion.div
             key="loading-overlay"
             initial={{ opacity: 1 }}
@@ -99,7 +97,7 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
         className="full-background-layer left-half"
         onClick={handleTechnicalClick}
         initial={{ x: "-100vw", opacity: 1 }}
-        animate={isLoading ? { x: "-100vw", opacity: 1 }
+        animate={showLoading ? { x: "-100vw", opacity: 1 }
          : (isTechnicalClicked ? { x: "0vw", opacity: 1, zIndex: 2 }
          : { x: "-50vw", opacity: 1 })}
         transition={{ type: "spring", duration: .5, bounce: .2 }} 
@@ -115,7 +113,7 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
         className="full-background-layer right-half"
         onClick={handleCreativeClick}
         initial={{ x: "100vw", opacity: 1 }}
-        animate={isLoading ? { x: "100vw", opacity: 1 }
+        animate={showLoading ? { x: "100vw", opacity: 1 }
          : (isCreativeClicked ? { x: "0vw", opacity: 1, zIndex: 2 }
          : { x: "50vw", opacity: 1 })}
         transition={{ type: "spring", duration: .5, bounce: .2 }}

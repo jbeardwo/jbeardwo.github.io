@@ -12,7 +12,6 @@ function App() {
   const [lastView, setlastView] = useState<'creative'| 'technical'| null>(null);
 
   const handleSelectView = (view: View) => {
-     console.log(`App: handleSelectView - setting cameFromViewForHome to null. Current: ${currentView}, Going to: ${view}`);
     setlastView(null);
     setCurrentView(view);
   };
@@ -20,10 +19,8 @@ function App() {
   const handleBackToHome = () => {
     if (currentView === 'creative' || currentView === 'technical') {
       setlastView(currentView);
-      console.log(`App: handleBackToHome - currentView BEFORE change: ${currentView}`);
     } else {
       setlastView(null);
-      console.log(`App: handleBackToHome - currentView AFTER change: ${currentView}`);
     }
     setCurrentView('home');
   };
