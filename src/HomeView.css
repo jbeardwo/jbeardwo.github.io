@@ -41,7 +41,21 @@
   background-image: url('/images/home-bg.jpg');
 }
 
+.default-home-bg{
+ background-image: url('/images/home-bg.jpg'); 
+}
 
+.creative-home-bg{
+ background-image: url('/images/creative-bg.jpg');  
+ background-position: left;  
+ background-size: cover;
+}
+
+.technical-home-bg{
+ background-image: url('/images/technical-bg3.jpg');  
+ background-position: right;
+ background-size: cover;
+}
 
 .oval-container {
   

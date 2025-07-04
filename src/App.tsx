@@ -12,16 +12,18 @@ function App() {
   const [lastView, setlastView] = useState<'creative'| 'technical'| null>(null);
 
   const handleSelectView = (view: View) => {
+     console.log(`App: handleSelectView - setting cameFromViewForHome to null. Current: ${currentView}, Going to: ${view}`);
     setlastView(null);
     setCurrentView(view);
   };
 
   const handleBackToHome = () => {
     if (currentView === 'creative' || currentView === 'technical') {
-      setlastView(currentView); // Store 'creative' or 'technical'
+      setlastView(currentView);
+      console.log(`App: handleBackToHome - currentView BEFORE change: ${currentView}`);
     } else {
-      // This case should ideally not happen if the back button only appears on creative/technical views
       setlastView(null);
+      console.log(`App: handleBackToHome - currentView AFTER change: ${currentView}`);
     }
     setCurrentView('home');
   };
@@ -38,7 +40,7 @@ function App() {
             transition={{ duration: 0.5 }}
             className="full-screen-overlay"
           >
-            <HomeView onSelectView={handleSelectView} />
+            <HomeView onSelectView={handleSelectView} lastView={lastView} />
           </motion.div>
         )}
 
@@ -47,11 +49,11 @@ function App() {
             key="creativeView"
             initial={{ opacity: 1 }}
             animate={{ opacity: 1, zIndex : 1 }}
-            exit={{ opacity: 0, zIndex : 2 }}
+            exit={{ opacity: 1, zIndex : 2 }}
             transition={{ duration: 0.5 }}
             className="full-screen-overlay"
           >
-            <CreativeView onBackToHome={handleBackToHome} />
+            <CreativeView onBackToHome={handleBackToHome}  />
           </motion.div>
         )}
 
@@ -60,7 +62,7 @@ function App() {
             key="technicalView"
             initial={{ opacity: 1}}
             animate={{ opacity: 1, zIndex : 1 }}
-            exit={{ opacity: 0, zIndex : 2 }}
+            exit={{ opacity: 1, zIndex : 2 }}
             transition={{ duration: 0.5 }}
             className="full-screen-overlay"
           >

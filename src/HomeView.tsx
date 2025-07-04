@@ -5,18 +5,21 @@ import Header from '../src/components/Header';
 
 interface HomeViewProps {
   onSelectView: (view: 'creative' | 'technical') => void;
+  lastView?: 'creative' | 'technical' | null;
 }
 
 
-function HomeView({ onSelectView }: HomeViewProps) {
+function HomeView({ onSelectView, lastView }: HomeViewProps) {
 
   const [isCreativeClicked, setIsCreativeClicked] = useState(false);
   const [isTechnicalClicked, setIsTechnicalClicked] = useState(false);
+  const[BgClass, setBgClass] = useState('default-home-bg')
   const [isLoading, setIsLoading] = useState(() => {
     const hasVisitedHomeViewInSession = sessionStorage.getItem('hasVisitedHomeViewInSession');
     console.log(hasVisitedHomeViewInSession)
     return hasVisitedHomeViewInSession ? false : true;
   });
+
   //Offset the initial animations so they don't conflict with page load
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -27,7 +30,20 @@ function HomeView({ onSelectView }: HomeViewProps) {
     return () => {
       clearTimeout(loadingTimer);
     };
-  }, []);
+  }, [isLoading]);
+
+  useEffect(() => {
+    console.log(`HomeView: BgClass determination useEffect triggered. isLoading: ${isLoading}, lastView: ${lastView}`);
+    if(isLoading){
+      setBgClass("default-home-bg");
+    }else if(lastView == "creative"){
+      setBgClass("creative-home-bg");
+    }else if(lastView == "technical"){
+      setBgClass("technical-home-bg");
+    }
+  },[isLoading,lastView]);
+
+
   //clicking the Creative Half
   const handleCreativeClick = async () => {
     setIsCreativeClicked(true);
@@ -65,7 +81,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
         )}
     </AnimatePresence>
 
-    <div className="home-view full-screen-view">
+    <div className={`home-view full-screen-view ${BgClass}`}>
 
       {/* Header w/ portrait and icons */}
       <motion.div
