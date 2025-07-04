@@ -184,16 +184,22 @@
   transform: translateX(25vw);
   letter-spacing: 2px;
   
-  text-shadow:
+  /* text-shadow:
     -1px -1px 0 #A56A6F,
      1px -1px 0 #A56A6F,
     -1px  1px 0 #A56A6F,
-     1px  1px 0 #A56A6F;
+     1px  1px 0 #A56A6F; */
 }
 
 .left-content h2 {
   font-weight: 100;
   margin-bottom: 14px;
+  background-image: url("/images/creative-bg.jpg");
+  background-position: center left;
+  background-size: auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 
@@ -202,16 +208,22 @@
   color: white;
   font-size: 2.5vw;
   transform: translateX(-25vw);
-  text-shadow:
+  /* text-shadow:
     -1px -1px 0 #000,
      1px -1px 0 #000,
     -1px  1px 0 #000,
-     1px  1px 0 #000;
+     1px  1px 0 #000; */
 }
 
 .right-content h2 {
   font-weight: 100;
   margin-bottom: 8px;
+  background-image: url("/images/technical-bg3.jpg");
+  background-position: center;
+  background-size: 100vw 100vh;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .signature{

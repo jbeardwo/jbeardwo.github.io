@@ -12,16 +12,17 @@ function HomeView({ onSelectView }: HomeViewProps) {
 
   const [isCreativeClicked, setIsCreativeClicked] = useState(false);
   const [isTechnicalClicked, setIsTechnicalClicked] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [animateIcons, setAnimateIcons] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(() => {
+    const hasVisitedHomeViewInSession = sessionStorage.getItem('hasVisitedHomeViewInSession');
+    console.log(hasVisitedHomeViewInSession)
+    return hasVisitedHomeViewInSession ? false : true;
+  });
   //Offset the initial animations so they don't conflict with page load
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
+      sessionStorage.setItem('hasVisitedHomeViewInSession', 'true');
     }, 500);
-
-
 
     return () => {
       clearTimeout(loadingTimer);
@@ -33,8 +34,8 @@ function HomeView({ onSelectView }: HomeViewProps) {
     setIsTechnicalClicked(false);
 
     setTimeout(() => {
-    onSelectView('creative');
-    }, 600);
+      onSelectView('creative');
+    }, 700);
   };
   //clicking the Technical Half
   const handleTechnicalClick = async () => {
@@ -43,7 +44,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
 
     setTimeout(() => {
       onSelectView('technical');
-    }, 600);
+    }, 1000);
   };
 
 
@@ -66,8 +67,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
 
     <div className="home-view full-screen-view">
 
-      {/* Header w/ portrait and icons 
-        icons all fan out from the middle, relative position based on width and gap*/}
+      {/* Header w/ portrait and icons */}
       <motion.div
         className='header-container'
         initial={{ left: "50%", x: "-50%" }}
@@ -78,6 +78,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
       >
         <Header shouldAnimateFanOut={true} />
       </motion.div>
+      {/* left half */}
       <motion.div 
         className="full-background-layer left-half"
         onClick={handleTechnicalClick}
@@ -93,7 +94,7 @@ function HomeView({ onSelectView }: HomeViewProps) {
         </div>
 
       </motion.div>
-      
+      {/*right half  */}
       <motion.div 
         className="full-background-layer right-half"
         onClick={handleCreativeClick}
@@ -108,14 +109,16 @@ function HomeView({ onSelectView }: HomeViewProps) {
           <p></p>
         </div>
       </motion.div>
-      
+      {/* signature */}
       <motion.div
         className="signature"
-        initial={{ bottom: "20px", left: "50%", x:"-50%"}}
-        animate={isTechnicalClicked ? { left:"100%", x:"calc(-100% - 60px)"}
-            : isCreativeClicked ? {left: "0%", x:"60px"} // Added x to creative side too for consistency
-            : {left:"50%", x:"-50%"}}
-        transition={{  type: "spring", duration: .5, bounce: .2 }}
+        initial={{y:"-50vh", left: "50%", x:"-50%", fontSize:"50px"}}
+        animate={isTechnicalClicked ? {y:"0vh", left:"auto", right:"0%", x:"-60px", fontSize: "25px"}
+            : isCreativeClicked ? {y:"0vh", left: "0%", x:"60px", fontSize: "25px"} // Added x to creative side too for consistency
+            : {y:"0vh", left: "50%", x: "-50%", fontSize:"24px"}}
+        transition={isTechnicalClicked||isCreativeClicked ? { type: "spring", duration: .5, bounce: .2 , delay:0} 
+            : {  type: "spring", duration: 1, bounce: .2 , delay:1.5}}
+        
       >
         John Beardwood
       </motion.div>

@@ -9,12 +9,20 @@ type View = 'home' | 'creative' | 'technical';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('home');
+  const [lastView, setlastView] = useState<'creative'| 'technical'| null>(null);
 
   const handleSelectView = (view: View) => {
+    setlastView(null);
     setCurrentView(view);
   };
 
   const handleBackToHome = () => {
+    if (currentView === 'creative' || currentView === 'technical') {
+      setlastView(currentView); // Store 'creative' or 'technical'
+    } else {
+      // This case should ideally not happen if the back button only appears on creative/technical views
+      setlastView(null);
+    }
     setCurrentView('home');
   };
 
