@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import './HomeView.css'; 
 import Header from '../src/components/Header';
 
@@ -19,6 +19,10 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
     return loadShow;
   });
 
+  const controlsLeftSig = useAnimation();
+  const controlsRightSig = useAnimation();
+  const controlsSignature = useAnimation();
+
   //Offset the initial animations so they don't conflict with page load
   useEffect(() => {
     if (showLoading) {
@@ -30,6 +34,57 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
         clearTimeout(loadingTimer); };
       }
   }, [showLoading]);
+
+  useEffect(() => {
+    if(!showLoading){
+      const runHalfSigAnimation = async () => {
+        await Promise.all([  
+          controlsLeftSig.start({
+            left: "50%",
+            x: "-100%",
+            transition: { type: "spring", duration: .5, bounce: .2, delay: 0 }
+          }),
+          controlsRightSig.start({
+            left: "50%",
+            x: "0%",
+            transition: { type: "spring", duration: .5, bounce: .2, delay: 0 }
+          })
+        ]);
+
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        await Promise.all([
+          controlsLeftSig.start({
+            opacity:0,
+            transition:{ duration: .5}
+          }),
+          controlsRightSig.start({
+            opacity:0,
+            transition:{ duration: .5}
+          }),
+          controlsSignature.start({
+            opacity:1,
+            transition:{ duration: .15}
+          })
+        ]);
+
+        await new Promise(resolve => setTimeout(resolve, 300));
+        controlsSignature.start({
+          y:"0vh", left: "50%", x: "-50%", fontSize:"24px",
+          transition: {  type: "spring", duration: 1, bounce: .2 , delay:0}
+        }
+      )
+
+      };
+      
+      
+
+      runHalfSigAnimation();
+   
+    }
+  }, [showLoading, controlsLeftSig, controlsRightSig, controlsSignature]);
+
+
 
   useEffect(() => {
     if(showLoading){
@@ -46,7 +101,10 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
   const handleCreativeClick = async () => {
     setIsCreativeClicked(true);
     setIsTechnicalClicked(false);
-
+    controlsSignature.start({
+        y:"0vh", left: "0%", right:"auto", x:"60px", fontSize: "25px",
+        transition:{ type: "spring", duration: .5, bounce: .2 , delay:0}  
+      })
     setTimeout(() => {
       onSelectView('creative');
     }, 700);
@@ -55,7 +113,10 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
   const handleTechnicalClick = async () => {
       setIsTechnicalClicked(true);
       setIsCreativeClicked(false);
-
+      controlsSignature.start({
+        y:"0vh", left:"auto", right:"0%", x:"-60px", fontSize: "25px",
+        transition:{ type: "spring", duration: .5, bounce: .2 , delay:0}  
+      })
     setTimeout(() => {
       onSelectView('technical');
     }, 1000);
@@ -104,9 +165,9 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
       >
         <div className="half-content left-content">
           <h2>Technical</h2>
+          
           <p></p>
         </div>
-
       </motion.div>
       {/*right half  */}
       <motion.div 
@@ -124,20 +185,34 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
         </div>
       </motion.div>
       {/* signature */}
-      <motion.div
+      
+
+    </div>
+    <motion.div
         className="signature"
-        initial={{y:"-50vh", left: "50%", x:"-50%", fontSize:"50px"}}
-        animate={isTechnicalClicked ? {y:"0vh", left:"auto", right:"0%", x:"-60px", fontSize: "25px"}
-            : isCreativeClicked ? {y:"0vh", left: "0%", right:"auto", x:"60px", fontSize: "25px"} // Added x to creative side too for consistency
-            : {y:"0vh", left: "50%", x: "-50%", fontSize:"24px"}}
-        transition={isTechnicalClicked||isCreativeClicked ? { type: "spring", duration: .5, bounce: .2 , delay:0} 
-            : {  type: "spring", duration: 1, bounce: .2 , delay:1.5}}
-        
+        initial={{y:"-50vh", left: "50%", x:"-47.5%", fontSize:"48px", opacity:0}}
+        animate={controlsSignature}
       >
         John Beardwood
       </motion.div>
+    <motion.div
+      className="half-signature"
+      initial={{y:"-50vh", left: "0%", x:"-50%", opacity:1}}
+      animate={controlsLeftSig}
+      transition={ {  type: "spring", duration: .5, bounce: .2 , delay:0}}
+    >
+        John Be
+    </motion.div>
+    <motion.div
+      className="half-signature"
+      initial={{y:"-50vh", left: "100%", x:"-50%"}}
+      animate={controlsRightSig}
+      transition={ {  type: "spring", duration: .5, bounce: .2 , delay:0}}
+    >
+       ardwood 
+    </motion.div>
 
-    </div>
+
     </> //close the fragment
   );
 }

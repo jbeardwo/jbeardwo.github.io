@@ -251,6 +251,17 @@
   white-space: nowrap;
 }
 
+.half-signature{
+  font-family: 'neutral';
+  color: orange;
+  font-size: 48px;
+  z-index: 5;
+  position: absolute;
+  pad: 1px;
+  bottom:20px;
+  white-space: nowrap;
+}
+
 .home-button{
   width: 40px;
   height: 40px;
