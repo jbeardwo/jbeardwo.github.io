@@ -72,7 +72,7 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
           })
         ]);
 
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await new Promise(resolve => setTimeout(resolve, 0));
         controlsSignature.start({
           y:"0vh", left: "50%", x: "-50%", fontSize:"24px",
           transition: {  type: "spring", duration: 1, bounce: .2 , delay:0}
