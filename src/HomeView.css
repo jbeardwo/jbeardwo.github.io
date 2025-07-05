@@ -214,6 +214,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  user-select: none;
 }
 
 
@@ -238,6 +239,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  user-select: none;
 }
 
 .signature{
@@ -260,6 +262,7 @@
   pad: 1px;
   bottom:20px;
   white-space: nowrap;
+  user-select: none;
 }
 
 .home-button{

@@ -12,7 +12,7 @@ function App() {
   const [lastView, setlastView] = useState<'creative'| 'technical'| null>(null);
 
   const handleSelectView = (view: View) => {
-    setlastView(null);
+    setlastView(view as 'creative' | 'technical' | null);
     setCurrentView(view);
   };
 
@@ -25,8 +25,17 @@ function App() {
     setCurrentView('home');
   };
 
+  const backgroundClass = 
+    lastView === 'creative' ? 'bg-from-creative' :
+    lastView === 'technical' ? 'bg-from-technical' :
+    '';
+
   return (
+
     <div className="app-container">
+
+      <div className={`bg-dup ${backgroundClass}`}></div>
+
       <AnimatePresence> 
         {currentView === 'home' && (
           <motion.div

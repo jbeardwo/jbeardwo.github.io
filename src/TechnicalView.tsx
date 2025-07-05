@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { motion  } from 'framer-motion';
 import './TechnicalView.css';
 import Header from '../src/components/Header';
@@ -8,9 +8,17 @@ interface TechnicalViewProps {
 }
 
 function TechnicalView({ onBackToHome }: TechnicalViewProps) {
+  const [isHomeClicked, setIsHomeClicked] = useState(false);
+
+  const handleHomeClick = async () => {
+    setIsHomeClicked(true);
+    setTimeout(() => {
+      onBackToHome();
+    }, 700);
+  }
+
   return (
     <>
-    
       <motion.div
         className="technical-intro-text"
         initial={{y:0, opacity: 1 }}
@@ -24,43 +32,44 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
       </motion.div>
     
 
-      <div className="technical-view full-screen-view">
+      <motion.div className="technical-view full-screen-view"
+        initial={{opacity: 1}}
+        animate={isHomeClicked? {opacity: 0}
+            : {opacity: 1}}
+        transition={{duration: 0.5}}
+      >
         
         <motion.div
           className='header-container'
           initial={{left:"100%", x:"-110%"}}
-          
         >
           <Header shouldAnimateFanOut={false} />
         </motion.div>
-        
-      </div>
-      <section className="layout">
-            <div className="header">1</div>
-            <div className="leftSide">2</div>
-            <div className="body">3</div>
-            <div className="rightSide">4</div>
-            <div className="footer">5</div>
-          </section>
+        <section className="layout">
+          <div className="header">1</div>
+          <div className="leftSide">2</div>
+          <div className="body">3</div>
+          <div className="rightSide">4</div>
+          <div className="footer">5</div>
+        </section>
     
 
-      <motion.div
-        className="signature"
-        initial={{bottom: "20px", left:"100%", x:"calc(-100% - 60px)"}}
-        // animate={isTechnicalClicked ? {left:"100%", x:"calc(-110% - 60px)"}
-        //     : isCreativeClicked ? {left: "0%", x:"calc(+10% + 60px)"} // Added x to creative side too for consistency
-        //     : {left:"50%", x:"-50%"}}
-        // transition={{  type: "spring", duration: .5, bounce: .2 }}
-      >
-        John Beardwood
+        <motion.div
+          className="signature"
+          initial={{bottom: "20px", left:"100%", x:"calc(-100% - 60px)"}}
+        >
+          John Beardwood
+        </motion.div>
+        <motion.img src="/home-heart-fill.svg"
+          className= "home-button"
+          initial={{bottom: "-100px", left:"100%", x:"-50px"}}
+          animate={{bottom: "20px", left:"100%", x:"-50px"}}
+          transition={{duration : 0.5, delay: 0.5}}
+          onClick={handleHomeClick}
+        ></motion.img>
+
       </motion.div>
-      <motion.img src="/home-heart-fill.svg"
-        className= "home-button"
-        initial={{bottom: "-100px", left:"100%", x:"-50px"}}
-        animate={{bottom: "20px", left:"100%", x:"-50px"}}
-        transition={{duration : 0.5, delay: 0.5}}
-        onClick={onBackToHome}
-      ></motion.img>
+      
     </>
   );
 }

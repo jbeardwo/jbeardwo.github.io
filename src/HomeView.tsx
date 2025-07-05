@@ -13,7 +13,11 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
 
   const [isCreativeClicked, setIsCreativeClicked] = useState(false);
   const [isTechnicalClicked, setIsTechnicalClicked] = useState(false);
-  const[BgClass, setBgClass] = useState('default-home-bg')
+  const [BgClass, setBgClass] = useState(() => {
+    if (lastView === 'creative') return 'creative-home-bg';
+    if (lastView === 'technical') return 'technical-home-bg';
+    return 'default-home-bg';
+  });
   const [showLoading, setShowLoading] = useState(() => {
     const loadShow = !lastView;
     return loadShow;
@@ -87,14 +91,14 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
 
 
   useEffect(() => {
-    if(showLoading){
-      setBgClass("default-home-bg");
-    }else if(lastView == "creative"){
-      setBgClass("creative-home-bg");
-    }else if(lastView == "technical"){
-      setBgClass("technical-home-bg");
-    }
-  },[showLoading,lastView]);
+  if (lastView === "creative") {
+    setBgClass("creative-home-bg");
+  } else if (lastView === "technical") {
+    setBgClass("technical-home-bg");
+  } else {
+    setBgClass("default-home-bg");
+  }
+}, [lastView]);
 
 
   //clicking the Creative Half

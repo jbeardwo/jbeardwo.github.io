@@ -56,3 +56,25 @@ html, body, #root, .app-container {
     width: 100vw;
     height: 100vh;
 }
+
+.bg-dup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/images/home-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.bg-dup.bg-from-creative{
+  background-image: url('/images/creative-bg.jpg'); 
+  background-position: left;
+}
+
+.bg-dup.bg-from-technical{
+  background-image: url('/images/technical-bg3.jpg'); 
+  background-position: right;
+}
