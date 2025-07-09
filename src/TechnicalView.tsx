@@ -51,8 +51,19 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
         <section className="layout">
           <div className="header">1</div>
           <div className="leftSide">2</div>
-          <div className="body">3</div>
-          <div className="rightSide">4</div>
+          <div className="body">
+
+          </div>
+          <div className="rightSide">
+            
+            <div className="sidebar">
+              <img src='/images/mediaPlayerTemp.png'></img>
+              <div className="sidebar-content">
+                <p>4</p>
+              </div>
+              
+            </div>
+          </div>
           <div className="footer">5</div>
         </section>
     
@@ -65,8 +76,8 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
         </motion.div>
         <motion.img src="/home-heart-fill.svg"
           className= "home-button"
-          initial={{bottom: "-100px", left:"100%", x:"-50px"}}
-          animate={{bottom: "20px", left:"100%", x:"-50px"}}
+          initial={{bottom: "-100px", left:"100%", x:"-48px"}}
+          animate={{bottom: "23px", left:"100%", x:"-48px"}}
           transition={{duration : 0.5, delay: 0.5}}
           onClick={handleHomeClick}
         ></motion.img>
