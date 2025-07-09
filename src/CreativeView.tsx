@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { motion  } from 'framer-motion';
 import './CreativeView.css';
 import Header from '../src/components/Header';
+import AboutMeOverlay from './components/AboutMeOverlay';
 
 interface CreativeViewProps {
   onBackToHome: () => void;
@@ -9,6 +10,7 @@ interface CreativeViewProps {
 
 function CreativeView({ onBackToHome }: CreativeViewProps) {
   const [isHomeClicked, setIsHomeClicked] = useState(false);
+  const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
 
   const handleHomeClick = async () => {
     setIsHomeClicked(true);
@@ -31,6 +33,7 @@ function CreativeView({ onBackToHome }: CreativeViewProps) {
         </div>
       </motion.div>
 
+      <AboutMeOverlay isOpen={isAboutMeOpen} onClose={() => setIsAboutMeOpen(false)} />
 
       <motion.div className="creative-view full-screen-view"
       initial={{opacity: 1}}
@@ -44,7 +47,7 @@ function CreativeView({ onBackToHome }: CreativeViewProps) {
           className='header-container'
           initial={{left: "0%", x:"+10%"}}
         >
-          <Header shouldAnimateFanOut={false} />
+          <Header shouldAnimateFanOut={false} onPortraitClick={() => setIsAboutMeOpen(true)} />
         </motion.div>
         <section className="layout">
           <div className="header">1</div>

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { motion  } from 'framer-motion';
 import './TechnicalView.css';
 import Header from '../src/components/Header';
+import AboutMeOverlay from './components/AboutMeOverlay';
 
 interface TechnicalViewProps {
   onBackToHome: () => void;
@@ -9,6 +10,7 @@ interface TechnicalViewProps {
 
 function TechnicalView({ onBackToHome }: TechnicalViewProps) {
   const [isHomeClicked, setIsHomeClicked] = useState(false);
+  const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
 
   const handleHomeClick = async () => {
     setIsHomeClicked(true);
@@ -31,6 +33,7 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
         </div>
       </motion.div>
     
+      <AboutMeOverlay isOpen={isAboutMeOpen} onClose={() => setIsAboutMeOpen(false)} />
 
       <motion.div className="technical-view full-screen-view"
         initial={{opacity: 1}}
@@ -43,7 +46,7 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
           className='header-container'
           initial={{left:"100%", x:"-110%"}}
         >
-          <Header shouldAnimateFanOut={false} />
+          <Header shouldAnimateFanOut={false} onPortraitClick={() => setIsAboutMeOpen(true)}/>
         </motion.div>
         <section className="layout">
           <div className="header">1</div>

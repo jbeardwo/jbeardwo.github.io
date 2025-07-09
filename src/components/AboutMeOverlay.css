@@ -1,0 +1,72 @@
+.about-me-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 9998;
+}
+
+.about-me-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: #2c2c2c;
+  color: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  z-index: 9999;
+  max-width: 600px;
+  width: 50%;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-me-close-button {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.about-me-close-button:hover {
+  color: white;
+}
+
+.about-me-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 4px solid #c06e59;
+}
+
+.about-me-content {
+  text-align: center;
+}
+
+.about-me-content h2 {
+  font-family: 'neutral', sans-serif;
+  color: #c06e59;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+
+.about-me-content p {
+  font-family: sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}

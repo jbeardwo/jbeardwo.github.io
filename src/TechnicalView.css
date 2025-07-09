@@ -43,7 +43,7 @@
   width: 100vw;
   height: 100vh;
   position: absolute;
-  z-index: 10;
+  z-index: 5;
 
   display: grid;
   grid:
@@ -54,7 +54,10 @@
   gap: 8px;
 }
 
-.header { grid-area: header; }
+.header { 
+  grid-area: header; 
+  height: 80px;
+}
 .leftSide { grid-area: leftSide; }
 .body { grid-area: body; }
 .rightSide { grid-area: rightSide; }

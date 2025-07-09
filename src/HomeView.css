@@ -145,7 +145,7 @@
 .header-container{
   position: absolute;
   top: 20px;
-  z-index: 5;
+  z-index: 11;
 }
 
 .full-background-layer{
@@ -159,8 +159,9 @@
   align-items: center;
   justify-content: center;
 
-  opacity: 0;
+
 }
+
 
 .left-half {
   background-image: url('/images/technical-bg3.jpg');
@@ -198,11 +199,6 @@
   transform: translateX(25vw);
   letter-spacing: 2px;
   
-  /* text-shadow:
-    -1px -1px 0 #A56A6F,
-     1px -1px 0 #A56A6F,
-    -1px  1px 0 #A56A6F,
-     1px  1px 0 #A56A6F; */
 }
 
 .left-content h2 {
@@ -244,7 +240,7 @@
 
 .signature{
  font-family: 'neutral';
-  color: orange;
+  color: #c06e59;
   font-size: 25px;
   z-index: 5;
   position: absolute;
@@ -255,7 +251,7 @@
 
 .half-signature{
   font-family: 'neutral';
-  color: orange;
+  color: #c06e59;
   font-size: 48px;
   z-index: 5;
   position: absolute;
@@ -272,4 +268,5 @@
   position: absolute;
   pad: 1px;
   bottom:20px;
+  cursor: pointer;
 }

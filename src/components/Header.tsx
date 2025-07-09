@@ -3,10 +3,11 @@ import { motion } from 'framer-motion';
 import './Header.css';
 
 interface HeaderProps {
-  shouldAnimateFanOut?: boolean; // Optional prop to control the fanning animation
+  shouldAnimateFanOut?: boolean;
+  onPortraitClick: () => void;
 }
 
-function Header({ shouldAnimateFanOut = false }: HeaderProps) {
+function Header({ shouldAnimateFanOut = false, onPortraitClick }: HeaderProps) {
   const [animateIcons, setAnimateIcons] = useState(false);
 
   useEffect(() => {
@@ -55,10 +56,6 @@ function Header({ shouldAnimateFanOut = false }: HeaderProps) {
   return (
     <motion.div
       className="page-header"
-      // animate={isTechnicalClicked ? {left:"100%", x:"-105%"}
-      //          : isCreativeClicked ? {left: "0%", x:"+10%"}
-      //          : {left:"50%", x:"-50%"}}
-      // transition={{ type: "spring", duration: .5, bounce: 0 }}
     >
       <motion.div
         className="oval-container"
@@ -70,6 +67,7 @@ function Header({ shouldAnimateFanOut = false }: HeaderProps) {
           className="icon-hover-wrapper portrait-description"
           whileHover="hover"
           initial="rest"
+          onClick={onPortraitClick}  
         >
           <motion.img src="/images/me-square.jpg"
             className="icon portrait"
