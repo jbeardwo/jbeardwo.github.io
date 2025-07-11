@@ -1,0 +1,70 @@
+.slideshow-container {
+  position: relative;
+  width: 72%;
+  height: 50%;
+  max-width: 1000px;
+  overflow: hidden; /* Hide parts of images outside the container during transition */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(170, 170, 170, 0.7);
+  align-self: end;
+  flex-shrink: 0;
+}
+
+.slideshow-image {
+  max-width: 100%;
+  max-height: 100%; /* Ensure image fits vertically too */
+  object-fit: contain; /* or 'cover' depending on your desired image scaling */
+  position: absolute; /* Allows framer-motion to position for transitions */
+}
+
+.slideshow-navigation {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  z-index: 10;
+  padding: 0 10px; /* Space from edges */
+}
+
+.nav-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%; /* Makes them round */
+  font-size: 1.5em;
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.slideshow-dots {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+}
+
+.dot {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dot.active {
+  background-color: white;
+  transform: scale(1.2);
+}

@@ -47,29 +47,43 @@
 
   display: grid;
   grid:
-    "header header header gutter" auto
-    "body body rightSide gutter" 1fr
-    "footer footer footer gutter" auto
-    / auto 4fr 1fr 50px;
-  gap: 8px;
+    "header header header header gutter" auto
+    "body body bodyGap rightSide gutter" 1fr
+    "footer footer footer footer gutter" auto
+    / 3fr 8fr .75fr 3fr .25fr;
+  gap: 10px;
 }
 
 .header { 
   grid-area: header; 
   height: 80px;
 }
-.leftSide { grid-area: leftSide; }
+
+.leftSide { 
+  grid-area: leftSide;
+  width: 0px;
+}
+
 .body { 
   grid-area: body;
   display: flex;
   flex-direction: column;
-  justify-items: right;
+  justify-content: flex-start;
+  gap: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }
+
 .rightSide {
     grid-area: rightSide;
     display: flex;
   flex-direction: column;
  }
+
 .footer { 
   grid-area: footer; 
   height: 30px;
@@ -114,4 +128,81 @@
   background-color: transparent;
   z-index: 5;
   pointer-events: none;
+}
+
+.technical-summary{
+  position: relative;
+
+  width: 70%;
+  max-width: 1000px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
+  right: 4vw;
+  align-self: end; 
+}
+
+.technical-summary h1{
+  
+  font-weight: 100;
+  background-image: url("/images/creative-bg.jpg");
+  background-position: center left;
+  background-size: auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin:
+}
+
+.technical-summary p{
+  color: black;
+}
+
+
+
+
+.project-card{
+  align-self: end;
+  width: 80%;
+
+  display:flex;
+  flex-direction: row;
+  background-color: rgba(170, 170, 170, 0.7);
+  flex-wrap: nowrap;
+  padding: 10px;
+}
+
+.project-card img{
+  object-fit: fill;
+  width: 20vw;
+  height: 15vw;
+  align-self: center;
+}
+
+.project-summary{
+  height: 100%;
+  display:flex;
+  flex-direction: column;
+  background-color: rgba(170, 170, 170, 0.7);
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  margin-bottom: 0px;
+}
+
+.project-summary h1{
+  margin: 5px;
+  font-weight: 100;
+  background-image: url("/images/creative-bg.jpg");
+  background-position: center left;
+  background-size: auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.project-summary p{
+  margin: 0px;
 }
