@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { motion  } from 'framer-motion';
 import './TechnicalView.css';
 import Header from '../src/components/Header';
@@ -13,6 +13,8 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
   const [isHomeClicked, setIsHomeClicked] = useState(false);
   const [isAboutMeOpen, setIsAboutMeOpen] = useState(false);
 
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
   const handleHomeClick = async () => {
     setIsHomeClicked(true);
     setTimeout(() => {
@@ -25,6 +27,38 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
     '/images/SORSample.png',
     '/images/slide3.jpg',
   ];
+
+
+
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePos({ x: event.clientX, y: event.clientY });
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  useEffect(() => {
+    const iframe = document.getElementById('p5-visualizer') as HTMLIFrameElement | null;
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({
+        type: 'mouseMove',
+        x: mousePos.x,
+        y: mousePos.y,
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight
+      }, '*');
+    }
+  }, [mousePos]);
+
+
+
+
+
 
   return (
     <>
@@ -133,9 +167,10 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
           <div className="rightSide">
             
             <div className="sidebar">
-              <img src='/images/mediaPlayerTemp.png'></img>
+             <iframe id="p5-visualizer" src="Visualizer/index.html" style={{ objectFit: 'contain' }}></iframe>
+              {/* <img src='/images/mediaPlayerTemp.png'></img> */}
               <div className="sidebar-content">
-                <p></p>
+                <p>AHHHHH</p>
               </div>
               
             </div>

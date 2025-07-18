@@ -47,9 +47,9 @@
 
   display: grid;
   grid:
-    "header header header header gutter" auto
+    "body body header header gutter" auto
     "body body bodyGap rightSide gutter" 1fr
-    "footer footer footer footer gutter" auto
+    "body body footer footer gutter" auto
     / 3fr 8fr .75fr 3fr .25fr;
   gap: 10px;
 }
@@ -76,6 +76,7 @@
     width: 0;
     height: 0;
   }
+  margin:10px;
 }
 
 .rightSide {
@@ -90,14 +91,22 @@
 }
 
 .sidebar{
-  
+  opacity: 1; 
+
+  width: 100%;
   height: auto;
-  opacity: 1;
-  width: auto;
-  flex-grow: 1;
+  overflow: hidden;
+  flex-grow: 0;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.sidebar iframe{
+  width:100%;
+  height: 20vh;
+  border:none;
 }
 
 .sidebar img{
@@ -153,7 +162,6 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  margin:
 }
 
 .technical-summary p{

@@ -3,7 +3,7 @@
   width: 72%;
   height: 50%;
   max-width: 1000px;
-  overflow: hidden; /* Hide parts of images outside the container during transition */
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,9 +14,9 @@
 
 .slideshow-image {
   max-width: 100%;
-  max-height: 100%; /* Ensure image fits vertically too */
-  object-fit: contain; /* or 'cover' depending on your desired image scaling */
-  position: absolute; /* Allows framer-motion to position for transitions */
+  max-height: 100%;
+  object-fit: contain;
+  position: absolute;
 }
 
 .slideshow-navigation {
@@ -27,7 +27,7 @@
   justify-content: space-between;
   transform: translateY(-50%);
   z-index: 10;
-  padding: 0 10px; /* Space from edges */
+  padding: 0 10px;
 }
 
 .nav-button {
@@ -36,7 +36,7 @@
   border: none;
   padding: 10px 15px;
   cursor: pointer;
-  border-radius: 50%; /* Makes them round */
+  border-radius: 50%; 
   font-size: 1.5em;
   transition: background-color 0.3s ease;
 }
