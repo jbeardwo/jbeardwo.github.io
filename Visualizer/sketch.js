@@ -1,4 +1,4 @@
-let size = 10;
+let size = 1;
 let num = 10;
 let grid = [];
 let song;
@@ -16,13 +16,14 @@ let parentViewportHeight = 0;
 
 function preload(){
 	song = loadSound("weeb.mp3")
-}
+		size = windowHeight / 20;
+	}
 
-function setup() {
-	createCanvas(windowWidth, windowHeight, WEBGL);
+	function setup() {
+		createCanvas(windowWidth, windowHeight, WEBGL);
 
-	song.play();
-	fft = new p5.FFT();
+		song.play();
+		fft = new p5.FFT();
 	
 	window.addEventListener('message', (event) => {
 
@@ -36,8 +37,6 @@ function setup() {
 				parentViewportWidth = newParentViewportWidth;
 				parentViewportHeight = newParentViewportHeight;
 				
-				size = Math.max(5, parentViewportHeight / 40);
-				initializeGrid();
 			}
 		}
 	});
@@ -78,7 +77,7 @@ function windowResized() {
 }
 
 function draw() {
-	
+	size = windowHeight / 18;
 	clear();
 	// orbitControl();
 	
@@ -86,8 +85,8 @@ function draw() {
 	let rotX = 0;
 
 	if (parentViewportWidth > 0 && parentViewportHeight > 0) {
-		rotY = map(viewMouseX, 0, parentViewportWidth, 0.25*-PI, 0.25*PI);
-		rotX = map(viewMouseY, 0, parentViewportHeight, 0.25*PI, 0.25*-PI);
+		rotY = map(viewMouseX + mouseX, 0, parentViewportWidth, 0.75*-PI, 0.75*PI);
+		rotX = map(viewMouseY + mouseY, 0, parentViewportHeight, 0.75*PI, 0.75*-PI);
 	}
 
 	rotateX(rotX);
