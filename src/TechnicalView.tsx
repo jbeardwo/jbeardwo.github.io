@@ -28,7 +28,17 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
     '/images/slide3.jpg',
   ];
 
-
+  const sendCanvasOffset = () => {
+    const iframe = document.getElementById('p5-visualizer') as HTMLIFrameElement | null;
+    if (iframe && iframe.contentWindow) {
+      const rect = iframe.getBoundingClientRect();
+      return {
+        offsetX: rect.left,
+        offsetY: rect.top
+      };
+    }
+    return null;
+  };
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -37,14 +47,39 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
 
     document.addEventListener('mousemove', handleMouseMove);
 
+    const handleResize = () => {
+      const iframe = document.getElementById('p5-visualizer') as HTMLIFrameElement | null;
+      if (iframe && iframe.contentWindow) {
+        const offset = sendCanvasOffset();
+        if (offset) {
+          iframe.contentWindow.postMessage({
+            type: 'canvasOffset',
+            offsetX: offset.offsetX,
+            offsetY: offset.offsetY
+          }, '*');
+        }
+      }
+    };
+
+     window.addEventListener('resize', handleResize);
+
+     const timer = setTimeout(() => {
+      handleResize();
+    }, 100);
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timer);
     };
   }, []);
 
   useEffect(() => {
     const iframe = document.getElementById('p5-visualizer') as HTMLIFrameElement | null;
     if (iframe && iframe.contentWindow) {
+      // Send canvas offset with every mouse move to ensure it's always current
+      const offset = sendCanvasOffset();
+      
       iframe.contentWindow.postMessage({
         type: 'mouseMove',
         x: mousePos.x,
@@ -52,10 +87,32 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
         viewportWidth: window.innerWidth,
         viewportHeight: window.innerHeight
       }, '*');
+
+      if (offset) {
+        iframe.contentWindow.postMessage({
+          type: 'canvasOffset',
+          offsetX: offset.offsetX,
+          offsetY: offset.offsetY
+        }, '*');
+      }
     }
   }, [mousePos]);
 
-
+  const handleIframeLoad = () => {
+      setTimeout(() => {
+        const iframe = document.getElementById('p5-visualizer') as HTMLIFrameElement | null;
+        if (iframe && iframe.contentWindow) {
+          const offset = sendCanvasOffset();
+          if (offset) {
+            iframe.contentWindow.postMessage({
+              type: 'canvasOffset',
+              offsetX: offset.offsetX,
+              offsetY: offset.offsetY
+            }, '*');
+          }
+        }
+      }, 100);
+    };
 
 
 
@@ -167,7 +224,12 @@ function TechnicalView({ onBackToHome }: TechnicalViewProps) {
           <div className="rightSide">
             
             <div className="sidebar">
-             <iframe id="p5-visualizer" src="Visualizer/index.html" style={{ objectFit: 'contain' }}></iframe>
+             <iframe 
+               id="p5-visualizer" 
+               src="Visualizer/index.html" 
+               style={{ objectFit: 'contain' }}
+               onLoad={handleIframeLoad}
+             ></iframe>
               {/* <img src='/images/mediaPlayerTemp.png'></img> */}
               <div className="sidebar-content">
                 <p>AHHHHH</p>
