@@ -1,5 +1,17 @@
-.technical-view {
+.page-container {
   background-image: url('/images/technical-bg3.jpg');
+}
+
+.header-container{
+  position: absolute;
+  top: 10px;
+  z-index: 11;
+  left: 100%;
+  transform: translateX(-110%)
+}
+
+
+.technical-view .full-screen-view{
   position: absolute;
   top: 0;
   left: 0;
@@ -24,11 +36,7 @@
 }
 
 
-.technical-view .back-button:hover {
-  background-color: #1e7e34;
-}
-
-.layout {
+.technical-wrapper .layout {
   width: 100vw;
   height: 100vh;
   position: absolute;
@@ -45,7 +53,7 @@
 }
 
 
-.body { 
+.technical-wrapper .body { 
   grid-area: body;
   display: flex;
   flex-direction: column;
@@ -60,26 +68,26 @@
   margin:10px;
 }
 
-.page-top{
+.technical-wrapper .page-top{
   grid-area: page-top;
   display: flex;
   justify-content: flex-end;
 }
 
-.page-bot{
+.technical-wrapper .page-bot{
   grid-area: page-bot;
   display: flex;
   justify-content: flex-end;
   align-content: flex-end;
 }
-.side {
+.technical-wrapper .side {
   grid-area: side;
   display: flex;
   flex-direction: column;
   align-items: end;
 }
 
-.technical-view .slideshow-container{
+.technical-wrapper .slideshow-container{
 
   outline: 2px solid rgb(70, 93, 124);
   outline-offset: -4px;
@@ -180,17 +188,12 @@
   padding-bottom: 20px;
 }
 
-.technical-view .signature{
-  position: relative;
-  
+.technical-wrapper .signature{
+  left: auto;
+  right: 0%;
+  transform: translateX(-40px);
 }
 
-
-/* .technical-view .signature{ */
-/*   position: relative; */
-/*   z-index: auto; */
-/*   bottom: 20px; */
-/* } */
 
 .technical-intro-text {
   position: absolute;

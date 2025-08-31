@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { motion  } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import './CreativeView.css';
 import Header from '../src/components/Header';
 import AboutMeOverlay from './components/AboutMeOverlay';
@@ -20,60 +20,66 @@ function CreativeView({ onBackToHome }: CreativeViewProps) {
   }
 
   return (
-    <>
+    <div className='creative-wrapper'>
       <motion.div
         className='creative-intro-text'
-        initial={{y:0, opacity: 1}}
-        animate={{y: '-100vh', opacity:1}}
-        transition={{duration : 0.75, delay: 0.3}}
-      >  
+        initial={{ y: 0, opacity: 1 }}
+        animate={{ y: '-100vh', opacity: 1 }}
+        transition={{ duration: 0.75, delay: 0.3 }}
+      >
         <div className="half-content right-content">
           <h2>Creative</h2>
           <p></p>
         </div>
       </motion.div>
+      <div className='page-container'>
 
-      <AboutMeOverlay isOpen={isAboutMeOpen} onClose={() => setIsAboutMeOpen(false)} />
-
-      <motion.div className="creative-view full-screen-view"
-      initial={{opacity: 1}}
-      animate={isHomeClicked? {opacity: 0}
-          : {opacity: 1}}
-        transition={{duration: 0.5}}
-      >
-
-        
         <motion.div
           className='header-container'
-          initial={{left: "0%", x:"+10%"}}
+          initial={{ left: "0%", x: "+10%" }}
         >
           <Header shouldAnimateFanOut={false} onPortraitClick={() => setIsAboutMeOpen(true)} />
         </motion.div>
-        <section className="layout">
-          <div className="header">1</div>
-          <div className="leftSide">2</div>
-          <div className="body">3</div>
-          <div className="rightSide">4</div>
-          <div className="footer">5</div>
-        </section>
-       
-        <motion.div
-        className="signature"
-        initial={{bottom: "20px", left:"0%", x:"60px"}}
-        >
+
+        <div className="signature">
           John Beardwood
+        </div>
+        <motion.div className="creative-view full-screen-view"
+          initial={{ y: '100vh' }}
+          animate={isHomeClicked ? { opacity: 0, y: '0vh' }
+            : { y: '0vh' }}
+          transition={isHomeClicked ? { duration: 0.75, delay: 0 }
+            : { duration: 0.5, delay: 0.2 }}
+        >
+
+          <section className="layout">
+            <div className="page-top">
+
+            </div>
+            <div className="body">
+              <h1>Under Construction</h1>
+              <h2>But there's some cool art on the Technical side, for now.</h2>
+            </div>
+            <div className="side">
+
+            </div>
+            <div className="page-bot">
+
+              <motion.img src="/home-heart-fill.svg"
+                className="home-button"
+                initial={{ bottom: "-100px" }}
+                animate={{ bottom: "5px" }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                onClick={handleHomeClick}
+              ></motion.img>
+
+            </div>
+          </section>
+
         </motion.div>
-        <motion.img src="/home-heart-fill.svg"
-          className= "home-button"
-          initial={{bottom: "-100px", left:"0%", x:"10px"}}
-          animate={{bottom: "20px", left:"0%", x:"10px"}}
-          transition={{duration : 0.5, delay: 0.5}}
-          onClick={handleHomeClick}
-          
-        ></motion.img>
-        </motion.div>
-      
-    </>
+      </div>
+
+    </div>
   );
 }
 

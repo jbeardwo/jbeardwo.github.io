@@ -105,7 +105,7 @@ function HomeView({ onSelectView, lastView }: HomeViewProps) {
     setIsTechnicalClicked(false);
     //Move Signature to corresponding side
     controlsSignature.start({
-      y: "0vh", left: "0%", right: "auto", x: "60px", fontSize: "25px",
+      y: "0vh", left: "0%", right: "auto", x: "40px", fontSize: "25px",
       transition: { type: "spring", duration: .5, bounce: .2, delay: 0 }
     })
     setTimeout(() => {
