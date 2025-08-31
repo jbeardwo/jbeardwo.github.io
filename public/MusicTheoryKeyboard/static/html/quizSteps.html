@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<title>Virtual Music Theory Keyboard: Lesson: Circle</title>
 <head>
+  <title>Virtual Music Theory Keyboard: Quiz: Steps</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="..//css/theStyle.css">
@@ -27,9 +27,11 @@
 	<div id="splash-screen"> 
         <div id="splash-content">
         	<p  class='instruction'>
-            	Welcome to the Circle of Fifths Lesson!<br>
-            	Use the previous and next buttons to traverse through the lesson.<br>
-            	Click the interactive buttons in the lesson text to enhance your learning. <br>
+            	Welcome to the Steps Quiz!<br>
+            	When you click start quiz a note will be highlighted on the keyboard.<br>
+            	You will also be given a distance (whole or half step) as well as a direction. <br>
+            	Click or key in the corresponding note on the piano to submit your answer. <br>
+            	The Quiz is 10 questions, see if you can get 100%!
         	</p>
             <button id="close-splash" onclick="closeSplash();loadMIDI();">Close</button>
         </div>
@@ -37,8 +39,6 @@
 
 	<div id="window">
 		<div id="topBanner">
-		</div>
-
 		<div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="layout.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
@@ -96,44 +96,13 @@
 					<input type="button" value="Toggle Key Names" onclick="toggleVisibility('keyname');">
 					<input type="button" value="Toggle Hardware Key Names" onclick="toggleVisibility('hardwareKey');">
 				</div>
-				<button class="previous" onclick="showPrevious()">Previous</button>
-				<button class="next" onclick="showNext()">Next</button><br>
-				<img id="circleOfFifths" src="..//images/GrandStaffPics/Circle_of_fifths_deluxe_4.svg.png">
-			    <p class="content" id="page1">
-				    For this lesson, we will begin by displaying a chart.<br>
-					This is known as the Circle of Fifths, a chart displaying the relationships between all 12 possible notes.<br>
-					Let’s focus on the outer layer of the circle first.<br>
-
-					Starting with C at the top of the chart, each adjacent note is located a perfect fifth interval away as you travel around the circle clockwise. <br>
-					G is a perfect fifth away from C. D is, in turn, a fifth away from G. 
-					This process repeats until we return to C.
+				<p class="content" id="page1">
+					<input type="button" class="quizStart" value="Start Quiz" onclick="startQuiz();">
+				    <div class="question" id="quizQuestion">questionHere</div>
+				    <div class="score" id="quizScore">0</div>
 				</p>
-				<p class="content" id="page2">
-			        The key signatures beside their respective notes represent the major key built off the note. For instance, the key of C has no sharps or flats, as denoted by the key signature. <br>
 
-					The next note, the G, has one sharp in its key signature, which is notably a difference of one accidental from the key of C. <br>
-                    So it makes sense that the key of D major (two fifths away from C) has two sharps, which is a two-accidental difference from C major. 
-				</p>
-				<p class="content" id="page3">
-			        The same principle applies in a counterclockwise direction, but with flats instead of sharps, and fourths instead of fifths.<br>
-                    F is one fourth away from C, and therefore the key of F major has one flat-- a one accidental difference from C major.<br>
-                    The key of  Bb has two flats, the key of Eb has three, etc<br>
-                    The bottom of the circle is the note Gb (or its enharmonic equivalent F#) which has either 6 flats or 6 sharps in its major key depending on which enharmonic equivalency is defined. 
-		        </p>
-		        <p class="content" id="page4">
-			        Now, the interior circle. <br>
-                    The inner circle works just like the outer one, but with minor keys.<br>
-                    The relative minor key of C major is A minor, as denoted on the circle.<br>
-                    As E is a perfect fifth away from A, the key of E minor has one sharp, just as G major.<br>
-                    A simple way to find the relative minor key of a major key is to simply go three semitones down from the tonic note. C->B->Bb->A (illuminate keys)<br>
-		        </p>
-		        <p class="content" id="page5">
-			        The circle of fifths has applications beyond memorizing key signatures.<br>
-                    In popular music, chord progressions generally travel in very small steps around the circle.<br>
-                    For instance, the most natural resolutions of a chord progressions travel in fifths. One of the most ubiquitous progressions in music, the ii V I, is powerful due to the very natural resolution of the V -> I, a perfect counterclockwise fifth on the circle. <br>
-                    Putting chord progressions in the context of the circle of fifths offers a very visual and geometric perception of how chords interact with each other in proximity to the tonic note of the key. <br>
-					Now, let’s go to the quiz.
-		        </p>
+
 			</div>
 		</div>
 	</body>

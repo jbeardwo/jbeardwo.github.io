@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<title>Virtual Music Theory Keyboard: Quiz: Scale Construction</title>
 <head>
+  <title>Virtual Music Theory Keyboard: Quiz: Notes</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="..//css/theStyle.css">
@@ -22,24 +22,19 @@
 	<script src="../js/util/dom_request_xhr.js" type="text/javascript"></script>
 	<script src="../js/util/dom_request_script.js" type="text/javascript"></script>
 </head>
-<body onload="" background="..//images/wood-grain.jpg">
-
-	<div id="splash-screen"> 
+<body onload="toggleVisibility('keyname');" background="..//images/wood-grain.jpg">
+	<div id="window">
+		<div id="splash-screen"> 
         <div id="splash-content">
         	<p  class='instruction'>
-            	Welcome to the Scale Construction Quiz<br>
-            	When you click start quiz a note will be highlighted on the keyboard.<br>
-            	You will also be given a scale quality (Major or Minor).
-            	Click or key in the rest of the notes of that scale for one octave (including the repeated root). <br>
-            	When all the notes you want are highlighted blue, you're ready.<br>
-            	Then you can click Submit to see if you were right<br>
+            	Welcome to your first Quiz!<br>
+            	When you click start quiz you will be given a note name.<br>
+            	Click that note (or choose it on your keyboard) to choose your answer. <br>
             	The Quiz is 10 questions, see if you can get 100%!
         	</p>
             <button id="close-splash" onclick="closeSplash();loadMIDI();">Close</button>
         </div>
     </div>
-
-	<div id="window">
 		<div id="topBanner">
 		</div>
 
@@ -93,16 +88,15 @@
 			--><div class="key blackKey" id="eb5Key" onclick="pianoKeyClick('eb5')"><div class="hardwareKey">0</div><div class="keyname">D<sup>#</sup> E<sup>b</sup></div></div><!--
 			--><div class="key rStraightKey" id="e5Key" onclick="pianoKeyClick('e5')"><div class="hardwareKey">p</div><div class="keyname">E</div></div>
 		</div>
-		
+		<button onclick="loadMIDI()">Load MIDI Plugin</button>
 
 			<div class="lesson">
 				<div id="showKeys">
-					<input type="button" value="Toggle Key Names" onclick="toggleVisibility('keyname');">
+					<!-- <input type="button" value="Toggle Key Names" onclick="toggleVisibility('keyname');"> -->
 					<input type="button" value="Toggle Hardware Key Names" onclick="toggleVisibility('hardwareKey');">
 				</div>
 				<p class="content" id="page1">
-					<input type="button" class="quizStart" value="Start Quiz" onclick="startQuiz();"><br>
-					<input type="button" class="scaleQuizSubmit" value="Submit Answer" onclick="submitScaleAnswer();" disabled>
+					<input type="button" class="quizStart" value="Start Quiz" onclick="startQuiz();">
 				    <div class="question" id="quizQuestion">questionHere</div>
 				    <div class="score" id="quizScore">0</div>
 				</p>

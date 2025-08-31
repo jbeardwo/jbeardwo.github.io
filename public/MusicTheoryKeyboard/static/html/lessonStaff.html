@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<title>Virtual Music Theory Keyboard: Quiz: Key Signatures</title>
 <head>
+  <title>Virtual Music Theory Keyboard: Lesson: Staff</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="..//css/theStyle.css">
@@ -27,18 +27,14 @@
 	<div id="splash-screen"> 
         <div id="splash-content">
         	<p  class='instruction'>
-            	Welcome to the Key Signature Quiz<br>
-            	When you click start you will be given a note and a scale quality.<br>
-            	Click or key in the notes that are present in the key signature for that scale. <br>
-            	Only select one of each note.<br>
-            	When all the notes you want are highlighted blue, you're ready.<br>
-            	Then you can click Submit to see if you were right<br>
-            	The Quiz is 10 questions, see if you can get 100%!
+            	Welcome to the Staff Lesson!<br>
+            	Use the previous and next buttons to traverse through the lesson.<br>
+            	Click the interactive buttons in the lesson text to enhance your learning. <br>
         	</p>
             <button id="close-splash" onclick="closeSplash();loadMIDI();">Close</button>
         </div>
     </div>
-	
+
 	<div id="window">
 		<div id="topBanner">
 		</div>
@@ -100,14 +96,64 @@
 					<input type="button" value="Toggle Key Names" onclick="toggleVisibility('keyname');">
 					<input type="button" value="Toggle Hardware Key Names" onclick="toggleVisibility('hardwareKey');">
 				</div>
-				<p class="content" id="page1">
-					<input type="button" class="quizStart" value="Start Quiz" onclick="startQuiz();"><br>
-					<input type="button" class="keySignatureQuizSubmit" value="Submit Answer" onclick="submitKeySignatureAnswer();" disabled>
-				    <div class="question" id="quizQuestion">questionHere</div>
-				    <div class="score" id="quizScore">0</div>
+				<button class="previous" onclick="showPrevious()">Previous</button>
+				<button class="next" onclick="showNext()">Next</button>
+			    <p class="content" id="page1">
+				    Now that we know how the piano works, it's time to tackle the staff!<br>
+					A staff is comprised of five lines. Both the lines and their spaces are significant.<br>
+					A note is either placed ON the line, or IN a space.<br>
+					These note placements correspond with the white keys of the keyboard.<br>
 				</p>
-
-
+				<p class="content" id="page2">
+			        <img src="..//images/GrandStaffPics/Staff1.png"><br>
+		       		This is a TREBLE CLEF. it assigns a set of notes to the lines and spaces on the clefs.<br>
+					<img src="..//images/GrandStaffPics/Staff2.png"><br>
+					In the Treble clef, the bottom line corresponds to the E note.<br> 
+					The space directly above it corresponds to the F note.<br>
+					The space directly below it corresponds to the D note.<br>
+					<img src="..//images/GrandStaffPics/Staff4.png"><br>
+					When there is no more room, a LEDGER LINE is added as an extension to the staff, where the C is placed.<br>
+					A helpful mnemonic device to learn the notes as they appear on the lines in the Treble clef is:<br><br>
+					Fine (top line)<br>
+					Does<br>
+					Boy<br>
+					Good<br>
+					Every (bottom line)<br><br>
+					And for the spaces, the trick is simply:<br><br>
+ 		            E (top space)<br>
+			        C<br>
+				    A<br>
+					F (bottom space)<br>
+				</p>
+				<p class="content" id="page3">
+			        <img src="..//images/GrandStaffPics/Staff5.png"><br>
+		        	The other clef we will be using is the BASS CLEF. <br>
+					This clef represents a different set of notes lower in pitch than in the Treble clef.<br>
+					The bottom line corresponds to the G note.<br>
+					The line above it corresponds to the A note, etc. etc.<br>
+					A helpful mnemonic device to memorize the notes as they appear on the lines in the Bass clef is:<br><br>
+					<img src="..//images/GrandStaffPics/Staff7.png"> <br>
+            		Always (top line)<br>
+         			Fine<br>
+				    Do<br>
+				    Boys<br>
+					Good (bottom line)<br>
+					“All Cows Eat Grass” for the spaces:<br><br>
+					<img src="..//images/GrandStaffPics/Staff6.png"> <br>
+         			Grass (top space)<br>
+      				Eat<br>
+   					Cows<br>
+					All (bottom space)<br><br>
+					When a note is placed on the first ledger line above the Bass clef, it is a C note at the same pitch as the C note demonstrated on the Treble clef.<br> 
+					This is known as middle C.<br>
+					<img src="..//images/GrandStaffPics/Staff8.png"> <br>
+					In what is called the GRAND STAFF, these clefs are placed with the Treble on top and the Bass below.<br> 
+					They are joined by the middle C note.<br>
+		        </p>
+		        <p class="content" id="page4">
+			        Now that we've finished the lesson, go check out the quiz!
+		        </p>
+		        
 			</div>
 		</div>
 	</body>

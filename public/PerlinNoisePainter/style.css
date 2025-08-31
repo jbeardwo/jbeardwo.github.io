@@ -1,0 +1,343 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+}
+
+.controls-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.play-panel {
+    flex: 1; /* take remaining space in container */
+    min-width: 300px;
+    max-width: 350px;  display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    max-width: 100%;
+    height: fit-content;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.play-panel .section {
+    width: 100%;
+    max-width: 100%;
+}
+
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 10px;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+input, select {
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus, select:focus {
+    outline: none;
+    background: white;
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+}
+
+.color-input {
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+
+
+button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.button-like {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    flex 1 1 45%;
+}
+
+.button-like:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+.btn-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+}
+
+.btn-danger.btn-disabled {
+    background: gray !important;
+    color: white !important;
+    cursor: not-allowed;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+}
+
+.btn-success.btn-disabled {
+    background: gray !important;
+    color: white !important;
+    cursor: not-allowed;
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+.file-input-wrapper input[type=file] {
+    position: absolute;
+    left: -9999px;
+}
+
+
+
+.particle-set-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.particle-set-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    z-index: 1000;
+    border: 1px solid #555;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.tooltip.visible {
+    opacity: 1;
+}
+
+.tooltip-section {
+    margin-bottom: 8px;
+}
+
+.tooltip-section:last-child {
+    margin-bottom: 0;
+}
+
+.tooltip-title {
+    color: #4ade80;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.particle-set-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.particle-set-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.small-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.section {
+    max-width : 720px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.canvas-controls {
+    margin-bottom: 5px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+#fps-counter {
+    font-weight: bold;
+    color: #4ade80;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 1400px) {
+    .container {
+        display: flex;               /* switch to flex */
+        flex-direction: column;      /* stack vertically */
+        align-items: center;         /* center horizontally */
+        gap: 15px;
+    }
+
+    .controls-panel,
+    .play-panel {
+        width: auto;                 /* shrink to fit content */
+        max-width: 90%;              /* optional: prevent overflow */
+    }
+}
+
+
+/* Collapsible Section Styles */
+
+.collapsible-section {
+    max-width: 720px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.collapsible-header {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+
+.collapsible-header:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.collapsible-header h2,
+.collapsible-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #ffffff;
+    flex-grow: 1;
+}
+
+.collapsible-arrow {
+    transition: transform 0.3s ease;
+    color: #888;
+    font-size: 12px;
+}
+
+.collapsible-section.open .collapsible-content {
+    max-height: 2000px;
+}
+
+.collapsible-inner {
+    padding: 15px;
+}
+
+.collapsible-section.open .collapsible-arrow {
+    transform: rotate(90deg);
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+

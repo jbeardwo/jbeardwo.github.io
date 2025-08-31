@@ -9,7 +9,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
   pad: 1px;
   z-index: 11;
 }
