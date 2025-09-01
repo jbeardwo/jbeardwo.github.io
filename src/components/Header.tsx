@@ -12,12 +12,12 @@ function Header({ shouldAnimateFanOut = false, onPortraitClick }: HeaderProps) {
 
   useEffect(() => {
     const iconTimer = setTimeout(() => {
-        setAnimateIcons(true);
-    },900);
+      setAnimateIcons(true);
+    }, 900);
 
     return () => {
-        clearTimeout(iconTimer);
-      };
+      clearTimeout(iconTimer);
+    };
   }, [shouldAnimateFanOut]);
 
   //states for icons' hover text
@@ -28,30 +28,30 @@ function Header({ shouldAnimateFanOut = false, onPortraitClick }: HeaderProps) {
 
   const ovalContainerProps = shouldAnimateFanOut
     ? {
-        initial: { width: 45, x: -3 },
-        animate: animateIcons ? { width: 199, x: "-3px" } : undefined,
-        transition: { type: "spring", duration: .5, bounce: 0 }
-      }
+      initial: { width: 45, x: -3 },
+      animate: animateIcons ? { width: 199, x: "-3px" } : undefined,
+      transition: { type: "spring", duration: .5, bounce: 0 }
+    }
     : {
-        initial: { width: 199, x: -3 },
-      };
-
-    const getIconProps = (initialXOffset: string) => {
-        return shouldAnimateFanOut
-        ? {
-            initial: { x: initialXOffset },
-            animate: animateIcons ? { x: "0px" } : undefined,
-            transition: {
-                type: "spring",
-                stiffness: 200,
-                damping: 15,
-                bounce: 0
-            }
-          }
-        : {
-            initial: { x: "0px" },
-            };
+      initial: { width: 199, x: -3 },
     };
+
+  const getIconProps = (initialXOffset: string) => {
+    return shouldAnimateFanOut
+      ? {
+        initial: { x: initialXOffset },
+        animate: animateIcons ? { x: "0px" } : undefined,
+        transition: {
+          type: "spring",
+          stiffness: 200,
+          damping: 15,
+          bounce: 0
+        }
+      }
+      : {
+        initial: { x: "0px" },
+      };
+  };
 
   return (
     <motion.div
@@ -67,7 +67,7 @@ function Header({ shouldAnimateFanOut = false, onPortraitClick }: HeaderProps) {
           className="icon-hover-wrapper portrait-description"
           whileHover="hover"
           initial="rest"
-          onClick={onPortraitClick}  
+          onClick={onPortraitClick}
         >
           <motion.img src="/images/me-square.jpg"
             className="icon portrait"
@@ -77,7 +77,7 @@ function Header({ shouldAnimateFanOut = false, onPortraitClick }: HeaderProps) {
             className="icon-description"
             variants={hoverTextVariants}
           >
-            That's me!
+            About me!
           </motion.p>
         </motion.div>
 
@@ -143,7 +143,7 @@ function Header({ shouldAnimateFanOut = false, onPortraitClick }: HeaderProps) {
       </motion.div>
 
     </motion.div>
-  ); 
+  );
 }
 
 export default Header;

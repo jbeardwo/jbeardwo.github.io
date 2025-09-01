@@ -40,7 +40,7 @@
     "page-top page-top" 60px 
     "side     body" 1fr
     "page-bot page-bot" 30px
-    / 2fr     8fr; 
+    / 0fr     8fr; 
   row-gap: 0px;
   column-gap: 10px;
 }
@@ -81,7 +81,7 @@
   font-size: 120px;
   font-weight: 100;
   margin-bottom: 14px;
-  background-image: url("/images/creative-bg.jpg");
+  background-image: url("/images/technical-bg3.jpg");
   background-position: center left;
   background-size: auto;
   -webkit-background-clip: text;
